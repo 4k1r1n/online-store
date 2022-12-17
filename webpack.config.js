@@ -2,21 +2,28 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Eslintlugin = require('eslint-webpack-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const baseConfig = {
   context: path.resolve(__dirname, './src'),
   entry: './index',
-  mode: 'development',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name][contenthash].js',
+    assetModuleFilename: 'assets/[name][hash][ext][query]',
+    hashFunction: 'xxhash64',
+    clean: true,
+  },
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(s[ac]|c)ss$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       { test: /\.ts$/i, use: 'ts-loader' },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpe?g|gif|webp)$/i,
         type: 'asset/resource',
       },
     ],
@@ -24,18 +31,15 @@ const baseConfig = {
   resolve: {
     extensions: ['.js', '.ts'],
   },
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, './dist'),
-    hashFunction: 'xxhash64',
-    clean: true,
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
       filename: 'index.html',
     }),
-    new Eslintlugin({ extensions: 'ts' }),
+    new EslintPlugin({ extensions: 'ts' }),
+    new MiniCssExtractPlugin({
+      filename: '[name][contenthash].css'
+    }),
   ],
 };
 

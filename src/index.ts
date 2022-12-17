@@ -1,1 +1,1 @@
-console.log('hello, world!');
+import './sass/style.scss';
