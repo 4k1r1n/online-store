@@ -4,6 +4,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { NetlifyPlugin } = require("netlify-webpack-plugin");
 
 const baseConfig = {
   context: path.resolve(__dirname, './src'),
@@ -39,6 +40,25 @@ const baseConfig = {
     new EslintPlugin({ extensions: 'ts' }),
     new MiniCssExtractPlugin({
       filename: '[name][contenthash].css'
+    }),
+    new NetlifyPlugin({
+      redirects: [
+        {
+          from: "/*",
+          to: "/",
+          status: 200,
+        },
+        {
+          from: "/cart/*",
+          to: "/cart",
+          status: 200,
+        },
+        {
+          from: "/product/*",
+          to: "/product",
+          status: 200,
+        },
+      ],
     }),
   ],
 };

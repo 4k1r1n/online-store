@@ -6,7 +6,10 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     static: path.resolve(__dirname, './dist'),
-    hot: false,
+    hot: true,
     open: true,
+    historyApiFallback: {
+      rewrites: [{ from: '/*', to: '/' }],
+    },
   },
 };
