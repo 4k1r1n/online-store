@@ -1,14 +1,4 @@
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  brand: string;
-  category: string;
-  price: number;
-  stock: number;
-  capacity: number;
-  images: string[];
-}
+import { Product } from '../types/types';
 
 const data: Product[] = [
   {
