@@ -8,12 +8,12 @@ import getProduct from './product-details';
 export default function renderPage(path: string) {
   switch (path) {
     case PATHS.main:
-      return getStore('whatever Man');
+      return getStore();
     case PATHS.cart:
-      return getCart('look how much you bought');
+      return getCart();
     case PATHS.product:
-      return getProduct('that is a cool lamp mAn');
+      return getProduct();
     default:
-      return getError('404');
+      return getError();
   }
 }

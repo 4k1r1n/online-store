@@ -1,4 +1,11 @@
 @import 'components/button';
 
+// layout
+@import 'layout/app';
 @import 'layout/footer';
 @import 'layout/header';
+
+// pages
+@import 'pages/cart';
+@import 'pages/products';
+@import 'pages/store';

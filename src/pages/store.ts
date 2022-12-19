@@ -1,3 +1,3 @@
-export default function getStore(data: string) {
-  return `<div>${data}</div>`;
+export default function getStore() {
+  return `<div class="store">STORE</div>`;
 }

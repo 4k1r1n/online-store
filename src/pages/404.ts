@@ -1,3 +1,3 @@
-export default function getError(data: string) {
-  return `<div>${data}</div>`;
+export default function getError() {
+  return `<div>404</div>`;
 }
