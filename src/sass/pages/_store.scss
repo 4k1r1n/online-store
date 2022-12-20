@@ -2,3 +2,27 @@
   border: 2px solid purple;
   height: 100%;
 }
+
+.store-form {
+  width: 20%;
+}
+
+.categories {
+  border: 1px solid brown;
+  margin: 10px 0;
+  &__input{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.filter {
+    border: 1px solid brown;
+    margin: 10px 0;
+    &__input {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+}

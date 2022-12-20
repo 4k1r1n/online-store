@@ -8,4 +8,4 @@ export type Product = {
   stock: number;
   capacity: number;
   images: string[];
-}
+};

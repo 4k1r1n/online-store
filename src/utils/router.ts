@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import renderPage from '../pages/index';
 
 declare global {

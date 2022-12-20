@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import renderFooter from './footer/footer';
 import renderHeader from './header/header';
 

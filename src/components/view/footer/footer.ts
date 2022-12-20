@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export default function renderFooter() {
   const footer = document.createElement('footer');
   footer.innerHTML = `<a href="#">matthewTheWizzard & 4k1r1n</a>
