@@ -1,4 +1,30 @@
 .cart {
-  border: 2px solid red;
   height: 100%;
+
+  &__items {
+    border-bottom: solid 1px #000;
+  }
+
+  &__header {
+    margin-bottom: 55px;
+  }
+
+  &__wrapper {
+    margin: 0 35px 80px;
+  }
+
+  &__footer {
+    display: flex;
+    max-width: calc(100% - 90%);
+    align-items: center;
+    margin-left: auto;
+  }
+
+  &__page-number {
+    white-space: nowrap;
+  }
+
+  &__summary {
+    max-width: calc(100% - 75%);
+  }
 }

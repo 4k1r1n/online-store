@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const { NetlifyPlugin } = require("netlify-webpack-plugin");
 
 const baseConfig = {
@@ -40,6 +40,11 @@ const baseConfig = {
     new EslintPlugin({ extensions: 'ts' }),
     new MiniCssExtractPlugin({
       filename: '[name][contenthash].css'
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: "./assets/img/products", to: "assets/img/products" },
+      ],
     }),
     new NetlifyPlugin({
       redirects: [

@@ -1,3 +1,10 @@
+import createElement from '../utils/create-element';
+import renderCartContent from '../components/view/cart-content/cart-content';
+import renderCartSummary from '../components/view/cart-summary/cart-summary';
+
 export default function getCart() {
-  return `<div class="cart">CART</div>`;
+  const cartContainer = createElement('div', 'cart cart__wrapper');
+  cartContainer.append(renderCartContent(), renderCartSummary());
+  const html = cartContainer.outerHTML;
+  return html;
 }

@@ -1,0 +1,15 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  &__img {
+    max-width: calc(100% - 90%);
+  }
+
+  &__number-control {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+}

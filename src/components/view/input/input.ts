@@ -46,3 +46,16 @@ function option(value: string) {
   option.setAttribute('value', value);
   return option;
 }
+
+export function itemsCountPerPage() {
+  const input = createElement('input', 'cart__items-count');
+  input.setAttribute('type', 'text');
+  return input;
+}
+
+export function promoCodeInput() {
+  const input = createElement('input', 'promo-code__input');
+  input.setAttribute('type', 'search');
+  input.setAttribute('placeholder', 'Enter promo code');
+  return input;
+}
