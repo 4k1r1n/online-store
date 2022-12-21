@@ -1,10 +1,12 @@
 @import 'components/button';
 @import 'components/range';
+@import 'components/card';
 
 // layout
 @import 'layout/app';
 @import 'layout/footer';
 @import 'layout/header';
+@import 'layout/cards';
 
 // pages
 @import 'pages/cart';

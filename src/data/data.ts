@@ -1,6 +1,6 @@
 import { Product } from '../types/types';
 
-const data: Product[] = [
+export const data: Product[] = [
   {
     id: 1,
     title: 'Musc Immortel',

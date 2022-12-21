@@ -1,6 +1,24 @@
 .store {
   border: 2px solid purple;
   height: 100%;
+  display: flex;
+}
+
+.cards-section {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  &__layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    overflow: scroll;
+  }
+
+  .menu {
+    display: flex;
+    gap: 10px;
+  }
 }
 
 .store-form {
