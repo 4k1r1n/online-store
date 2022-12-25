@@ -6,7 +6,7 @@ export default function renderCategories() {
   //create heading
   const heading = createElement('h4', 'aside-store__heading', 'Categories');
   // add elements
-  categories.appendChild(heading);
-  categories.appendChild(createCategoriesInput());
+  categories.append(heading);
+  categories.append(createCategoriesInput());
   return categories;
 }

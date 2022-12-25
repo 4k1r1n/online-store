@@ -6,7 +6,7 @@ export default function renderFilter() {
   //create heading
   const heading = createElement('h4', 'aside-store__heading', 'Brand');
   // add elements
-  filters.appendChild(heading);
-  filters.appendChild(createFilterInput());
+  filters.append(heading);
+  filters.append(createFilterInput());
   return filters;
 }

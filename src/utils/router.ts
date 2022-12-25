@@ -17,8 +17,9 @@ const handleChangeRoute = (event: Event) => {
 const handleLocation = () => {
   const path: string | number = window.location.pathname;
   const rootElement = document.getElementById('app') as HTMLElement;
+  rootElement.innerHTML = '';
   const page = renderPage(path);
-  rootElement.innerHTML = page;
+  rootElement.append(page);
 };
 
 window.onpopstate = handleLocation;

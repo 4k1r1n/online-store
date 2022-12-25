@@ -1,9 +1,11 @@
 import createElement from '../../../utils/create-element';
 
-export default function createCheckbox() {
+export default function createCheckbox(value: string, id: number) {
   const checkbox = createElement('input', 'checkbox');
-  const label = createElement('label', 'form__label', 'value-change?');
+  const label = createElement('label', 'form__label', value);
   checkbox.setAttribute('type', 'checkbox');
+  checkbox.setAttribute('value', value);
+  checkbox.setAttribute('data-id', `${id}`);
   label.prepend(checkbox);
   return label;
 }

@@ -5,6 +5,5 @@ import renderCartSummary from '../components/view/cart-summary/cart-summary';
 export default function getCart() {
   const cartContainer = createElement('div', 'cart cart__wrapper');
   cartContainer.append(renderCartContent(), renderCartSummary());
-  const html = cartContainer.outerHTML;
-  return html;
+  return cartContainer;
 }

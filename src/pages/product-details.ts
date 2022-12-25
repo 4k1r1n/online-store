@@ -7,6 +7,5 @@ export default function getProduct() {
   const product = createElement('div', 'product');
   product.append(productImg());
   product.append(productInfo(data[0]));
-  const html = product.outerHTML;
-  return html;
+  return product;
 }

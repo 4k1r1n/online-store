@@ -7,11 +7,11 @@ import { copyStoreButton, resetStoreButton } from '../button/button';
 
 export default function renderFormStore() {
   const form = createElement('form', 'store-form');
-  form.appendChild(renderCategories());
-  form.appendChild(renderFilter());
-  form.appendChild(renderPriceRage());
-  form.appendChild(renderStockRage());
-  form.appendChild(resetStoreButton());
-  form.appendChild(copyStoreButton());
+  form.append(renderCategories());
+  form.append(renderFilter());
+  form.append(renderPriceRage());
+  form.append(renderStockRage());
+  form.append(resetStoreButton());
+  form.append(copyStoreButton());
   return form;
 }
