@@ -1,5 +1,7 @@
 import fidnDataById from '../model/find-data';
 import { Product } from '../../types/types';
+import getProduct from '../../pages/product-details';
+import { PATHS } from '../../constants/constants';
 
 export function handleQuerySearch(e: Event, type: string) {
   const event = e.target as HTMLElement;
@@ -18,4 +20,21 @@ export function handleQuerySearch(e: Event, type: string) {
       window.history.pushState({}, '', url);
     }
   }
+}
+
+export function handleProductClick(e: Event) {
+  const event = e.target as HTMLElement;
+  if (event.tagName === 'IMG') {
+    const id = event.getAttribute('data-id') as string;
+    const link = window.location.origin + PATHS.product + id;
+    window.history.pushState({}, '', link);
+    renderProductsSection(+id);
+  }
+}
+
+export function renderProductsSection(id: number) {
+  const rootElement = document.getElementById('app') as HTMLElement;
+  rootElement.innerHTML = '';
+  const page = getProduct(+id);
+  rootElement.append(page);
 }

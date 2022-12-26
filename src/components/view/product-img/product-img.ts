@@ -1,8 +1,9 @@
+import { Product } from '../../../types/types';
 import createElement from '../../../utils/create-element';
 import imagesLayout from './images-layout';
 
-export default function productImg() {
+export default function productImg(data: Product['images']) {
   const images = createElement('div', 'product__images');
-  images.append(imagesLayout(['1', '2', '3'])); // change to data
+  images.append(imagesLayout(data));
   return images;
 }

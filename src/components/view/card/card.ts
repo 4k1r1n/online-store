@@ -1,9 +1,12 @@
 import createElement from '../../../utils/create-element';
 
-export function createCard(img: string, name: string, price: string | number): HTMLElement {
+export function createCard(img: string, name: string, price: string | number, id: number): HTMLElement {
   const card = createElement('div', 'card');
   const cardImage: HTMLElement = createElement('img', 'card__img');
-  if (cardImage instanceof HTMLImageElement) cardImage.src = img;
+  if (cardImage instanceof HTMLImageElement) {
+    cardImage.src = img;
+    cardImage.setAttribute('data-id', id.toString());
+  }
   const cardName = createElement('span', 'card__name', name);
   const cardPrice = createElement('span', 'card__price', '$ ' + price);
   const cardButton = createElement('button', 'card__btn');
