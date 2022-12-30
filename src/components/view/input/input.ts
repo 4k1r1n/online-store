@@ -11,9 +11,24 @@ export default function createCheckbox(value: string, id: number) {
 }
 
 export function createRange() {
-  const range = createElement('input', 'range');
-  range.setAttribute('type', 'range');
-  return range;
+  const container = createElement('div', 'slider');
+  const template = `<div>
+    <div inverse-left style="width:70%;"></div>
+    <div inverse-right style="width:70%;"></div>
+    <div range style="left:0%;right:0%;"></div>
+    <span thumb style="left:0%;"></span>
+    <span thumb style="left:100%;"></span>
+    <div sign style="left:0%;">
+      <span id="value">0</span>
+    </div>
+    <div sign style="left:100%;">
+      <span id="value">100</span>
+    </div>
+  </div>
+  <input class="left-range" type="range" value="0" max="100" min="0" step="1" />
+<input class="right-range" type="range" value="100" max="100" min="0" step="1"/>`;
+  container.innerHTML = template;
+  return container;
 }
 
 export function createSearch() {
