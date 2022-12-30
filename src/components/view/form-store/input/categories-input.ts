@@ -1,15 +1,28 @@
 import createElement from '../../../../utils/create-element';
 import createCheckbox from '../../input/input';
 import getCategories from '../../../model/categories-model';
-import { handleQuerySearch } from '../../../controller/main-page';
+import { filterLocalStorage, handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
+import { filterData } from '../../../model/filter-model';
+import { renderFilterCards } from '../../../view/cards-store/cards-store';
 
 const categories = getCategories();
 
 export function createCategoriesInput() {
+  let filterQueryParams: string[] = [];
+  if (localStorage.length !== 0) {
+    const newfilter = localStorage.getItem('category')?.split(',');
+    if (newfilter) filterQueryParams = newfilter;
+  }
   const section = createElement('div', 'categories__input');
-  section.addEventListener('click', (e: Event) => {
-    handleQuerySearch(e, 'category');
+  section.addEventListener('change', (e: Event) => {
+    handelLocalStorage(e, 'category', filterQueryParams);
+    handleQuerySearch();
+    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+    const fliterStorage = filterLocalStorage(obj);
+    renderFilterCards(filterData(fliterStorage));
   });
-  for (let i = 0; i < categories.length; i++) section.append(createCheckbox(categories[i].category, categories[i].id));
+  for (let i = 0; i < categories.length; i++) {
+    section.append(createCheckbox(categories[i].category, categories[i].id));
+  }
   return section;
 }

@@ -9,9 +9,9 @@ declare global {
 const handleChangeRoute = (event: Event) => {
   event = event || window.event;
   const link = (event.target as HTMLAnchorElement).href;
-  event.preventDefault();
   window.history.pushState({}, '', link);
   handleLocation();
+  localStorage.clear();
 };
 
 const handleLocation = () => {
