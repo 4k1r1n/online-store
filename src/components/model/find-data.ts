@@ -1,10 +1,13 @@
 import data from '../../data/data';
-import { Product } from '../../types/types';
 
 export default function fidnDataById(value: number) {
   return data.find((el) => el.id === value);
 }
 
-export function findAllPrices(data: Product[]) {
+export function findAllPrices() {
   return data.map((el) => el.price);
+}
+
+export function findAllStock() {
+  return data.map((el) => el.stock);
 }

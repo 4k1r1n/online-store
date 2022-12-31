@@ -1,6 +1,5 @@
 import getProduct from '../../pages/product-details';
 import { PATHS } from '../../constants/constants';
-// import { findAllPrices } from '../model/find-data';
 
 export function handleQuerySearch() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
@@ -57,6 +56,32 @@ export function handelLocalStorage(event: Event, key: string, query: string[]) {
   } else {
     query.splice(query.indexOf(value), 1);
   }
+  setLocalStorage(query.join(','), key);
+  if (!localStorage.getItem(key)) localStorage.removeItem(key);
+}
+
+export function handleLocalStorageRange(event: Event, key: string, query: string[]) {
+  const values: { leftValue: string; rightValue: string } = {
+    leftValue: '',
+    rightValue: '',
+  };
+  let rightInput;
+  let leftInput;
+  const e = event.target as HTMLInputElement;
+  switch (e.className) {
+    case 'multi-range__left':
+      values.leftValue = e.value;
+      rightInput = e.nextElementSibling as HTMLInputElement;
+      values.rightValue = rightInput.value;
+      break;
+    case 'multi-range__right':
+      values.rightValue = e.value;
+      leftInput = e.previousElementSibling as HTMLInputElement;
+      values.leftValue = leftInput.value;
+      break;
+  }
+  query.push(values.leftValue);
+  query.push(values.rightValue);
   setLocalStorage(query.join(','), key);
   if (!localStorage.getItem(key)) localStorage.removeItem(key);
 }
