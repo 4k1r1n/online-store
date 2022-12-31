@@ -1,5 +1,6 @@
 import getProduct from '../../pages/product-details';
 import { PATHS } from '../../constants/constants';
+// import { findAllPrices } from '../model/find-data';
 
 export function handleQuerySearch() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
