@@ -11,7 +11,7 @@ const handleChangeRoute = (event: Event) => {
   const link = (event.target as HTMLAnchorElement).href;
   window.history.pushState({}, '', link);
   handleLocation();
-  localStorage.clear();
+  if (window.location.pathname === '/') localStorage.clear();
 };
 
 const handleLocation = () => {
