@@ -1,8 +1,11 @@
 import createElement from '../../../utils/create-element';
+import { allStorage } from '../../model/filter-model';
 
 export default function createCheckbox(value: string, id: number) {
-  const checkbox = createElement('input', 'checkbox');
+  const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
   const label = createElement('label', 'form__label', value);
+  const queryValue = allStorage();
+  if (queryValue.indexOf(value) != -1) checkbox.checked = true;
   checkbox.setAttribute('type', 'checkbox');
   checkbox.setAttribute('value', value);
   checkbox.setAttribute('data-id', `${id}`);
@@ -11,23 +14,18 @@ export default function createCheckbox(value: string, id: number) {
 }
 
 export function createRange() {
-  const container = createElement('div', 'slider');
-  const template = `<div>
-    <div inverse-left style="width:70%;"></div>
-    <div inverse-right style="width:70%;"></div>
-    <div range style="left:0%;right:0%;"></div>
-    <span thumb style="left:0%;"></span>
-    <span thumb style="left:100%;"></span>
-    <div sign style="left:0%;">
-      <span id="value">0</span>
-    </div>
-    <div sign style="left:100%;">
-      <span id="value">100</span>
-    </div>
-  </div>
-  <input class="left-range" type="range" value="0" max="100" min="0" step="1" />
-<input class="right-range" type="range" value="100" max="100" min="0" step="1"/>`;
-  container.innerHTML = template;
+  const container = createElement('div', 'multi-range');
+  const leftRange = createElement('input', 'multi-range__left');
+  leftRange.setAttribute('type', 'range');
+  leftRange.setAttribute('min', '0');
+  leftRange.setAttribute('max', '100');
+  leftRange.setAttribute('value', '0');
+  const rightRange = createElement('input', 'multi-range__right');
+  rightRange.setAttribute('min', '0');
+  rightRange.setAttribute('max', '100');
+  rightRange.setAttribute('type', 'range');
+  rightRange.setAttribute('value', '100');
+  container.append(leftRange, rightRange);
   return container;
 }
 

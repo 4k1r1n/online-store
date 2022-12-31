@@ -1,6 +1,6 @@
 import data from '../../data/data';
 
-export default function getBrand() {
+export default function getCategories() {
   const array = Array.from(new Set(data.map((el) => el.category)));
   const obj = [];
   for (let i = 0; i < array.length; i++) {

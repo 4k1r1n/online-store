@@ -1,25 +1,16 @@
-import fidnDataById from '../model/find-data';
-import { Product } from '../../types/types';
 import getProduct from '../../pages/product-details';
 import { PATHS } from '../../constants/constants';
 
-export function handleQuerySearch(e: Event, type: string) {
-  const event = e.target as HTMLElement;
-  if (event.tagName === 'INPUT') {
-    const url = new URL(window.location.href);
-    const id = Number(event.getAttribute('data-id'));
-    const query = fidnDataById(id) as Product;
-    if (!(event as HTMLInputElement).checked) {
-      const queryValue = query.category.split(' ').join('+');
-      const params = url.search.slice(1).replace(`${type}=${queryValue}`, '');
-      const newParams = new URLSearchParams(params);
-      const newURL = new URL(url.origin + '?' + newParams);
-      window.history.pushState({}, '', newURL);
-    } else {
-      url.searchParams.append(type, query.category);
-      window.history.pushState({}, '', url);
-    }
-  }
+export function handleQuerySearch() {
+  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+  const params = filterQuery(obj).join('&').split(',').join('%2C');
+  const searchDevider = localStorage.length ? '?' : '';
+  const url = window.location.origin + searchDevider + params;
+  window.history.pushState({}, '', url);
+}
+
+export function setLocalStorage(params: string, type: string) {
+  localStorage.setItem(type, params);
 }
 
 export function handleProductClick(e: Event) {
@@ -37,4 +28,34 @@ export function renderProductsSection(id: number) {
   rootElement.innerHTML = '';
   const page = getProduct(+id);
   rootElement.append(page);
+}
+
+function filterQuery(object: object) {
+  const array: string[][] = [];
+  for (const [key, value] of Object.entries(object)) {
+    array.push([`${key}=${value}`]);
+  }
+  return array;
+}
+
+export function filterLocalStorage(object: object) {
+  const array: string[][] = [];
+  for (const [key, value] of Object.entries(object)) {
+    const newValue = value.split(',');
+    for (let i = 0; i < newValue.length; i++) {
+      array.push([`${key},${newValue[i]}`]);
+    }
+  }
+  return array.map((el) => el.join().split(','));
+}
+
+export function handelLocalStorage(event: Event, key: string, query: string[]) {
+  const value = (event.target as HTMLInputElement).value;
+  if (query.indexOf(value) === -1) {
+    query.push(value);
+  } else {
+    query.splice(query.indexOf(value), 1);
+  }
+  setLocalStorage(query.join(','), key);
+  if (!localStorage.getItem(key)) localStorage.removeItem(key);
 }
