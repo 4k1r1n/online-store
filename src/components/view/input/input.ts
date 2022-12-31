@@ -1,11 +1,13 @@
 import createElement from '../../../utils/create-element';
-import { allStorage } from '../../model/filter-model';
+import { queryValues } from '../../model/filter-model';
 
 export default function createCheckbox(value: string, id: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
   const label = createElement('label', 'form__label', value);
-  const queryValue = allStorage();
-  if (queryValue.indexOf(value) != -1) checkbox.checked = true;
+  const searcParams = queryValues();
+  searcParams.forEach((el) => {
+    if (el === value) checkbox.checked = true;
+  });
   checkbox.setAttribute('type', 'checkbox');
   checkbox.setAttribute('value', value);
   checkbox.setAttribute('data-id', `${id}`);

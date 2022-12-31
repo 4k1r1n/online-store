@@ -9,6 +9,7 @@ const categories = getCategories();
 
 export function createCategoriesInput() {
   let filterQueryParams: string[] = [];
+  if (!window.location.search) localStorage.clear();
   if (localStorage.length !== 0) {
     const newfilter = localStorage.getItem('category')?.split(',');
     if (newfilter) filterQueryParams = newfilter;
