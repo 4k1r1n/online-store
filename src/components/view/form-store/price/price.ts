@@ -17,7 +17,8 @@ export default function renderPriceRage() {
   const heading = createElement('h4', 'aside-store__heading', 'Price');
   // add elements
   priceRange.appendChild(heading);
-  const [leftPrice, rightPrice] = getQueryParams().price;
+  const queryParams = getQueryParams().price;
+  const [leftPrice, rightPrice] = queryParams ? queryParams : [min, max];
   priceRange.appendChild(createRange(min, max, +leftPrice, +rightPrice));
   return priceRange;
 }

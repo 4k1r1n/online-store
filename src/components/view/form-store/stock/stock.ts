@@ -17,7 +17,8 @@ export default function renderStockRage() {
   const heading = createElement('h4', 'aside-store__heading', 'Stock');
   // add elements
   stockRange.appendChild(heading);
-  const [leftStock, rightStock] = getQueryParams().stock;
+  const queryParams = getQueryParams().price;
+  const [leftStock, rightStock] = queryParams ? queryParams : [min, max];
   stockRange.appendChild(createRange(min, max, +leftStock, +rightStock));
   return stockRange;
 }
