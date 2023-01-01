@@ -53,3 +53,8 @@ export function allStorage() {
 
   return values.toString().split(',');
 }
+
+export function filterRange(key: string) {
+  const query = localStorage.getItem(key);
+  return query?.split(',');
+}

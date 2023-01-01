@@ -1,30 +1,23 @@
 import createElement from '../../../../utils/create-element';
-import { handleLocalStorageRange } from '../../../controller/main-page';
+import { handleLocalStorageRange, handleQuerySearch } from '../../../controller/main-page';
+import { getQueryParams } from '../../../model/filter-model';
 import { findAllPrices } from '../../../model/find-data';
 import { createRange } from '../../input/input';
 
-export default function renderPriceRage(valueL?: number, valueR?: number) {
+export default function renderPriceRage() {
   const min = Math.min(...findAllPrices());
   const max = Math.max(...findAllPrices());
   const priceRange = createElement('section', 'price');
   priceRange.addEventListener('input', (e) => {
     const filterQueryParams: string[] = [];
     handleLocalStorageRange(e, 'price', filterQueryParams);
-    const event = e.target as HTMLInputElement;
-    console.log(filterQueryParams);
-    switch (event.className) {
-      case 'multi-range__right':
-        // event.value = valueR.toString();
-        break;
-      case 'multi-range__left':
-        // event.value = valueL.toString();
-        break;
-    }
+    handleQuerySearch();
   });
   //create heading
   const heading = createElement('h4', 'aside-store__heading', 'Price');
   // add elements
   priceRange.appendChild(heading);
-  priceRange.appendChild(createRange(min, max));
+  const [leftPrice, rightPrice] = getQueryParams().price;
+  priceRange.appendChild(createRange(min, max, +leftPrice, +rightPrice));
   return priceRange;
 }

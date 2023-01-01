@@ -15,17 +15,17 @@ export default function createCheckbox(value: string, id: number) {
   return label;
 }
 
-export function createRange(min: number, max: number, valueL?: number, valueR?: number) {
+export function createRange(min: number, max: number, valueL: number, valueR: number) {
   const container = createElement('div', 'multi-range');
   const labelContainer = createElement('div', 'multi-range__label');
-  const minLable = createElement('div', 'multi-range__label-min', `${min}`);
-  const maxLable = createElement('div', 'multi-range__label-max', `${max}`);
+  const minLable = createElement('div', 'multi-range__label-min', `${valueL}`);
+  const maxLable = createElement('div', 'multi-range__label-max', `${valueR}`);
   labelContainer.append(minLable, maxLable);
   const leftRange = createElement('input', 'multi-range__left');
   leftRange.setAttribute('type', 'range');
   leftRange.setAttribute('min', `${min}`);
   leftRange.setAttribute('max', `${max}`);
-  leftRange.setAttribute('value', '10');
+  leftRange.setAttribute('value', `${valueL}`);
   leftRange.addEventListener('input', (e) => {
     const event = e.target as HTMLInputElement;
     const label = event.parentNode?.childNodes[0].firstChild;
@@ -35,7 +35,7 @@ export function createRange(min: number, max: number, valueL?: number, valueR?: 
   rightRange.setAttribute('min', `${min}`);
   rightRange.setAttribute('max', `${max}`);
   rightRange.setAttribute('type', 'range');
-  rightRange.setAttribute('value', '80');
+  rightRange.setAttribute('value', `${valueR}`);
   rightRange.addEventListener('input', (e) => {
     const event = e.target as HTMLInputElement;
     const label = event.parentNode?.childNodes[0].lastChild;
