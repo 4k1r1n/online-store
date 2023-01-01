@@ -58,3 +58,7 @@ export function filterRange(key: string) {
   const query = localStorage.getItem(key);
   return query?.split(',');
 }
+
+export function filterByRange(obj: Product[], key: string, leftRange: number, rightRange: number) {
+  return obj.filter((el) => el[key] >= leftRange && el[key] <= rightRange);
+}
