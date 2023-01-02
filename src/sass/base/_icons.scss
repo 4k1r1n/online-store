@@ -1,0 +1,18 @@
+.ico {
+  cursor: pointer;
+  display: inline-block;
+
+  &_rs {
+    background: url('../assets/icons/rs_ico.svg') center no-repeat;
+    background-size: contain;
+    width: 60px;
+    height: 25px;
+  }
+
+  &_cart {
+    background: url('../assets/icons/cart_ico.svg') center no-repeat;
+    background-size: contain;
+    width: 35px;
+    height: 35px;
+  }
+}

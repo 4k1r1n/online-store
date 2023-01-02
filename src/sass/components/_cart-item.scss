@@ -3,8 +3,24 @@
   align-items: center;
   gap: 15px;
 
+  &__num {
+    @include font($size: 2rem, $weight: 700);
+  }
+
   &__img {
     max-width: calc(100% - 90%);
+  }
+
+  &__name {
+    @include font($size: 1.8rem, $weight: 700);
+  }
+
+  &__category {
+    margin-bottom: 10px;
+  }
+
+  &__desc {
+    margin-bottom: 15px;
   }
 
   &__number-control {

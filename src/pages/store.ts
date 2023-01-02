@@ -4,7 +4,9 @@ import renderCardsLayout from '../components/view/cards-store/cards-store';
 
 export default function getStore() {
   const store = createElement('div', 'store');
-  store.append(renderFormStore());
-  store.append(renderCardsLayout());
+  const storeWrapper = createElement('div', 'store__wrapper wrapper');
+  store.append(storeWrapper);
+  storeWrapper.append(renderFormStore());
+  storeWrapper.append(renderCardsLayout());
   return store;
 }

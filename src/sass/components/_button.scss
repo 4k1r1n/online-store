@@ -1,5 +1,30 @@
 .btn {
   display: block;
-  width: 100%;
-  margin: 10px 0;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  &_card {
+    background-color: $color-primary;
+    background-image: url('../assets/icons/cart-btn_ico.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 25px;
+    height: 25px;
+  }
+
+  &_add {
+    background: url('../assets/icons/add-btn_ico.svg') center no-repeat;
+    background-size: contain;
+    width: 18px;
+    height: 22px;
+  }
+
+  &_remove {
+    background: url('../assets/icons/remove-btn_ico.svg') center no-repeat;
+    background-size: contain;
+    width: 18px;
+    height: 22px;
+  }
 }

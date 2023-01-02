@@ -1,17 +1,24 @@
+@import 'abstracts/mixins';
+@import 'abstracts/placeholders';
+@import 'abstracts/variables';
+
+@import 'base/base';
+@import 'base/typography';
+@import 'base/icons';
+
 @import 'components/button';
 @import 'components/range';
 @import 'components/card';
 @import 'components/cart-item';
 @import 'components/summary';
+@import 'components/products';
+@import 'components/cart';
 
-// layout
-@import 'layout/app';
+@import 'layout/columns';
+@import 'layout/wrapper';
 @import 'layout/footer';
 @import 'layout/header';
-@import 'layout/cards';
-@import 'layout/products';
 
-// pages
 @import 'pages/cart';
 @import 'pages/products';
 @import 'pages/store';

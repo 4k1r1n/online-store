@@ -1,5 +1,30 @@
-footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+.footer {
+  background-color: $color-additional;
+
+  &__wrapper {
+    padding: 15px 0 30px;
+  }
+
+  &__copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__authors {
+    margin-bottom: 20px;
+    @extend %font-additional;
+    @include font($size: 2rem, $weight: 700);
+  }
+}
+
+.author {
+  @include font();
+}
+
+.copyright {
+  &__year {
+    pointer-events: none;
+    @include font($size: 1.4rem);
+  }
 }
