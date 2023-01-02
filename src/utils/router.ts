@@ -6,13 +6,16 @@ declare global {
   }
 }
 
-const handleChangeRoute = (event: Event) => {
+export function handleChangeRoute(event: Event) {
   event = event || window.event;
   const link = (event.target as HTMLAnchorElement).href;
   window.history.pushState({}, '', link);
   handleLocation();
-  if (window.location.pathname === '/') localStorage.clear();
-};
+  if (window.location.pathname === '/') {
+    localStorage.removeItem('category');
+    localStorage.removeItem('brand');
+  }
+}
 
 const handleLocation = () => {
   const path: string | number = window.location.pathname;

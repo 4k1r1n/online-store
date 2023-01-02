@@ -12,7 +12,7 @@ export function renderFilterCards(data: Product[]) {
 }
 
 const renderCards = (data: Product[]) => {
-  const layout = createElement('div', 'cards-section__layout');
+  const layout = createElement('div', 'cards layout-3-column');
   layout.addEventListener('click', (e) => {
     handleProductClick(e);
   });

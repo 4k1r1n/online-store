@@ -1,5 +1,12 @@
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.header {
+  margin: 0 15px;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 10px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+  }
 }

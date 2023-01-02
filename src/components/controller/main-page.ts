@@ -3,6 +3,8 @@ import { PATHS } from '../../constants/constants';
 
 export function handleQuerySearch() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+  delete obj.cart;
+  // const obj = Object.entries(parsedObj).filter([key] =>  key!=='cart');
   const params = filterQuery(obj).join('&').split(',').join('%2C');
   const searchDevider = localStorage.length ? '?' : '';
   const url = window.location.origin + searchDevider + params;

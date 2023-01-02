@@ -9,11 +9,12 @@ export function copyStoreButton(): HTMLElement {
 }
 
 export function addProductButton() {
-  return createElement('button', 'number-control__btn btn btn_add-product', '+');
+  return createElement('button', 'number-control__btn btn btn_add');
 }
 
 export function removeProductButton() {
-  return createElement('button', 'number-control__btn btn btn_add-product', '-');
+  const btn = createElement('button', 'number-control__btn btn btn_remove');
+  return btn;
 }
 
 export function nextPageButton() {

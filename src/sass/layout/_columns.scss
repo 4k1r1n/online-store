@@ -1,0 +1,4 @@
+.layout-3-column {
+  @include columns($width: 31%);
+  gap: 45px 30px;
+}

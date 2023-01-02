@@ -1,23 +1,28 @@
 .store {
-  border: 2px solid purple;
   height: 100%;
-  display: flex;
+
+  &__wrapper {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 90px;
+  }
 }
 
 .cards-section {
   width: 80%;
   display: flex;
   flex-direction: column;
+
   &__layout {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    overflow: scroll;
   }
 
   .menu {
     display: flex;
     gap: 10px;
+    margin-bottom: 40px;
   }
 }
 
@@ -26,9 +31,9 @@
 }
 
 .categories {
-  border: 1px solid brown;
   margin: 10px 0;
-  &__input{
+
+  &__input {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -36,15 +41,11 @@
 }
 
 .filter {
-    border: 1px solid brown;
-    margin: 10px 0;
-    &__input {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-}
+  margin: 10px 0;
 
-.price, .stock{
-  padding: 0 15px;
+  &__input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
