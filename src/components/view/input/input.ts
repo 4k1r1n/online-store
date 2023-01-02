@@ -1,8 +1,14 @@
 import createElement from '../../../utils/create-element';
-import { filterLocalStorage, handleLocalStorageSearch, handleQuerySearch } from '../../controller/main-page';
+import {
+  filterLocalStorage,
+  handleLocalStorageSearch,
+  handleLocalStorageSort,
+  handleQuerySearch,
+} from '../../controller/main-page';
 import { filterData, queryValues, searchProduct } from '../../model/filter-model';
 import { renderFilterCards } from '../cards-store/cards-store';
 import { SORTING } from '../../../constants/constants';
+import { sortProducts } from '../../model/sort-model';
 
 export default function createCheckbox(value: string, id: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
@@ -68,12 +74,6 @@ export function createSearch() {
   return search;
 }
 
-export function createSort() {
-  const search = createElement('input', 'search');
-  search.setAttribute('type', 'search');
-  return search;
-}
-
 export function createOptions() {
   const wrapper = createElement('div', 'options');
   const datalist = createElement('select');
@@ -83,7 +83,12 @@ export function createOptions() {
   for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));
   datalist.addEventListener('change', (e) => {
     const event = e.target as HTMLInputElement;
-    console.log(event.value);
+    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+    const fliterStorage = filterLocalStorage(obj);
+    const data = filterData(fliterStorage);
+    renderFilterCards(sortProducts(data, event.value));
+    handleLocalStorageSort('sort', event.value);
+    handleQuerySearch();
   });
   wrapper.append(datalist);
   return wrapper;

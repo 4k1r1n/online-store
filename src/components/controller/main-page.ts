@@ -90,3 +90,8 @@ export function handleLocalStorageSearch(key: string, value: string) {
   setLocalStorage(value, key);
   if (!localStorage.getItem(key)) localStorage.removeItem(key);
 }
+
+export function handleLocalStorageSort(key: string, value: string) {
+  setLocalStorage(value, key);
+  if (!localStorage.getItem(key)) localStorage.removeItem(key);
+}
