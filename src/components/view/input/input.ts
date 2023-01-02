@@ -1,5 +1,7 @@
 import createElement from '../../../utils/create-element';
-import { queryValues } from '../../model/filter-model';
+import { filterLocalStorage, handleLocalStorageSearch, handleQuerySearch } from '../../controller/main-page';
+import { filterData, queryValues, searchProduct } from '../../model/filter-model';
+import { renderFilterCards } from '../cards-store/cards-store';
 
 export default function createCheckbox(value: string, id: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
@@ -49,6 +51,19 @@ export function createSearch() {
   const search = createElement('input', 'search');
   search.setAttribute('type', 'search');
   search.setAttribute('placeholder', 'Search');
+  search.addEventListener('input', (e) => {
+    const event = e.target as HTMLInputElement;
+    let value = event.value;
+
+    value = value.trim().toLowerCase();
+    console.log(value);
+    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+    const fliterStorage = filterLocalStorage(obj);
+    const data = filterData(fliterStorage);
+    renderFilterCards(searchProduct(data, value));
+    handleLocalStorageSearch('search', value);
+    handleQuerySearch();
+  });
   return search;
 }
 
