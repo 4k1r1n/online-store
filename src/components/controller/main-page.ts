@@ -85,3 +85,8 @@ export function handleLocalStorageRange(event: Event, key: string, query: string
   setLocalStorage(query.join(','), key);
   if (!localStorage.getItem(key)) localStorage.removeItem(key);
 }
+
+export function handleLocalStorageSearch(key: string, value: string) {
+  setLocalStorage(value, key);
+  if (!localStorage.getItem(key)) localStorage.removeItem(key);
+}

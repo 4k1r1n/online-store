@@ -62,3 +62,15 @@ export function filterRange(key: string) {
 export function filterByRange(obj: Product[], key: string, leftRange: number, rightRange: number) {
   return obj.filter((el) => el[key] >= leftRange && el[key] <= rightRange);
 }
+
+export function searchProduct(obj: Product[], value: string): Product[] {
+  return obj.filter((el) => {
+    if (el.brand.toLowerCase().includes(value)) return el;
+    if (el.capacity === +value) return el;
+    if (el.category.toLowerCase().includes(value)) return el;
+    if (el.description.toLowerCase().includes(value)) return el;
+    if (el.price === +value) return el;
+    if (el.stock === +value) return el;
+    if (el.title.toLowerCase().includes(value)) return el;
+  });
+}
