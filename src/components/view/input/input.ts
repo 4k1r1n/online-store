@@ -63,13 +63,13 @@ export function createSearch() {
     let value = event.value;
 
     value = value.trim().toLowerCase();
-    console.log(value);
+
+    handleLocalStorageSearch('search', value);
+    handleQuerySearch();
     const obj = JSON.parse(JSON.stringify({ ...localStorage }));
     const fliterStorage = filterLocalStorage(obj);
     const data = filterData(fliterStorage);
     renderFilterCards(searchProduct(data, value));
-    handleLocalStorageSearch('search', value);
-    handleQuerySearch();
   });
   return search;
 }
@@ -83,12 +83,12 @@ export function createOptions() {
   for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));
   datalist.addEventListener('change', (e) => {
     const event = e.target as HTMLInputElement;
+    handleLocalStorageSort('sort', event.value);
+    handleQuerySearch();
     const obj = JSON.parse(JSON.stringify({ ...localStorage }));
     const fliterStorage = filterLocalStorage(obj);
     const data = filterData(fliterStorage);
     renderFilterCards(sortProducts(data, event.value));
-    handleLocalStorageSort('sort', event.value);
-    handleQuerySearch();
   });
   wrapper.append(datalist);
   return wrapper;
