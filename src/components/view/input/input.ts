@@ -2,6 +2,7 @@ import createElement from '../../../utils/create-element';
 import { filterLocalStorage, handleLocalStorageSearch, handleQuerySearch } from '../../controller/main-page';
 import { filterData, queryValues, searchProduct } from '../../model/filter-model';
 import { renderFilterCards } from '../cards-store/cards-store';
+import { SORTING } from '../../../constants/constants';
 
 export default function createCheckbox(value: string, id: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
@@ -75,14 +76,15 @@ export function createSort() {
 
 export function createOptions() {
   const wrapper = createElement('div', 'options');
-  const datalist = createElement('datalist');
+  const datalist = createElement('select');
   datalist.setAttribute('id', 'options');
+  const sortingValues = Object.values(SORTING);
   // create options change to a function that takes options of sorting from data
-  for (let i = 0; i < 4; i++) datalist.appendChild(option('option'));
-  const input = createElement('input');
-  input.setAttribute('list', 'options');
-  input.setAttribute('placeholder', 'Sort options');
-  wrapper.append(input);
+  for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));
+  datalist.addEventListener('change', (e) => {
+    const event = e.target as HTMLInputElement;
+    console.log(event.value);
+  });
   wrapper.append(datalist);
   return wrapper;
 }
