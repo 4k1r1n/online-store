@@ -4,9 +4,19 @@
   padding: 0;
   cursor: pointer;
 
-  &_card {
+  &_product-add {
     background-color: $color-primary;
-    background-image: url('../assets/icons/cart-btn_ico.svg');
+    background-image: url('../assets/icons/add-product-btn_ico.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 25px;
+    height: 25px;
+  }
+
+  &_product-remove {
+    background-color: $color-primary;
+    background-image: url('../assets/icons/remove-product-btn_ico.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

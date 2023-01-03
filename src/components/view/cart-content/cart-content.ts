@@ -9,7 +9,7 @@ export default function renderCartContent(cart: object[]) {
   const cartItems = createElement('div', 'cart__items');
   const cartIsEmpty = createElement('h3', 'cart__text');
   cartContent.append(renderCartHeader(), cartItems);
-  if (!cart) {
+  if (!cart || !cart.length) {
     cartItems.append(cartIsEmpty);
     cartIsEmpty.textContent = 'Cart is empty';
   } else {

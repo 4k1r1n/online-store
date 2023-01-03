@@ -25,6 +25,10 @@ export function prevPageButton() {
   return createElement('button', 'btn btn_prev', '<');
 }
 
+export function addToCartButton() {
+  return createElement('button', 'btn btn_dark btn_cart', 'add to cart');
+}
+
 export function buyNowButton() {
   return createElement('button', 'btn btn_dark', 'BUY NOW');
 }

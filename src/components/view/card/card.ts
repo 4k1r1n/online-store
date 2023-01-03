@@ -1,8 +1,5 @@
-import { Product } from './../../../types/types';
 import createElement from '../../../utils/create-element';
-import fidnDataById from '../../model/find-data';
-import { addProductToCart } from '../../model/cart';
-import { cartCounter } from '../header/header';
+import { handleCartClick, setStateCardButtons } from '../../controller/main-page';
 
 export function createCard(img: string, name: string, price: string | number, id: number): HTMLElement {
   const card = createElement('div', 'card');
@@ -13,7 +10,7 @@ export function createCard(img: string, name: string, price: string | number, id
   }
   const cardName = createElement('span', 'card__name', name);
   const cardPrice = createElement('span', 'card__price', '$ ' + price);
-  const cardButton = createElement('button', 'btn btn_card');
+  const cardButton = createElement('button', 'btn btn_product-add');
   const cardInfo = createElement('div', 'card__info');
   const cardFooter = createElement('div', 'card__footer');
 
@@ -24,14 +21,9 @@ export function createCard(img: string, name: string, price: string | number, id
   card.appendChild(cardImage);
   card.appendChild(cardFooter);
 
-  cardButton.addEventListener('click', () => {
-    const idProduct = cardImage.getAttribute('data-id');
-    if (idProduct) {
-      const objProduct = fidnDataById(+idProduct) as Product;
-      addProductToCart(objProduct);
-      if (localStorage.getItem('cart')) cartCounter.textContent = JSON.parse(localStorage.cart).length;
-    }
-  });
+  let isClicked = false;
+  cardButton.addEventListener('click', (e) => (isClicked = handleCartClick(isClicked, cardImage, e)));
+  isClicked = setStateCardButtons(isClicked, cardButton, cardImage);
 
   return card;
 }
