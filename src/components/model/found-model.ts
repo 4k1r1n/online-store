@@ -1,3 +1,4 @@
+import data from '../../data/data';
 import { filterLocalStorage } from '../controller/main-page';
 import { filterData } from './filter-model';
 
@@ -11,4 +12,16 @@ export function getFoundProducts() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
   const fliterStorage = filterLocalStorage(obj);
   return filterData(fliterStorage).length.toString();
+}
+
+// function getUniqueCategories(key: string) {
+//   return Array.from(new Set(data.map((el) => el[key])));
+// }
+
+export function getAmountOfProducts(key: string, value: string) {
+  let amount = 0;
+  data.forEach((el) => {
+    if (el[key] === value) amount += 1;
+  });
+  return amount;
 }

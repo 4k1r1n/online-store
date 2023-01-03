@@ -11,10 +11,10 @@ import { SORTING } from '../../../constants/constants';
 import { sortProducts } from '../../model/sort-model';
 import changeFoundProducts from '../../model/found-model';
 
-export default function createCheckbox(value: string, id: number) {
+export default function createCheckbox(value: string, id: number, minStock: number, maxStock: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
   const label = createElement('label', 'form__label', value);
-  const stock = createElement('span', 'form__stock', '5/5');
+  const amountOfProducts = createElement('span', 'form__stock', `${minStock}/${maxStock}`);
   const searcParams = queryValues();
   searcParams.forEach((el) => {
     if (el === value) checkbox.checked = true;
@@ -23,7 +23,7 @@ export default function createCheckbox(value: string, id: number) {
   checkbox.setAttribute('value', value);
   checkbox.setAttribute('data-id', `${id}`);
   label.prepend(checkbox);
-  label.append(stock);
+  label.append(amountOfProducts);
   return label;
 }
 

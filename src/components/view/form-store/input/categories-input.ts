@@ -4,7 +4,7 @@ import getCategories from '../../../model/categories-model';
 import { filterLocalStorage, handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
 import { filterData } from '../../../model/filter-model';
 import { renderFilterCards } from '../../../view/cards-store/cards-store';
-import changeFoundProducts from '../../../model/found-model';
+import changeFoundProducts, { getAmountOfProducts } from '../../../model/found-model';
 
 const categories = getCategories();
 
@@ -29,7 +29,8 @@ export function createCategoriesInput() {
     changeFoundProducts();
   });
   for (let i = 0; i < categories.length; i++) {
-    section.append(createCheckbox(categories[i].category, categories[i].id));
+    const maxAmount = getAmountOfProducts('category', categories[i].category);
+    section.append(createCheckbox(categories[i].category, categories[i].id, 10, maxAmount));
   }
   return section;
 }
