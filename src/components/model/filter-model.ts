@@ -84,20 +84,24 @@ export function filterData(query: string[][]): Product[] {
 
     if (localStorage.getItem('sort')) {
       const value = localStorage.getItem('sort') as string;
+      // console.log(value);
       if (newData.length) {
+        console.log(value);
         newData = sortProducts(newData, value);
       } else {
         newData = sortProducts(data, value);
+        // default sort
+        if (newData.length) {
+          newData = sortProducts(newData, SORTING.lowPrice);
+        } else {
+          newData = sortProducts(data, SORTING.lowPrice);
+        }
       }
     }
   } else {
     newData = data;
     // default sort
-    if (newData.length) {
-      newData = sortProducts(newData, SORTING.lowPrice);
-    } else {
-      newData = sortProducts(data, SORTING.lowPrice);
-    }
+    newData = sortProducts(newData, SORTING.lowPrice);
   }
   return newData;
 }

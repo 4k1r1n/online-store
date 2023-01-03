@@ -55,9 +55,10 @@ export function createRange(min: number, max: number, valueL: number, valueR: nu
 }
 
 export function createSearch() {
-  const search = createElement('input', 'search');
+  const search = createElement('input', 'search') as HTMLInputElement;
   search.setAttribute('type', 'search');
   search.setAttribute('placeholder', 'Search');
+  if (localStorage.getItem('search')) search.value = localStorage.getItem('search') as string;
   search.addEventListener('input', (e) => {
     const event = e.target as HTMLInputElement;
     let value = event.value;
@@ -82,7 +83,7 @@ export function createOptions() {
   // create options change to a function that takes options of sorting from data
   for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));
   datalist.addEventListener('change', (e) => {
-    const event = e.target as HTMLInputElement;
+    const event = e.target as HTMLOptionElement;
     handleLocalStorageSort('sort', event.value);
     handleQuerySearch();
     const obj = JSON.parse(JSON.stringify({ ...localStorage }));
@@ -95,8 +96,9 @@ export function createOptions() {
 }
 
 function option(value: string) {
-  const option = createElement('option', '', value);
+  const option = createElement('option', '', value) as HTMLOptionElement;
   option.setAttribute('value', value);
+  if (value === localStorage.getItem('sort')) option.selected = true;
   return option;
 }
 

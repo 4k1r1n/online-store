@@ -10,7 +10,7 @@ export function sortProducts(data: Product[], sort: string) {
     case SORTING.lowCapacity:
       return data.sort((a, b) => a.capacity - b.capacity);
     case SORTING.highCapacity:
-      return data.sort((a, b) => b.capacity - a.price);
+      return data.sort((a, b) => b.capacity - a.capacity);
     default:
       return data.sort((a, b) => a.price - b.price);
   }
