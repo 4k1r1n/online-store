@@ -14,6 +14,7 @@ import changeFoundProducts from '../../model/found-model';
 export default function createCheckbox(value: string, id: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
   const label = createElement('label', 'form__label', value);
+  const stock = createElement('span', 'form__stock', '5/5');
   const searcParams = queryValues();
   searcParams.forEach((el) => {
     if (el === value) checkbox.checked = true;
@@ -22,6 +23,7 @@ export default function createCheckbox(value: string, id: number) {
   checkbox.setAttribute('value', value);
   checkbox.setAttribute('data-id', `${id}`);
   label.prepend(checkbox);
+  label.append(stock);
   return label;
 }
 
