@@ -1,5 +1,6 @@
 import data from '../../data/data';
 import { Product } from '../../types/types';
+import { sortProducts } from './sort-model';
 
 export function getQueryParams() {
   const query: { [key: string]: string[] } = {};
@@ -16,7 +17,11 @@ export function getQueryParams() {
 export function getFilterQuery(obj: { [key: string]: string[] }) {
   const arr: string[][] = [];
   for (const [key, value] of Object.entries(obj)) {
-    value.forEach((el) => arr.push([`${key}`, `${decodeURIComponent(el).split('%20').join(' ')}`]));
+    if (key === 'price' || key === 'stock') {
+      arr.push([`${key}`, `${value}`]);
+    } else {
+      value.forEach((el) => arr.push([`${key}`, `${decodeURIComponent(el).split('%20').join(' ')}`]));
+    }
   }
 
   return arr;
@@ -29,18 +34,61 @@ export function queryValues() {
 }
 
 export function filterData(query: string[][]): Product[] {
-  const filteredData: Set<string> = new Set();
-  for (let i = 0; i < query.length; i++) {
-    const key = query[i][0];
-    const value = query[i][1];
-    data.forEach((el) => {
-      if (el[key] === value) filteredData.add(JSON.stringify(el));
-    });
+  if (window.location.search.length !== 0) {
+    let newData: Product[] = [];
+    // filter by brand and category
+    for (let i = 0; i < query.length; i++) {
+      const key = query[i][0];
+      const value = query[i][1];
+      data.forEach((el) => {
+        if (el[key] === value) newData.push(el);
+      });
+    }
+
+    // filter by price
+    if (localStorage.getItem('price')) {
+      const [leftPrice, rightPrice] = filterRange('price') as string[];
+      if (newData.length) {
+        newData = newData.filter((el) => el['price'] >= +leftPrice && el['price'] <= +rightPrice);
+      } else {
+        newData = data.filter((el) => el['price'] >= +leftPrice && el['price'] <= +rightPrice);
+      }
+    }
+
+    //filter by range
+    if (localStorage.getItem('range')) {
+      const [leftRange, rightRange] = filterRange('range') as string[];
+      if (newData.length) {
+        newData = newData.filter((el) => el['range'] >= +leftRange && el['range'] <= +rightRange);
+      } else {
+        newData = data.filter((el) => el['range'] >= +leftRange && el['range'] <= +rightRange);
+      }
+    }
+
+    //search
+    if (localStorage.getItem('search')) {
+      const value = localStorage.getItem('search') as string;
+      if (newData.length) {
+        newData = searchProduct(newData, value);
+      } else {
+        newData = searchProduct(data, value);
+      }
+    }
+
+    //sort
+
+    if (localStorage.getItem('sort')) {
+      const value = localStorage.getItem('sort') as string;
+      if (newData.length) {
+        newData = sortProducts(newData, value);
+      } else {
+        newData = sortProducts(data, value);
+      }
+    }
+    return newData;
+  } else {
+    return data;
   }
-  const uniqueData = Array.from(filteredData);
-  let result = uniqueData.map((el) => JSON.parse(el)) as Product[];
-  if (!result.length) result = data;
-  return result;
 }
 
 export function allStorage() {

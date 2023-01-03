@@ -1,5 +1,6 @@
 import createElement from '../../../utils/create-element';
 import { handleChangeRoute } from '../../../utils/router';
+import clearAllFilters from '../../model/clear-filter';
 
 export const cartCounter = createElement('span', 'cart-header__count');
 
@@ -16,9 +17,15 @@ export default function renderHeader() {
   const total = createElement('span', 'total__sum', '0');
 
   logoWrapper.setAttribute('href', '/');
-  logoWrapper.addEventListener('click', handleChangeRoute);
+  logoWrapper.addEventListener('click', (e) => {
+    handleChangeRoute(e);
+    clearAllFilters();
+  });
   cartContainer.setAttribute('href', '/cart');
-  cartContainer.addEventListener('click', handleChangeRoute);
+  cartContainer.addEventListener('click', (e) => {
+    handleChangeRoute(e);
+    clearAllFilters();
+  });
 
   if (localStorage.getItem('cart')) {
     cartCounter.textContent = JSON.parse(localStorage.cart).length;
