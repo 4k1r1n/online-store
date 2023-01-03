@@ -1,3 +1,4 @@
+import { SORTING } from '../../constants/constants';
 import data from '../../data/data';
 import { Product } from '../../types/types';
 import { sortProducts } from './sort-model';
@@ -34,9 +35,10 @@ export function queryValues() {
 }
 
 export function filterData(query: string[][]): Product[] {
+  let newData: Product[] = [];
   if (window.location.search.length !== 0) {
-    let newData: Product[] = [];
     // filter by brand and category
+
     for (let i = 0; i < query.length; i++) {
       const key = query[i][0];
       const value = query[i][1];
@@ -46,6 +48,7 @@ export function filterData(query: string[][]): Product[] {
     }
 
     // filter by price
+
     if (localStorage.getItem('price')) {
       const [leftPrice, rightPrice] = filterRange('price') as string[];
       if (newData.length) {
@@ -55,17 +58,19 @@ export function filterData(query: string[][]): Product[] {
       }
     }
 
-    //filter by range
-    if (localStorage.getItem('range')) {
-      const [leftRange, rightRange] = filterRange('range') as string[];
+    //filter by stock
+
+    if (localStorage.getItem('stock')) {
+      const [leftRange, rightRange] = filterRange('stock') as string[];
       if (newData.length) {
-        newData = newData.filter((el) => el['range'] >= +leftRange && el['range'] <= +rightRange);
+        newData = newData.filter((el) => el['stock'] >= +leftRange && el['stock'] <= +rightRange);
       } else {
-        newData = data.filter((el) => el['range'] >= +leftRange && el['range'] <= +rightRange);
+        newData = data.filter((el) => el['stock'] >= +leftRange && el['stock'] <= +rightRange);
       }
     }
 
     //search
+
     if (localStorage.getItem('search')) {
       const value = localStorage.getItem('search') as string;
       if (newData.length) {
@@ -85,10 +90,16 @@ export function filterData(query: string[][]): Product[] {
         newData = sortProducts(data, value);
       }
     }
-    return newData;
   } else {
-    return data;
+    newData = data;
+    // default sort
+    if (newData.length) {
+      newData = sortProducts(newData, SORTING.lowPrice);
+    } else {
+      newData = sortProducts(data, SORTING.lowPrice);
+    }
   }
+  return newData;
 }
 
 export function allStorage() {
