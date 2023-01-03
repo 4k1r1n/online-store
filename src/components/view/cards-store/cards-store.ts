@@ -24,9 +24,7 @@ const renderCards = (data: Product[]) => {
 
 export default function renderCardsLayout() {
   const query = getQueryParams();
-  // console.log(query);
   const data = filterData(getFilterQuery(query));
-  // console.log(getFilterQuery(query));
   const section = createElement('section', 'cards-section');
   const layout = renderCards(data);
   section.appendChild(renderMenu());

@@ -9,6 +9,7 @@ import { filterData, queryValues, searchProduct } from '../../model/filter-model
 import { renderFilterCards } from '../cards-store/cards-store';
 import { SORTING } from '../../../constants/constants';
 import { sortProducts } from '../../model/sort-model';
+import changeFoundProducts from '../../model/found-model';
 
 export default function createCheckbox(value: string, id: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
@@ -71,6 +72,7 @@ export function createSearch() {
     const fliterStorage = filterLocalStorage(obj);
     const data = filterData(fliterStorage);
     renderFilterCards(searchProduct(data, value));
+    changeFoundProducts();
   });
   return search;
 }
@@ -80,7 +82,7 @@ export function createOptions() {
   const datalist = createElement('select');
   datalist.setAttribute('id', 'options');
   const sortingValues = Object.values(SORTING);
-  // create options change to a function that takes options of sorting from data
+
   for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));
   datalist.addEventListener('change', (e) => {
     const event = e.target as HTMLOptionElement;

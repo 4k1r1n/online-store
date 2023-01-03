@@ -100,7 +100,7 @@ export function filterData(query: string[][]): Product[] {
     }
   } else {
     newData = data;
-    // default sort
+
     newData = sortProducts(newData, SORTING.lowPrice);
   }
   return newData;

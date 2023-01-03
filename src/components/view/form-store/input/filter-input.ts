@@ -4,6 +4,7 @@ import getBrands from '../../../model/brand-mondel';
 import { filterLocalStorage, handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
 import { filterData } from '../../../model/filter-model';
 import { renderFilterCards } from '../../../view/cards-store/cards-store';
+import changeFoundProducts from '../../../model/found-model';
 
 const brand = getBrands();
 
@@ -20,6 +21,7 @@ export function createFilterInput() {
     const fliterStorage = filterLocalStorage(obj);
     handleQuerySearch();
     renderFilterCards(filterData(fliterStorage));
+    changeFoundProducts();
   });
   for (let i = 0; i < brand.length; i++) section.appendChild(createCheckbox(brand[i].brand, brand[i].id));
 

@@ -2,6 +2,7 @@ import createElement from '../../../../utils/create-element';
 import { filterLocalStorage, handleLocalStorageRange, handleQuerySearch } from '../../../controller/main-page';
 import { filterByRange, filterData, getQueryParams } from '../../../model/filter-model';
 import { findAllStock } from '../../../model/find-data';
+import changeFoundProducts from '../../../model/found-model';
 import { renderFilterCards } from '../../cards-store/cards-store';
 import { createRange } from '../../input/input';
 
@@ -20,6 +21,7 @@ export default function renderStockRage() {
     const fliterStorage = filterLocalStorage(obj);
     const filteredData = filterByRange(filterData(fliterStorage), 'stock', +newLeftStock, +newRightStock);
     renderFilterCards(filteredData);
+    changeFoundProducts();
   });
   //create heading
   const heading = createElement('h4', 'aside-store__heading', 'Stock');

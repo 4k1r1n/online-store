@@ -4,6 +4,7 @@ import getCategories from '../../../model/categories-model';
 import { filterLocalStorage, handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
 import { filterData } from '../../../model/filter-model';
 import { renderFilterCards } from '../../../view/cards-store/cards-store';
+import changeFoundProducts from '../../../model/found-model';
 
 const categories = getCategories();
 
@@ -25,6 +26,7 @@ export function createCategoriesInput() {
     const obj = JSON.parse(JSON.stringify({ ...localStorage }));
     const fliterStorage = filterLocalStorage(obj);
     renderFilterCards(filterData(fliterStorage));
+    changeFoundProducts();
   });
   for (let i = 0; i < categories.length; i++) {
     section.append(createCheckbox(categories[i].category, categories[i].id));

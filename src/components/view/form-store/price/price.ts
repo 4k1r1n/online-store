@@ -2,6 +2,7 @@ import createElement from '../../../../utils/create-element';
 import { filterLocalStorage, handleLocalStorageRange, handleQuerySearch } from '../../../controller/main-page';
 import { filterByRange, filterData, getQueryParams } from '../../../model/filter-model';
 import { findAllPrices } from '../../../model/find-data';
+import changeFoundProducts from '../../../model/found-model';
 import { renderFilterCards } from '../../cards-store/cards-store';
 import { createRange } from '../../input/input';
 
@@ -20,10 +21,11 @@ export default function renderPriceRage() {
     const fliterStorage = filterLocalStorage(obj);
     const filteredData = filterByRange(filterData(fliterStorage), 'price', +newLeftPrice, +newRightPrice);
     renderFilterCards(filteredData);
+    changeFoundProducts();
   });
-  //create heading
+
   const heading = createElement('h4', 'aside-store__heading', 'Price');
-  // add elements
+
   priceRange.appendChild(heading);
   priceRange.appendChild(createRange(min, max, +leftPrice, +rightPrice));
   return priceRange;
