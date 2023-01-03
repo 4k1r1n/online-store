@@ -98,6 +98,16 @@ export function filterData(query: string[][]): Product[] {
         }
       }
     }
+
+    //search
+    if (localStorage.getItem('search')) {
+      const value = localStorage.getItem('search') as string;
+      if (newData.length) {
+        newData = searchProduct(newData, value);
+      } else {
+        newData = searchProduct(data, value);
+      }
+    }
   } else {
     newData = data;
 
