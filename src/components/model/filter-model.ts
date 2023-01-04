@@ -1,6 +1,9 @@
 import { SORTING } from '../../constants/constants';
 import data from '../../data/data';
 import { Product } from '../../types/types';
+import { filterLocalStorage } from '../controller/main-page';
+import { createCategoriesInput } from '../view/form-store/input/categories-input';
+import { createFilterInput } from '../view/form-store/input/filter-input';
 import { sortProducts } from './sort-model';
 
 export function getQueryParams() {
@@ -146,4 +149,28 @@ export function searchProduct(obj: Product[], value: string): Product[] {
     if (el.stock === +value) return el;
     if (el.title.toLowerCase().includes(value)) return el;
   });
+}
+
+export function toggleFilters() {
+  toggleBrandFilters();
+  toggleCategoryFilters();
+}
+
+function toggleBrandFilters() {
+  const section = document.querySelector('.filter') as HTMLElement;
+  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+  // const fliterStorage = filterLocalStorage(obj);
+  const data = filterData(filterLocalStorage(obj));
+  const filters = createFilterInput(data);
+  section.lastChild?.remove();
+  section.append(filters);
+}
+
+function toggleCategoryFilters() {
+  const section = document.querySelector('.categories') as HTMLElement;
+  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+  const data = filterData(filterLocalStorage(obj));
+  const filters = createCategoriesInput(data);
+  section.lastChild?.remove();
+  section.append(filters);
 }
