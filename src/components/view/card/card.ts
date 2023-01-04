@@ -21,9 +21,10 @@ export function createCard(img: string, name: string, price: string | number, id
   card.appendChild(cardImage);
   card.appendChild(cardFooter);
 
+  const cardId = Number(cardImage.getAttribute('data-id'));
   let isClicked = false;
-  cardButton.addEventListener('click', (e) => (isClicked = handleCartClick(isClicked, cardImage, e)));
-  isClicked = setStateCardButtons(isClicked, cardButton, cardImage);
+  cardButton.addEventListener('click', (e) => (isClicked = handleCartClick(isClicked, cardId, e)));
+  isClicked = setStateCardButtons(isClicked, cardButton, cardId);
 
   return card;
 }
