@@ -15,10 +15,6 @@ export function getFoundProducts() {
   return filterData(fliterStorage).length.toString();
 }
 
-// function getUniqueCategories(key: string) {
-//   return Array.from(new Set(data.map((el) => el[key])));
-// }
-
 export function getAmountOfProducts(key: string, value: string) {
   let amount = 0;
   data.forEach((el) => {

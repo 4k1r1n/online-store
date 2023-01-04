@@ -4,6 +4,8 @@ import { Product } from '../../types/types';
 import { filterLocalStorage } from '../controller/main-page';
 import { createCategoriesInput } from '../view/form-store/input/categories-input';
 import { createFilterInput } from '../view/form-store/input/filter-input';
+import { createRange } from '../view/input/input';
+import { findAllPrices, findAllStock } from './find-data';
 import { sortProducts } from './sort-model';
 
 export function getQueryParams() {
@@ -154,6 +156,8 @@ export function searchProduct(obj: Product[], value: string): Product[] {
 export function toggleFilters() {
   toggleBrandFilters();
   toggleCategoryFilters();
+  togglePriceFilters();
+  toggleStockFilters();
 }
 
 function toggleBrandFilters() {
@@ -173,4 +177,41 @@ function toggleCategoryFilters() {
   const filters = createCategoriesInput(data);
   section.lastChild?.remove();
   section.append(filters);
+}
+
+function togglePriceFilters() {
+  const section = document.querySelector('.price') as HTMLElement;
+  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+  const data = filterData(filterLocalStorage(obj));
+  // const filters = createCategoriesInput(data);
+  const [leftPrice, rightPrice] = [findMinValue(data, 'price'), findMaxValue(data, 'price')];
+  const min = Math.min(...findAllPrices());
+  const max = Math.max(...findAllPrices());
+  const filters = createRange(min, max, +leftPrice, +rightPrice);
+  section.lastChild?.remove();
+  section.append(filters);
+}
+
+function toggleStockFilters() {
+  const section = document.querySelector('.stock') as HTMLElement;
+  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
+  const data = filterData(filterLocalStorage(obj));
+  // const filters = createCategoriesInput(data);
+  const [leftStock, rightStock] = [findMinValue(data, 'stock'), findMaxValue(data, 'stock')];
+  console.log(leftStock, rightStock);
+  const min = Math.min(...findAllStock());
+  const max = Math.max(...findAllStock());
+  const filters = createRange(min, max, +leftStock, +rightStock);
+  section.lastChild?.remove();
+  section.append(filters);
+}
+
+function findMaxValue(obj: Product[], key: string) {
+  const values = obj.map((el) => el[key]) as number[];
+  return Math.max(...values);
+}
+
+function findMinValue(obj: Product[], key: string) {
+  const values = obj.map((el) => el[key]) as number[];
+  return Math.min(...values);
 }

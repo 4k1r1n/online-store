@@ -5,7 +5,7 @@ import {
   handleLocalStorageSort,
   handleQuerySearch,
 } from '../../controller/main-page';
-import { filterData, queryValues, searchProduct } from '../../model/filter-model';
+import { filterData, queryValues, searchProduct, toggleFilters } from '../../model/filter-model';
 import { renderFilterCards } from '../cards-store/cards-store';
 import { SORTING } from '../../../constants/constants';
 import { sortProducts } from '../../model/sort-model';
@@ -75,6 +75,7 @@ export function createSearch() {
     const data = filterData(fliterStorage);
     renderFilterCards(searchProduct(data, value));
     changeFoundProducts();
+    toggleFilters();
   });
   return search;
 }
