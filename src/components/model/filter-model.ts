@@ -4,8 +4,6 @@ import { Product } from '../../types/types';
 import { filterLocalStorage } from '../controller/main-page';
 import { createCategoriesInput } from '../view/form-store/input/categories-input';
 import { createFilterInput } from '../view/form-store/input/filter-input';
-import { createRange } from '../view/input/input';
-import { findAllPrices, findAllStock } from './find-data';
 import { sortProducts } from './sort-model';
 
 export function getQueryParams() {
@@ -74,16 +72,16 @@ export function filterData(query: string[][]): Product[] {
       }
     }
 
-    //search
+    // //search
 
-    if (localStorage.getItem('search')) {
-      const value = localStorage.getItem('search') as string;
-      if (newData.length) {
-        newData = searchProduct(newData, value);
-      } else {
-        newData = searchProduct(data, value);
-      }
-    }
+    // if (localStorage.getItem('search')) {
+    //   const value = localStorage.getItem('search') as string;
+    //   if (newData.length) {
+    //     newData = searchProduct(newData, value);
+    //   } else {
+    //     newData = searchProduct(data, value);
+    //   }
+    // }
 
     //sort
 
@@ -160,17 +158,17 @@ export function toggleFilters() {
   toggleStockFilters();
 }
 
-function toggleBrandFilters() {
+export function toggleBrandFilters() {
   const section = document.querySelector('.filter') as HTMLElement;
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-  // const fliterStorage = filterLocalStorage(obj);
-  const data = filterData(filterLocalStorage(obj));
+  const fliterStorage = filterLocalStorage(obj);
+  const data = filterData(fliterStorage);
   const filters = createFilterInput(data);
   section.lastChild?.remove();
   section.append(filters);
 }
 
-function toggleCategoryFilters() {
+export function toggleCategoryFilters() {
   const section = document.querySelector('.categories') as HTMLElement;
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
   const data = filterData(filterLocalStorage(obj));
@@ -179,31 +177,34 @@ function toggleCategoryFilters() {
   section.append(filters);
 }
 
-function togglePriceFilters() {
+export function togglePriceFilters() {
   const section = document.querySelector('.price') as HTMLElement;
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
   const data = filterData(filterLocalStorage(obj));
-  // const filters = createCategoriesInput(data);
   const [leftPrice, rightPrice] = [findMinValue(data, 'price'), findMaxValue(data, 'price')];
-  const min = Math.min(...findAllPrices());
-  const max = Math.max(...findAllPrices());
-  const filters = createRange(min, max, +leftPrice, +rightPrice);
-  section.lastChild?.remove();
-  section.append(filters);
+  const leftInput = section.lastElementChild?.querySelector('.multi-range__left') as HTMLInputElement;
+  const rightInput = section.lastElementChild?.querySelector('.multi-range__right') as HTMLInputElement;
+  const leftLabel = section.querySelector('.multi-range__label-min') as HTMLElement;
+  const rightLabel = section.querySelector('.multi-range__label-max') as HTMLElement;
+  leftLabel.textContent = leftPrice.toString();
+  rightLabel.textContent = rightPrice.toString();
+  leftInput.value = leftPrice.toString();
+  rightInput.value = rightPrice.toString();
 }
 
-function toggleStockFilters() {
+export function toggleStockFilters() {
   const section = document.querySelector('.stock') as HTMLElement;
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
   const data = filterData(filterLocalStorage(obj));
-  // const filters = createCategoriesInput(data);
   const [leftStock, rightStock] = [findMinValue(data, 'stock'), findMaxValue(data, 'stock')];
-  console.log(leftStock, rightStock);
-  const min = Math.min(...findAllStock());
-  const max = Math.max(...findAllStock());
-  const filters = createRange(min, max, +leftStock, +rightStock);
-  section.lastChild?.remove();
-  section.append(filters);
+  const leftInput = section.lastElementChild?.querySelector('.multi-range__left') as HTMLInputElement;
+  const rightInput = section.lastElementChild?.querySelector('.multi-range__right') as HTMLInputElement;
+  const leftLabel = section.querySelector('.multi-range__label-min') as HTMLElement;
+  const rightLabel = section.querySelector('.multi-range__label-max') as HTMLElement;
+  leftLabel.textContent = leftStock.toString();
+  rightLabel.textContent = rightStock.toString();
+  leftInput.value = leftStock.toString();
+  rightInput.value = rightStock.toString();
 }
 
 function findMaxValue(obj: Product[], key: string) {
