@@ -1,7 +1,6 @@
 import { SORTING } from '../../constants/constants';
 import data from '../../data/data';
 import { Product } from '../../types/types';
-import { filterLocalStorage } from '../controller/main-page';
 import { createCategoriesInput } from '../view/form-store/input/categories-input';
 import { createFilterInput } from '../view/form-store/input/filter-input';
 import { sortProducts } from './sort-model';
@@ -37,19 +36,9 @@ export function queryValues() {
   return filtersArr;
 }
 
-export function filterData(query?: string[][]): Product[] {
+export function filterData(): Product[] {
   let newData: Product[] = [];
   if (window.location.search.length !== 0) {
-    // filter by brand and category
-
-    // for (let i = 0; i < query.length; i++) {
-    //   const key = query[i][0];
-    //   const value = query[i][1];
-    //   data.forEach((el) => {
-    //     if (el[key] === value) newData.push(el);
-    //   });
-    // }
-
     if (localStorage.getItem('category')) {
       newData = filterCategory(data, 'category');
       if (localStorage.getItem('brand')) {
@@ -63,7 +52,6 @@ export function filterData(query?: string[][]): Product[] {
         newData = filterCategory(newData, 'category');
       }
     }
-    // filter by price
 
     if (localStorage.getItem('price')) {
       const [leftPrice, rightPrice] = filterRange('price') as string[];
@@ -74,8 +62,6 @@ export function filterData(query?: string[][]): Product[] {
       }
     }
 
-    //filter by stock
-
     if (localStorage.getItem('stock')) {
       const [leftRange, rightRange] = filterRange('stock') as string[];
       if (newData.length) {
@@ -84,8 +70,6 @@ export function filterData(query?: string[][]): Product[] {
         newData = data.filter((el) => el['stock'] >= +leftRange && el['stock'] <= +rightRange);
       }
     }
-
-    //sort
 
     if (localStorage.getItem('sort')) {
       const value = localStorage.getItem('sort') as string;
@@ -104,7 +88,6 @@ export function filterData(query?: string[][]): Product[] {
       }
     }
 
-    //search
     if (localStorage.getItem('search')) {
       const value = localStorage.getItem('search') as string;
       if (newData.length) {
@@ -162,9 +145,7 @@ export function toggleFilters() {
 
 export function toggleBrandFilters() {
   const section = document.querySelector('.filter') as HTMLElement;
-  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-  const fliterStorage = filterLocalStorage(obj);
-  const data = filterData(fliterStorage);
+  const data = filterData();
   const filters = createFilterInput(data);
   section.lastChild?.remove();
   section.append(filters);
@@ -172,8 +153,7 @@ export function toggleBrandFilters() {
 
 export function toggleCategoryFilters() {
   const section = document.querySelector('.categories') as HTMLElement;
-  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-  const data = filterData(filterLocalStorage(obj));
+  const data = filterData();
   const filters = createCategoriesInput(data);
   section.lastChild?.remove();
   section.append(filters);
@@ -181,8 +161,7 @@ export function toggleCategoryFilters() {
 
 export function togglePriceFilters() {
   const section = document.querySelector('.price') as HTMLElement;
-  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-  const data = filterData(filterLocalStorage(obj));
+  const data = filterData();
   const [leftPrice, rightPrice] = [findMinValue(data, 'price'), findMaxValue(data, 'price')];
   const leftInput = section.lastElementChild?.querySelector('.multi-range__left') as HTMLInputElement;
   const rightInput = section.lastElementChild?.querySelector('.multi-range__right') as HTMLInputElement;
@@ -196,8 +175,7 @@ export function togglePriceFilters() {
 
 export function toggleStockFilters() {
   const section = document.querySelector('.stock') as HTMLElement;
-  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-  const data = filterData(filterLocalStorage(obj));
+  const data = filterData();
   const [leftStock, rightStock] = [findMinValue(data, 'stock'), findMaxValue(data, 'stock')];
   const leftInput = section.lastElementChild?.querySelector('.multi-range__left') as HTMLInputElement;
   const rightInput = section.lastElementChild?.querySelector('.multi-range__right') as HTMLInputElement;
@@ -230,12 +208,3 @@ function filterCategory(data: Product[], type: string) {
   }
   return result;
 }
-
-// function changeFilterCategory(data: Product[], key: string, value: string[]) {
-//   const result: Product[] = [];
-//   for (let i = 0; i < value.length; i++) {
-//     data.forEach((el) => {
-//       if (el[key] === value[i]) result.push(el);
-//     });
-//   }
-// }

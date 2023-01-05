@@ -1,7 +1,7 @@
 import createElement from '../../../../utils/create-element';
 import createCheckbox from '../../input/input';
 import getBrands from '../../../model/brand-mondel';
-import { filterLocalStorage, handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
+import { handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
 import { filterData, toggleFilters } from '../../../model/filter-model';
 import { renderFilterCards } from '../../../view/cards-store/cards-store';
 import changeFoundProducts, { calculateBalanceOfProducts, getAmountOfProducts } from '../../../model/found-model';
@@ -18,10 +18,8 @@ export function createFilterInput(data: Product[]) {
   const section = createElement('div', 'filter__input');
   section.addEventListener('change', (e: Event) => {
     handelLocalStorage(e, 'brand', filterQueryParams);
-    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-    const fliterStorage = filterLocalStorage(obj);
     handleQuerySearch();
-    renderFilterCards(filterData(fliterStorage));
+    renderFilterCards(filterData());
     changeFoundProducts();
     toggleFilters();
   });

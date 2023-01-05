@@ -1,6 +1,5 @@
 import data from '../../data/data';
 import { Product } from '../../types/types';
-import { filterLocalStorage } from '../controller/main-page';
 import { filterData } from './filter-model';
 
 export default function changeFoundProducts() {
@@ -10,9 +9,7 @@ export default function changeFoundProducts() {
 }
 
 export function getFoundProducts() {
-  const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-  const fliterStorage = filterLocalStorage(obj);
-  return filterData(fliterStorage).length.toString();
+  return filterData().length.toString();
 }
 
 export function getAmountOfProducts(key: string, value: string) {

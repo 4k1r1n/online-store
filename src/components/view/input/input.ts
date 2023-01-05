@@ -1,10 +1,5 @@
 import createElement from '../../../utils/create-element';
-import {
-  filterLocalStorage,
-  handleLocalStorageSearch,
-  handleLocalStorageSort,
-  handleQuerySearch,
-} from '../../controller/main-page';
+import { handleLocalStorageSearch, handleLocalStorageSort, handleQuerySearch } from '../../controller/main-page';
 import { filterData, queryValues, searchProduct, toggleFilters } from '../../model/filter-model';
 import { renderFilterCards } from '../cards-store/cards-store';
 import { SORTING } from '../../../constants/constants';
@@ -70,9 +65,7 @@ export function createSearch() {
 
     handleLocalStorageSearch('search', value);
     handleQuerySearch();
-    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-    const fliterStorage = filterLocalStorage(obj);
-    const data = filterData(fliterStorage);
+    const data = filterData();
     renderFilterCards(searchProduct(data, value));
     changeFoundProducts();
     toggleFilters();
@@ -91,9 +84,7 @@ export function createOptions() {
     const event = e.target as HTMLOptionElement;
     handleLocalStorageSort('sort', event.value);
     handleQuerySearch();
-    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-    const fliterStorage = filterLocalStorage(obj);
-    const data = filterData(fliterStorage);
+    const data = filterData();
     renderFilterCards(sortProducts(data, event.value));
   });
   wrapper.append(datalist);

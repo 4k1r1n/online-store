@@ -3,7 +3,7 @@ import { createCard } from '../card/card';
 import renderMenu from './menu';
 import { handleProductClick } from '../../controller/main-page';
 import { Product } from '../../../types/types';
-import { filterData, getFilterQuery, getQueryParams } from '../../model/filter-model';
+import { filterData } from '../../model/filter-model';
 
 export function renderFilterCards(data: Product[]) {
   const section = document.querySelector('.cards-section') as HTMLElement;
@@ -23,8 +23,7 @@ const renderCards = (data: Product[]) => {
 };
 
 export default function renderCardsLayout() {
-  const query = getQueryParams();
-  const data = filterData(getFilterQuery(query));
+  const data = filterData();
   const section = createElement('section', 'cards-section');
   const layout = renderCards(data);
   section.appendChild(renderMenu());

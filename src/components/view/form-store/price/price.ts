@@ -1,5 +1,5 @@
 import createElement from '../../../../utils/create-element';
-import { filterLocalStorage, handleLocalStorageRange, handleQuerySearch } from '../../../controller/main-page';
+import { handleLocalStorageRange, handleQuerySearch } from '../../../controller/main-page';
 import {
   filterByRange,
   filterData,
@@ -24,9 +24,7 @@ export default function renderPriceRage() {
     handleLocalStorageRange(e, 'price', filterQueryParams);
     handleQuerySearch();
     const [newLeftPrice, newRightPrice] = getQueryParams().price;
-    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-    const fliterStorage = filterLocalStorage(obj);
-    const filteredData = filterByRange(filterData(fliterStorage), 'price', +newLeftPrice, +newRightPrice);
+    const filteredData = filterByRange(filterData(), 'price', +newLeftPrice, +newRightPrice);
     renderFilterCards(filteredData);
     changeFoundProducts();
     toggleBrandFilters();
