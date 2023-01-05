@@ -37,19 +37,32 @@ export function queryValues() {
   return filtersArr;
 }
 
-export function filterData(query: string[][]): Product[] {
+export function filterData(query?: string[][]): Product[] {
   let newData: Product[] = [];
   if (window.location.search.length !== 0) {
     // filter by brand and category
 
-    for (let i = 0; i < query.length; i++) {
-      const key = query[i][0];
-      const value = query[i][1];
-      data.forEach((el) => {
-        if (el[key] === value) newData.push(el);
-      });
+    // for (let i = 0; i < query.length; i++) {
+    //   const key = query[i][0];
+    //   const value = query[i][1];
+    //   data.forEach((el) => {
+    //     if (el[key] === value) newData.push(el);
+    //   });
+    // }
+
+    if (localStorage.getItem('category')) {
+      newData = filterCategory(data, 'category');
+      if (localStorage.getItem('brand')) {
+        newData = filterCategory(newData, 'brand');
+      }
     }
 
+    if (localStorage.getItem('brand')) {
+      newData = filterCategory(data, 'brand');
+      if (localStorage.getItem('category')) {
+        newData = filterCategory(newData, 'category');
+      }
+    }
     // filter by price
 
     if (localStorage.getItem('price')) {
@@ -71,17 +84,6 @@ export function filterData(query: string[][]): Product[] {
         newData = data.filter((el) => el['stock'] >= +leftRange && el['stock'] <= +rightRange);
       }
     }
-
-    // //search
-
-    // if (localStorage.getItem('search')) {
-    //   const value = localStorage.getItem('search') as string;
-    //   if (newData.length) {
-    //     newData = searchProduct(newData, value);
-    //   } else {
-    //     newData = searchProduct(data, value);
-    //   }
-    // }
 
     //sort
 
@@ -216,3 +218,24 @@ function findMinValue(obj: Product[], key: string) {
   const values = obj.map((el) => el[key]) as number[];
   return Math.min(...values);
 }
+
+function filterCategory(data: Product[], type: string) {
+  const categories = (localStorage.getItem(type) as string).split(',');
+  const result: Product[] = [];
+  for (let i = 0; i < categories.length; i++) {
+    const value = categories[i];
+    data.forEach((el) => {
+      if (el[type] === value) result.push(el);
+    });
+  }
+  return result;
+}
+
+// function changeFilterCategory(data: Product[], key: string, value: string[]) {
+//   const result: Product[] = [];
+//   for (let i = 0; i < value.length; i++) {
+//     data.forEach((el) => {
+//       if (el[key] === value[i]) result.push(el);
+//     });
+//   }
+// }
