@@ -1,0 +1,8 @@
+.promo-code {
+  &__input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 15px;
+    @include font($size: 1.6rem);
+  }
+}

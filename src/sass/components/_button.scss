@@ -3,6 +3,18 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  width: 100%;
+  background-color: $color-primary;
+  padding: 16px 0;
+  color: $color-light;
+  text-transform: uppercase;
+  @extend %font-additional;
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 1px;
+
+  &:hover {
+    background-color: $color-hovered;
+  }
 
   &_product-add {
     background-color: $color-primary;

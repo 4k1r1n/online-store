@@ -1,10 +1,8 @@
 .store {
-  height: 100%;
-
   &__wrapper {
     display: flex;
     gap: 60px;
-    margin-bottom: 90px;
+    margin-bottom: 100px;
   }
 }
 
@@ -23,11 +21,23 @@
     display: flex;
     gap: 10px;
     margin-bottom: 40px;
+
+    &__found {
+      margin-left: auto;
+    }
   }
 }
 
 .store-form {
   width: 20%;
+
+  &__btn:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.stock {
+  margin-bottom: 30px;
 }
 
 .categories {

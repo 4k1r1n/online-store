@@ -11,15 +11,20 @@
     align-items: center;
   }
 
-  &__authors {
+  &__links {
     margin-bottom: 20px;
     @extend %font-additional;
     @include font($size: 2rem, $weight: 700);
   }
 }
 
-.author {
+.link {
   @include font();
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: $color-hovered;
+  }
 }
 
 .copyright {

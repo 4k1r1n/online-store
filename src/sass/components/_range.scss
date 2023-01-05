@@ -1,24 +1,21 @@
-.multi-range{
-  &__label{
+.multi-range {
+  &__label {
     display: flex;
     justify-content: space-between;
   }
 }
-
 
 input[type=range] {
   box-sizing: border-box;
   appearance: none;
   width: 100%;
   margin: 0;
-  padding: 0 2px;
-  /* Add some L/R padding to ensure box shadow of handle is shown */
+  padding: 0;
   overflow: hidden;
   border: 0;
   border-radius: 1px;
   outline: none;
-  background: linear-gradient(black, black) no-repeat center;
-  /* Use a linear gradient to generate only the 2px height background */
+  background: linear-gradient($color-primary, $color-primary) no-repeat center;
   background-size: 100% 2px;
   pointer-events: none;
 
@@ -31,10 +28,9 @@ input[type=range] {
     height: 14px;
     width: 14px;
     border-radius: 28px;
-    background-color: #000;
+    background-color: $color-primary;
     position: relative;
     margin: 5px 0;
-    /* Add some margin to ensure box shadow is shown */
     cursor: pointer;
     appearance: none;
     pointer-events: all;
@@ -47,19 +43,5 @@ input[type=range] {
 
   input[type=range] {
     position: absolute;
-
-    &:nth-child(1) {
-      &::-webkit-slider-thumb::before {
-        background-color: red;
-      }
-    }
-
-    &:nth-child(2) {
-      background: none;
-
-      &::-webkit-slider-thumb::before {
-        background-color: 000;
-      }
-    }
   }
 }
