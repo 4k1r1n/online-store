@@ -137,6 +137,15 @@ export function searchProduct(obj: Product[], value: string): Product[] {
 }
 
 export function toggleFilters() {
+  const stock = document.querySelector('.stock .multi-range__label') as HTMLElement;
+  const price = document.querySelector('.price .multi-range__label') as HTMLElement;
+  if (filterData().length === 0) {
+    price.style.visibility = 'hidden';
+    stock.style.visibility = 'hidden';
+  } else {
+    price.style.visibility = 'visible';
+    stock.style.visibility = 'visible';
+  }
   toggleBrandFilters();
   toggleCategoryFilters();
   togglePriceFilters();

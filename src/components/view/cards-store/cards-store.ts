@@ -8,7 +8,12 @@ import { filterData } from '../../model/filter-model';
 export function renderFilterCards(data: Product[]) {
   const section = document.querySelector('.cards-section') as HTMLElement;
   section.lastChild?.remove();
-  section.appendChild(renderCards(data));
+  if (filterData().length === 0) {
+    const notFound = createElement('div', 'cards__not-found', 'No products found');
+    section.append(notFound);
+  } else {
+    section.appendChild(renderCards(data));
+  }
 }
 
 const renderCards = (data: Product[]) => {
