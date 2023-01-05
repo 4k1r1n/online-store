@@ -1,11 +1,25 @@
 import createElement from '../../../utils/create-element';
+import clearAllFilters from '../../model/clear-filter';
 
 export function resetStoreButton(): HTMLElement {
-  return createElement('button', 'btn form-store__btn btn_light', 'RESET');
+  const reset = createElement('button', 'btn form-store__btn btn_light', 'RESET');
+  reset.addEventListener('click', (e) => {
+    e.preventDefault();
+    clearAllFilters();
+    const url = window.location.origin;
+    window.history.pushState({}, '', url);
+    window.location.reload();
+  });
+  return reset;
 }
 
 export function copyStoreButton(): HTMLElement {
-  return createElement('button', 'btn form-store__btn btn_dark', 'COPY LINK');
+  const copy = createElement('button', 'btn form-store__btn btn_dark', 'COPY LINK');
+  copy.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href);
+  });
+  return copy;
 }
 
 export function addProductButton() {
