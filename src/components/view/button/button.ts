@@ -22,13 +22,12 @@ export function copyStoreButton(): HTMLElement {
   return copy;
 }
 
-export function addProductButton() {
+export function addProductBtn() {
   return createElement('button', 'number-control__btn btn btn_add');
 }
 
-export function removeProductButton() {
-  const btn = createElement('button', 'number-control__btn btn btn_remove');
-  return btn;
+export function removeProductBtn() {
+  return createElement('button', 'number-control__btn btn btn_remove');
 }
 
 export function nextPageButton() {

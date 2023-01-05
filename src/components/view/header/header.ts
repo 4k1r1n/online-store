@@ -1,8 +1,11 @@
 import createElement from '../../../utils/create-element';
 import { handleChangeRoute } from '../../../utils/router';
 import clearAllFilters from '../../model/clear-filter';
+import { setCartItemsCount, setCartItemsTotal } from '../../controller/product-details';
+
 
 export const cartCounter = createElement('span', 'cart-header__count');
+export const total = createElement('span', 'total__sum', '0');
 
 export default function renderHeader() {
   const header = createElement('header', 'header');
@@ -14,7 +17,6 @@ export default function renderHeader() {
   const cartIco = createElement('span', 'ico ico_cart');
   const cartTotal = createElement('div', 'cart-header__total total');
   const totalText = createElement('span', 'total__text', 'Total: $');
-  const total = createElement('span', 'total__sum', '0');
 
   logoWrapper.setAttribute('href', '/');
   logoWrapper.addEventListener('click', (e) => {
@@ -28,9 +30,10 @@ export default function renderHeader() {
   });
 
   if (localStorage.getItem('cart')) {
-    cartCounter.textContent = JSON.parse(localStorage.cart).length;
+    setCartItemsCount();
+    setCartItemsTotal();
   } else {
-    cartCounter.textContent = '0';
+    cartCounter.textContent = `${0}`;
   }
 
   header.append(headerWrapper);
