@@ -73,7 +73,6 @@ export function filterData(): Product[] {
 
     if (localStorage.getItem('sort')) {
       const value = localStorage.getItem('sort') as string;
-      // console.log(value);
       if (newData.length) {
         console.log(value);
         newData = sortProducts(newData, value);
@@ -94,6 +93,15 @@ export function filterData(): Product[] {
         newData = searchProduct(newData, value);
       } else {
         newData = searchProduct(data, value);
+      }
+    }
+
+    if (localStorage.getItem('view')) {
+      // const value = localStorage.getItem('view') as string;
+      if (newData.length) {
+        console.log(newData);
+      } else {
+        newData = data;
       }
     }
   } else {

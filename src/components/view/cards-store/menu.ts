@@ -8,7 +8,8 @@ export default function renderMenu() {
   const menu = createElement('div', 'menu');
   menu.append(createSearch());
   menu.append(createOptions());
-  menu.append(cardsArrButton());
+  const view = localStorage.getItem('view');
+  menu.append(cardsArrButton(view ?? 'columns'));
   const foundProducts = getFoundProducts();
   menu.append(storeFound(foundProducts));
   return menu;

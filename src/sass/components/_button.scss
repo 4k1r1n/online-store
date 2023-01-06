@@ -54,11 +54,17 @@
     height: 22px;
   }
 
-  &_view {
+  &__view {
     background: url('../assets/icons/view-btn_ico.svg') center no-repeat;
     background-size: contain;
     width: 17px;
     height: 17px;
+    &_columns{
+      background: url('../assets/icons/view-btn_ico.svg') center no-repeat;
+    }
+    &_list {
+      background: url('../assets/icons/btn-view-list.svg') center no-repeat;
+    }
   }
 
   &_remove-promo {
