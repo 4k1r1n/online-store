@@ -1,6 +1,6 @@
 import createElement from '../../../utils/create-element';
 import { handleChangeRoute } from '../../../utils/router';
-import { setCartItemsCount, setCartItemsTotal } from '../../controller/product-details';
+import { setCartItemsCount, setCartTotal } from '../../model/cart';
 
 export const cartCounter = createElement('span', 'cart-header__count');
 export const total = createElement('span', 'total__sum', '0');
@@ -14,7 +14,7 @@ export default function renderHeader() {
   const cartContainer = createElement('a', 'cart-header__info');
   const cartIco = createElement('span', 'ico ico_cart');
   const cartTotal = createElement('div', 'cart-header__total total');
-  const totalText = createElement('span', 'total__text', 'Total: $');
+  const totalText = createElement('span', 'total__text', 'Total $');
 
   logoWrapper.setAttribute('href', '/');
   logoWrapper.addEventListener('click', handleChangeRoute);
@@ -23,7 +23,7 @@ export default function renderHeader() {
 
   if (localStorage.getItem('cart')) {
     setCartItemsCount();
-    setCartItemsTotal();
+    setCartTotal();
   } else {
     cartCounter.textContent = `${0}`;
   }
