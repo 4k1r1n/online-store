@@ -82,7 +82,7 @@ export function createSearch() {
 
 export function createOptions() {
   const wrapper = createElement('div', 'options');
-  const datalist = createElement('select');
+  const datalist = createElement('select', 'input');
   datalist.setAttribute('id', 'options');
   const sortingValues = Object.values(SORTING);
   for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));

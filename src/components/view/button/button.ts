@@ -3,7 +3,7 @@ import { handleApplyPromoCode } from '../../controller/cart';
 import clearAllFilters from '../../model/clear-filter';
 
 export function resetStoreButton(): HTMLElement {
-  const reset = createElement('button', 'btn store-form__btn', 'RESET');
+  const reset = createElement('a', 'btn store-form__btn btn_link', 'RESET');
   reset.addEventListener('click', (e) => {
     e.preventDefault();
     clearAllFilters();
@@ -15,7 +15,7 @@ export function resetStoreButton(): HTMLElement {
 }
 
 export function copyStoreButton(): HTMLElement {
-  const copy = createElement('button', 'btn store-form__btn', 'COPY LINK');
+  const copy = createElement('a', 'btn store-form__btn btn_link', 'COPY LINK');
   copy.addEventListener('click', (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(window.location.href);
@@ -40,15 +40,15 @@ export function prevPageButton() {
 }
 
 export function addToCartButton() {
-  return createElement('button', 'btn', 'Add to cart');
+  return createElement('a', 'btn btn_link', 'Add to cart');
 }
 
 export function buyNowButton() {
-  return createElement('button', 'btn', 'Buy now');
+  return createElement('a', 'btn btn_link', 'Buy now');
 }
 
 export function removeAppliedPromoCodeButton() {
-  const removePromoCodeButton = createElement('button', 'btn btn_remove-promo', 'Remove');
+  const removePromoCodeButton = createElement('a', 'btn btn_remove-promo btn_link', 'Remove');
   if (removePromoCodeButton instanceof HTMLButtonElement) {
     removePromoCodeButton.addEventListener('click', (e) => {
       console.log(e.target);
@@ -58,7 +58,7 @@ export function removeAppliedPromoCodeButton() {
 }
 
 export function createApplyPromoCodeButton() {
-  const applyPromoCodeButton = createElement('button', 'btn', 'Apply');
+  const applyPromoCodeButton = createElement('a', 'btn btn_link', 'Apply');
   if (applyPromoCodeButton instanceof HTMLButtonElement) {
     applyPromoCodeButton.addEventListener('click', () => {
       handleApplyPromoCode();

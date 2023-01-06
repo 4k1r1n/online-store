@@ -148,7 +148,7 @@ export function setStateCardButtons(flag: boolean, btn: HTMLElement, id: number)
 export function setStateProductBtn(flag: boolean, btn: HTMLElement) {
   let cart: Product[] = [];
   if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
-  const idProduct = window.location.pathname.split('')[window.location.pathname.split('').length - 1];
+  const idProduct = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
   if (idProduct) {
     const objProduct = fidnDataById(+idProduct) as Product;
     cart.forEach((product) => {

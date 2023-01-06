@@ -31,8 +31,10 @@
 .store-form {
   width: 20%;
 
-  &__btn:not(:last-child) {
-    margin-bottom: 10px;
+  &__btn {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
   }
 }
 

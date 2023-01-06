@@ -21,7 +21,10 @@ export default function productInfo(data: Product) {
   infoBtn.append(addProductBtn, buyProductBtn);
 
   let isClicked = false;
-  addProductBtn.addEventListener('click', (e) => (isClicked = handleAddProductClick(isClicked, e)));
+  addProductBtn.addEventListener('click', (e) => {
+    isClicked = handleAddProductClick(isClicked, e);
+  });
+
   isClicked = setStateProductBtn(isClicked, addProductBtn);
 
   return productInfo;

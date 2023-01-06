@@ -12,8 +12,12 @@
   transition: all 0.3s ease-in-out;
   letter-spacing: 1px;
 
-  &:hover {
-    background-color: $color-hovered;
+  &_link {
+    text-align: center;
+
+    &:hover {
+      background-color: $color-hovered;
+    }
   }
 
   &_product-add {
@@ -48,6 +52,13 @@
     background-size: contain;
     width: 18px;
     height: 22px;
+  }
+
+  &_view {
+    background: url('../assets/icons/view-btn_ico.svg') center no-repeat;
+    background-size: contain;
+    width: 17px;
+    height: 17px;
   }
 
   &_remove-promo {

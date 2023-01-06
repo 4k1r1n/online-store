@@ -5,7 +5,7 @@ import fidnDataById from '../model/find-data';
 export function handleAddProductClick(flag: boolean, event: Event) {
   if (event.target instanceof HTMLElement) {
     const e = event.target;
-    const idProduct = +window.location.pathname.split('')[window.location.pathname.split('').length - 1];
+    const idProduct = +window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
     const objProduct = fidnDataById(idProduct) as Product;
     let cart: Product[] = [];
     if (!flag) {
