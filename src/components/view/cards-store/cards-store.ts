@@ -18,6 +18,7 @@ export function renderFilterCards(data: Product[]) {
 
 const renderCards = (data: Product[]) => {
   const layout = createElement('div', 'cards layout-3-column');
+  if (localStorage.getItem('view') === 'list') layout.classList.add('cards_list');
   layout.addEventListener('click', (e) => {
     handleProductClick(e);
   });

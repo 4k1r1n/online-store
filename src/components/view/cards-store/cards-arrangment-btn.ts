@@ -1,5 +1,6 @@
 import createElement from '../../../utils/create-element';
 import { handleQuerySearch } from '../../controller/main-page';
+import changeView from '../cards-view/cards-view';
 
 export default function cardsArrButton(view = 'columns') {
   const btn = createElement('button', 'btn btn__view');
@@ -7,6 +8,7 @@ export default function cardsArrButton(view = 'columns') {
   const className = view === 'columns' ? 'btn__view_columns' : 'btn__view_list';
   btn.classList.add(className);
   btn.addEventListener('click', (e) => {
+    changeView();
     const event = e.target as HTMLElement;
     if (event.getAttribute('data-id') === 'columns') {
       localStorage.setItem('view', 'list');
@@ -20,7 +22,6 @@ export default function cardsArrButton(view = 'columns') {
       btn.classList.add('btn__view_columns');
     }
     handleQuerySearch();
-    console.log(event);
   });
   return btn;
 }

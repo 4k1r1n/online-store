@@ -13,7 +13,6 @@
 
   &__layout {
     display: flex;
-    flex-wrap: wrap;
     gap: 20px;
   }
 
@@ -24,6 +23,23 @@
 
     &__found {
       margin-left: auto;
+    }
+  }
+
+  .cards {
+    flex-wrap: wrap;
+    &_list{
+      flex-wrap: nowrap;
+      flex-direction: column;
+
+      .card {
+        flex-direction: row;
+        height: 100px;
+        flex-basis: auto;
+      }
+      .card__footer{
+        flex-basis: 100%;
+      }
     }
   }
 }

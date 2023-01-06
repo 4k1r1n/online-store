@@ -38,7 +38,7 @@ export function queryValues() {
 
 export function filterData(): Product[] {
   let newData: Product[] = [];
-  if (window.location.search.length !== 0) {
+  if (ifFiltersTrue()) {
     if (localStorage.getItem('category')) {
       newData = filterCategory(data, 'category');
       if (localStorage.getItem('brand')) {
@@ -93,15 +93,6 @@ export function filterData(): Product[] {
         newData = searchProduct(newData, value);
       } else {
         newData = searchProduct(data, value);
-      }
-    }
-
-    if (localStorage.getItem('view')) {
-      // const value = localStorage.getItem('view') as string;
-      if (newData.length) {
-        console.log(newData);
-      } else {
-        newData = data;
       }
     }
   } else {
@@ -224,4 +215,14 @@ function filterCategory(data: Product[], type: string) {
     });
   }
   return result;
+}
+
+function ifFiltersTrue() {
+  const price = localStorage.getItem('price');
+  const stock = localStorage.getItem('stock');
+  const category = localStorage.getItem('category');
+  const brand = localStorage.getItem('brand');
+  const sort = localStorage.getItem('sort');
+  const search = localStorage.getItem('search');
+  return [price, stock, category, brand, sort, search].filter((el) => !!el === true).length;
 }
