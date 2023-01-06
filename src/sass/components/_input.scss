@@ -2,9 +2,8 @@
   padding: 10px 15px;
   border: none;
   @extend %font-prim;
-  font-style: italic;
   background-color: $color-additional;
-  border-radius: 15px;
+  border-radius: 10px;
   color: $color-primary;
 
   &:focus {

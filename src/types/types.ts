@@ -10,3 +10,7 @@ export interface Product {
   capacity: number;
   images: string[];
 }
+
+export interface Promo {
+  [key: string]: number;
+}

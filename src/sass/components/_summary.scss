@@ -4,7 +4,15 @@
   }
 
   &__promo-code {
-    margin-bottom: 40px;
+    margin-bottom: 45px;
+  }
+
+  &__sum-total_strike {
+    text-decoration: line-through;
+  }
+
+  &__new-sum-total {
+    margin: 15px 0 25px;
   }
 
   &__info {

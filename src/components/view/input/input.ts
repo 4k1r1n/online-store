@@ -1,3 +1,10 @@
+import { PROMO } from './../../../constants/constants';
+import {
+  applyPromoCodeBtn,
+  promoCodeContainer,
+  promoCodeFoundText,
+  summaryPromoCode,
+} from './../cart-summary/cart-summary';
 import createElement from '../../../utils/create-element';
 import { filterLocalStorage, handleLocalStorageSearch, handleQuerySearch } from '../../controller/main-page';
 import { filterData, queryValues, searchProduct } from '../../model/filter-model';
@@ -48,7 +55,7 @@ export function createRange(min: number, max: number, valueL: number, valueR: nu
 }
 
 export function createSearch() {
-  const search = createElement('input', 'search');
+  const search = createElement('input', 'input');
   search.setAttribute('type', 'search');
   search.setAttribute('placeholder', 'Search');
   search.addEventListener('input', (e) => {
@@ -79,7 +86,7 @@ export function createOptions() {
   datalist.setAttribute('id', 'options');
   // create options change to a function that takes options of sorting from data
   for (let i = 0; i < 4; i++) datalist.appendChild(option('option'));
-  const input = createElement('input');
+  const input = createElement('input', 'input');
   input.setAttribute('list', 'options');
   input.setAttribute('placeholder', 'Sort options');
   wrapper.append(input);
@@ -99,9 +106,26 @@ export function itemsCountPerPage() {
   return input;
 }
 
-export function promoCodeInput() {
-  const input = createElement('input', 'promo-code__input');
+export function createPromoCodeInput() {
+  const input = createElement('input', 'promo-code__input input');
   input.setAttribute('type', 'search');
   input.setAttribute('placeholder', 'Enter promo code');
+
+  input.addEventListener('input', (e) => {
+    if (e.target instanceof HTMLInputElement) {
+      const inputTextValue = e.target.value.toUpperCase();
+      const promo = Object.keys(PROMO)
+        .filter((key) => key === inputTextValue)
+        .join('');
+      if (promo === inputTextValue && inputTextValue !== '') {
+        summaryPromoCode.append(promoCodeContainer);
+        promoCodeContainer.append(promoCodeFoundText, applyPromoCodeBtn);
+        promoCodeFoundText.textContent = `${promo} - ${PROMO[promo]}%`;
+      } else {
+        promoCodeContainer.remove();
+      }
+    }
+  });
+
   return input;
 }
