@@ -3,6 +3,7 @@ import { PATHS } from '../../constants/constants';
 import fidnDataById from '../model/find-data';
 import { Product } from '../../types/types';
 import { addProduct, removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
+import createBreadcrumps from '../view/breadcrumps/breadcrumps';
 
 export function handleQuerySearch() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
@@ -30,9 +31,11 @@ export function handleProductClick(e: Event) {
 
 export function renderProductsSection(id: number) {
   const rootElement = document.getElementById('app') as HTMLElement;
+  const data = fidnDataById(id) as Product;
+  const breadcrumps = createBreadcrumps(data);
   rootElement.innerHTML = '';
   const page = getProduct(+id);
-  rootElement.append(page);
+  rootElement.append(breadcrumps, page);
 }
 
 function filterQuery(object: object) {

@@ -23,6 +23,7 @@
   &__small-image {
     max-width: 80%;
     max-height: calc(100% - 60%);
+    cursor: pointer;
   }
 
   &__main-image {
@@ -61,4 +62,13 @@
     flex-direction: column;
     gap: 15px;
   }
+}
+
+.breadcrumps.wrapper {
+  margin: 0 auto 25px;
+  font-family: Lora;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 25px;
+  color: #161412;
 }
