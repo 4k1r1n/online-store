@@ -5,4 +5,5 @@ export default function clearAllFilters() {
   localStorage.removeItem('category');
   localStorage.removeItem('sort');
   localStorage.removeItem('search');
+  localStorage.removeItem('view');
 }

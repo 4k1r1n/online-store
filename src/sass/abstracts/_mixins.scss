@@ -6,7 +6,6 @@
 
 @mixin columns ($width) {
   display: flex;
-  flex-wrap: wrap;
 
   >* {
     flex-basis: $width;
