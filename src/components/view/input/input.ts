@@ -6,13 +6,17 @@ import {
   summaryPromoCode,
 } from './../cart-summary/cart-summary';
 import createElement from '../../../utils/create-element';
-import { filterLocalStorage, handleLocalStorageSearch, handleQuerySearch } from '../../controller/main-page';
-import { filterData, queryValues, searchProduct } from '../../model/filter-model';
+import { handleLocalStorageSearch, handleLocalStorageSort, handleQuerySearch } from '../../controller/main-page';
+import { filterData, queryValues, searchProduct, toggleFilters } from '../../model/filter-model';
 import { renderFilterCards } from '../cards-store/cards-store';
+import { SORTING } from '../../../constants/constants';
+import { sortProducts } from '../../model/sort-model';
+import changeFoundProducts from '../../model/found-model';
 
-export default function createCheckbox(value: string, id: number) {
+export default function createCheckbox(value: string, id: number, minStock: number, maxStock: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
   const label = createElement('label', 'form__label', value);
+  const amountOfProducts = createElement('span', 'form__stock', `${minStock}/${maxStock}`);
   const searcParams = queryValues();
   searcParams.forEach((el) => {
     if (el === value) checkbox.checked = true;
@@ -21,6 +25,7 @@ export default function createCheckbox(value: string, id: number) {
   checkbox.setAttribute('value', value);
   checkbox.setAttribute('data-id', `${id}`);
   label.prepend(checkbox);
+  label.append(amountOfProducts);
   return label;
 }
 
@@ -55,48 +60,47 @@ export function createRange(min: number, max: number, valueL: number, valueR: nu
 }
 
 export function createSearch() {
-  const search = createElement('input', 'input');
+  const search = createElement('input', 'input') as HTMLInputElement;
   search.setAttribute('type', 'search');
   search.setAttribute('placeholder', 'Search');
+  if (localStorage.getItem('search')) search.value = localStorage.getItem('search') as string;
   search.addEventListener('input', (e) => {
     const event = e.target as HTMLInputElement;
     let value = event.value;
 
     value = value.trim().toLowerCase();
-    console.log(value);
-    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-    const fliterStorage = filterLocalStorage(obj);
-    const data = filterData(fliterStorage);
-    renderFilterCards(searchProduct(data, value));
+
     handleLocalStorageSearch('search', value);
     handleQuerySearch();
+    const data = filterData();
+    renderFilterCards(searchProduct(data, value));
+    changeFoundProducts();
+    toggleFilters();
   });
-  return search;
-}
-
-export function createSort() {
-  const search = createElement('input', 'search');
-  search.setAttribute('type', 'search');
   return search;
 }
 
 export function createOptions() {
   const wrapper = createElement('div', 'options');
-  const datalist = createElement('datalist');
+  const datalist = createElement('select');
   datalist.setAttribute('id', 'options');
-  // create options change to a function that takes options of sorting from data
-  for (let i = 0; i < 4; i++) datalist.appendChild(option('option'));
-  const input = createElement('input', 'input');
-  input.setAttribute('list', 'options');
-  input.setAttribute('placeholder', 'Sort options');
-  wrapper.append(input);
+  const sortingValues = Object.values(SORTING);
+  for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));
+  datalist.addEventListener('change', (e) => {
+    const event = e.target as HTMLOptionElement;
+    handleLocalStorageSort('sort', event.value);
+    handleQuerySearch();
+    const data = filterData();
+    renderFilterCards(sortProducts(data, event.value));
+  });
   wrapper.append(datalist);
   return wrapper;
 }
 
 function option(value: string) {
-  const option = createElement('option', '', value);
+  const option = createElement('option', '', value) as HTMLOptionElement;
   option.setAttribute('value', value);
+  if (value === localStorage.getItem('sort')) option.selected = true;
   return option;
 }
 

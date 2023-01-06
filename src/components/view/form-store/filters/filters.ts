@@ -1,4 +1,5 @@
 import createElement from '../../../../utils/create-element';
+import { filterData } from '../../../model/filter-model';
 import { createFilterInput } from '../input/filter-input';
 
 export default function renderFilter() {
@@ -6,7 +7,8 @@ export default function renderFilter() {
   //create heading
   const heading = createElement('h4', 'aside-store__heading', 'Brand');
   // add elements
+  const data = filterData();
   filters.append(heading);
-  filters.append(createFilterInput());
+  filters.append(createFilterInput(data));
   return filters;
 }

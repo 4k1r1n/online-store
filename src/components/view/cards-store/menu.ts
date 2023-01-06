@@ -1,4 +1,5 @@
 import createElement from '../../../utils/create-element';
+import { getFoundProducts } from '../../model/found-model';
 import { createSearch, createOptions } from '../input/input';
 import cardsArrButton from './cards-arrangment-btn';
 import storeFound from './found';
@@ -8,6 +9,7 @@ export default function renderMenu() {
   menu.append(createSearch());
   menu.append(createOptions());
   menu.append(cardsArrButton());
-  menu.append(storeFound('3'));
+  const foundProducts = getFoundProducts();
+  menu.append(storeFound(foundProducts));
   return menu;
 }

@@ -46,8 +46,16 @@
   &__input {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }
+
+}
+
+.form__label {
+  display: flex;
+}
+
+.form__stock {
+  margin-left: auto;
 }
 
 .filter {
@@ -56,6 +64,5 @@
   &__input {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }
 }

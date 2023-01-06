@@ -1,12 +1,26 @@
 import createElement from '../../../utils/create-element';
 import { handleApplyPromoCode } from '../../controller/cart';
+import clearAllFilters from '../../model/clear-filter';
 
 export function resetStoreButton(): HTMLElement {
-  return createElement('button', 'btn store-form__btn', 'Reset');
+  const reset = createElement('button', 'btn store-form__btn', 'RESET');
+  reset.addEventListener('click', (e) => {
+    e.preventDefault();
+    clearAllFilters();
+    const url = window.location.origin;
+    window.history.pushState({}, '', url);
+    window.location.reload();
+  });
+  return reset;
 }
 
 export function copyStoreButton(): HTMLElement {
-  return createElement('button', 'btn store-form__btn', 'Copy link');
+  const copy = createElement('button', 'btn store-form__btn', 'COPY LINK');
+  copy.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href);
+  });
+  return copy;
 }
 
 export function addProductBtn() {

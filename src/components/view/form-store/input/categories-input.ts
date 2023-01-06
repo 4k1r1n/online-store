@@ -1,13 +1,15 @@
 import createElement from '../../../../utils/create-element';
 import createCheckbox from '../../input/input';
 import getCategories from '../../../model/categories-model';
-import { filterLocalStorage, handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
-import { filterData } from '../../../model/filter-model';
+import { handelLocalStorage, handleQuerySearch } from '../../../controller/main-page';
+import { filterData, toggleFilters } from '../../../model/filter-model';
 import { renderFilterCards } from '../../../view/cards-store/cards-store';
+import changeFoundProducts, { calculateBalanceOfProducts, getAmountOfProducts } from '../../../model/found-model';
+import { Product } from '../../../../types/types';
 
 const categories = getCategories();
 
-export function createCategoriesInput() {
+export function createCategoriesInput(data: Product[]) {
   let filterQueryParams: string[] = [];
   if (!window.location.search) {
     localStorage.removeItem('category');
@@ -22,12 +24,14 @@ export function createCategoriesInput() {
   section.addEventListener('change', (e: Event) => {
     handelLocalStorage(e, 'category', filterQueryParams);
     handleQuerySearch();
-    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-    const fliterStorage = filterLocalStorage(obj);
-    renderFilterCards(filterData(fliterStorage));
+    renderFilterCards(filterData());
+    changeFoundProducts();
+    toggleFilters();
   });
   for (let i = 0; i < categories.length; i++) {
-    section.append(createCheckbox(categories[i].category, categories[i].id));
+    const minAmount = calculateBalanceOfProducts(data, 'category', categories[i].category);
+    const maxAmount = getAmountOfProducts('category', categories[i].category);
+    section.append(createCheckbox(categories[i].category, categories[i].id, minAmount, maxAmount));
   }
   return section;
 }
