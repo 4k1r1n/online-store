@@ -3,7 +3,6 @@ import { handleChangeRoute } from '../../../utils/router';
 import clearAllFilters from '../../model/clear-filter';
 import { setCartItemsCount, setCartItemsTotal } from '../../controller/product-details';
 
-
 export const cartCounter = createElement('span', 'cart-header__count');
 export const total = createElement('span', 'total__sum', '0');
 
