@@ -192,3 +192,8 @@ export function setStateProductBtn(flag: boolean, btn: HTMLElement) {
   }
   return flag;
 }
+
+export function handleLocalStorageSort(key: string, value: string) {
+  setLocalStorage(value, key);
+  if (!localStorage.getItem(key)) localStorage.removeItem(key);
+}

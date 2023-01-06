@@ -1,7 +1,15 @@
 import createElement from '../../../../utils/create-element';
-import { filterLocalStorage, handleLocalStorageRange, handleQuerySearch } from '../../../controller/main-page';
-import { filterByRange, filterData, getQueryParams } from '../../../model/filter-model';
+import { handleLocalStorageRange, handleQuerySearch } from '../../../controller/main-page';
+import {
+  filterByRange,
+  filterData,
+  getQueryParams,
+  toggleBrandFilters,
+  toggleCategoryFilters,
+  toggleStockFilters,
+} from '../../../model/filter-model';
 import { findAllPrices } from '../../../model/find-data';
+import changeFoundProducts from '../../../model/found-model';
 import { renderFilterCards } from '../../cards-store/cards-store';
 import { createRange } from '../../input/input';
 
@@ -16,14 +24,16 @@ export default function renderPriceRage() {
     handleLocalStorageRange(e, 'price', filterQueryParams);
     handleQuerySearch();
     const [newLeftPrice, newRightPrice] = getQueryParams().price;
-    const obj = JSON.parse(JSON.stringify({ ...localStorage }));
-    const fliterStorage = filterLocalStorage(obj);
-    const filteredData = filterByRange(filterData(fliterStorage), 'price', +newLeftPrice, +newRightPrice);
+    const filteredData = filterByRange(filterData(), 'price', +newLeftPrice, +newRightPrice);
     renderFilterCards(filteredData);
+    changeFoundProducts();
+    toggleBrandFilters();
+    toggleCategoryFilters();
+    toggleStockFilters();
   });
-  //create heading
+
   const heading = createElement('h4', 'aside-store__heading', 'Price');
-  // add elements
+
   priceRange.appendChild(heading);
   priceRange.appendChild(createRange(min, max, +leftPrice, +rightPrice));
   return priceRange;
