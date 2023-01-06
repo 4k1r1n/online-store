@@ -4,9 +4,9 @@ export default function renderFooter() {
   const footer = createElement('footer', 'footer');
   const footerWrapper = createElement('div', 'footer__wrapper wrapper');
 
-  const authors = createElement('div', 'footer__authors');
-  const author1 = createElement('a', 'author', 'matthewTheWizzard');
-  const author2 = createElement('a', 'author', '4k1r1n');
+  const authors = createElement('div', 'footer__links');
+  const author1 = createElement('a', 'link', 'matthewTheWizzard');
+  const author2 = createElement('a', 'link', '4k1r1n');
   author1.setAttribute('href', 'https://github.com/matthewTheWizzard');
   author1.setAttribute('target', '_blank');
   author2.setAttribute('href', 'https://github.com/4k1r1n');

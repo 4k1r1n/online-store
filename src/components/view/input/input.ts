@@ -1,3 +1,10 @@
+import { PROMO } from './../../../constants/constants';
+import {
+  applyPromoCodeBtn,
+  promoCodeContainer,
+  promoCodeFoundText,
+  summaryPromoCode,
+} from './../cart-summary/cart-summary';
 import createElement from '../../../utils/create-element';
 import { handleLocalStorageSearch, handleLocalStorageSort, handleQuerySearch } from '../../controller/main-page';
 import { filterData, queryValues, searchProduct, toggleFilters } from '../../model/filter-model';
@@ -53,7 +60,7 @@ export function createRange(min: number, max: number, valueL: number, valueR: nu
 }
 
 export function createSearch() {
-  const search = createElement('input', 'search') as HTMLInputElement;
+  const search = createElement('input', 'input') as HTMLInputElement;
   search.setAttribute('type', 'search');
   search.setAttribute('placeholder', 'Search');
   if (localStorage.getItem('search')) search.value = localStorage.getItem('search') as string;
@@ -75,10 +82,9 @@ export function createSearch() {
 
 export function createOptions() {
   const wrapper = createElement('div', 'options');
-  const datalist = createElement('select');
+  const datalist = createElement('select', 'input');
   datalist.setAttribute('id', 'options');
   const sortingValues = Object.values(SORTING);
-
   for (let i = 0; i < sortingValues.length; i++) datalist.appendChild(option(sortingValues[i]));
   datalist.addEventListener('change', (e) => {
     const event = e.target as HTMLOptionElement;
@@ -104,9 +110,26 @@ export function itemsCountPerPage() {
   return input;
 }
 
-export function promoCodeInput() {
-  const input = createElement('input', 'promo-code__input');
+export function createPromoCodeInput() {
+  const input = createElement('input', 'promo-code__input input');
   input.setAttribute('type', 'search');
   input.setAttribute('placeholder', 'Enter promo code');
+
+  input.addEventListener('input', (e) => {
+    if (e.target instanceof HTMLInputElement) {
+      const inputTextValue = e.target.value.toUpperCase();
+      const promo = Object.keys(PROMO)
+        .filter((key) => key === inputTextValue)
+        .join('');
+      if (promo === inputTextValue && inputTextValue !== '') {
+        summaryPromoCode.append(promoCodeContainer);
+        promoCodeContainer.append(promoCodeFoundText, applyPromoCodeBtn);
+        promoCodeFoundText.textContent = `${promo} - ${PROMO[promo]}%`;
+      } else {
+        promoCodeContainer.remove();
+      }
+    }
+  });
+
   return input;
 }

@@ -2,8 +2,7 @@ import getProduct from '../../pages/product-details';
 import { PATHS } from '../../constants/constants';
 import fidnDataById from '../model/find-data';
 import { Product } from '../../types/types';
-import { addProduct, removeProduct } from '../model/cart';
-import { setCartItemsCount, setCartItemsTotal } from './product-details';
+import { addProduct, removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
 
 export function handleQuerySearch() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
@@ -127,37 +126,7 @@ export function handleCartClick(flag: boolean, id: number, event: Event) {
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     setCartItemsCount();
-    setCartItemsTotal();
-  }
-  return flag;
-}
-
-export function handleAddProductClick(flag: boolean, event: Event) {
-  if (event.target instanceof HTMLElement) {
-    const e = event.target;
-    const idProduct = +window.location.pathname.split('')[window.location.pathname.split('').length - 1];
-    const objProduct = fidnDataById(idProduct) as Product;
-    let cart: Product[] = [];
-    if (!flag) {
-      flag = true;
-      addProduct(objProduct);
-      e.textContent = 'remove from cart';
-      if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
-      cart.forEach((product) => {
-        if (product.id === idProduct) product.stock--;
-      });
-    } else {
-      flag = false;
-      removeProduct(objProduct);
-      e.textContent = 'add to cart';
-      if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
-      cart.forEach((product) => {
-        if (product.id === idProduct) product.stock++;
-      });
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    setCartItemsCount();
-    setCartItemsTotal();
+    setCartTotal();
   }
   return flag;
 }
@@ -179,7 +148,7 @@ export function setStateCardButtons(flag: boolean, btn: HTMLElement, id: number)
 export function setStateProductBtn(flag: boolean, btn: HTMLElement) {
   let cart: Product[] = [];
   if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
-  const idProduct = window.location.pathname.split('')[window.location.pathname.split('').length - 1];
+  const idProduct = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
   if (idProduct) {
     const objProduct = fidnDataById(+idProduct) as Product;
     cart.forEach((product) => {
@@ -188,7 +157,7 @@ export function setStateProductBtn(flag: boolean, btn: HTMLElement) {
         btn.textContent = 'remove from cart';
       }
     });
-    setCartItemsTotal();
+    setCartTotal();
   }
   return flag;
 }

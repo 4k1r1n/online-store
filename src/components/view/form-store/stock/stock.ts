@@ -32,9 +32,8 @@ export default function renderStockRage() {
     toggleCategoryFilters();
     togglePriceFilters();
   });
-  //create heading
+
   const heading = createElement('h4', 'aside-store__heading', 'Stock');
-  // add elements
   stockRange.appendChild(heading);
   stockRange.appendChild(createRange(min, max, +leftStock, +rightStock));
   return stockRange;

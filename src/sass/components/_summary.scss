@@ -1,3 +1,28 @@
 .summary {
-  &__info {}
+  &__heading {
+    margin-bottom: 15px;
+  }
+
+  &__promo-code {
+    margin-bottom: 45px;
+  }
+
+  &__sum-total_strike {
+    text-decoration: line-through;
+  }
+
+  &__new-sum-total {
+    margin: 15px 0 25px;
+  }
+
+  &__info {
+    border-bottom: solid 1px $color-border;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+
+  &__products-text {
+    display: inline-block;
+    margin-bottom: 8px;
+  }
 }

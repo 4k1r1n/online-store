@@ -1,11 +1,13 @@
 import createElement from '../../../utils/create-element';
 import { Product } from '../../../types/types';
 import { addToCartButton, buyNowButton } from '../button/button';
-import { handleAddProductClick, setStateProductBtn } from '../../controller/main-page';
+import { setStateProductBtn } from '../../model/product-details';
+import { handleAddProductClick } from '../../controller/product-details';
 
 export default function productInfo(data: Product) {
   const productInfo = createElement('div', 'product__info info');
-  const infoTitle = createElement('h3', 'info__title', `${data.title}`);
+  const infoContainer = createElement('div', 'info__container');
+  const infoTitle = createElement('h2', 'info__title', `${data.title}`);
   const infoCategory = createElement('p', 'info__category', `${data.category}`);
   const infoBrand = createElement('p', 'info__brand', `${data.brand}`);
   const infoDesc = createElement('p', 'info__desc', `${data.description}`);
@@ -14,11 +16,15 @@ export default function productInfo(data: Product) {
   const addProductBtn = addToCartButton();
   const buyProductBtn = buyNowButton();
 
-  productInfo.append(infoTitle, infoCategory, infoBrand, infoDesc, infoPrice, infoBtn);
+  productInfo.append(infoContainer, infoBtn);
+  infoContainer.append(infoTitle, infoCategory, infoBrand, infoDesc, infoPrice);
   infoBtn.append(addProductBtn, buyProductBtn);
 
   let isClicked = false;
-  addProductBtn.addEventListener('click', (e) => (isClicked = handleAddProductClick(isClicked, e)));
+  addProductBtn.addEventListener('click', (e) => {
+    isClicked = handleAddProductClick(isClicked, e);
+  });
+
   isClicked = setStateProductBtn(isClicked, addProductBtn);
 
   return productInfo;

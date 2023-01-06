@@ -6,13 +6,14 @@
 @import 'base/typography';
 @import 'base/icons';
 
+@import 'components/input';
 @import 'components/button';
 @import 'components/range';
 @import 'components/card';
 @import 'components/cart-item';
 @import 'components/summary';
-@import 'components/products';
-@import 'components/cart';
+@import 'components/product';
+@import 'components/promo-code';
 
 @import 'layout/columns';
 @import 'layout/wrapper';
@@ -20,5 +21,5 @@
 @import 'layout/header';
 
 @import 'pages/cart';
-@import 'pages/products';
 @import 'pages/store';
+@import 'pages/error';

@@ -1,0 +1,48 @@
+.promo-code {
+  &__input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 15px;
+    @include font($size: 1.6rem);
+  }
+
+  &__applied {
+    border: solid 1px #BEBEBE;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &-title {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__text {
+    margin-bottom: 25px;
+  }
+
+  &__res {
+    margin-top: 20px;
+    border-bottom: solid 1px $color-border;
+    padding-bottom: 20px;
+
+    &-text {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+      @include font($weight: 700);
+    }
+  }
+}
+
+.applied-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

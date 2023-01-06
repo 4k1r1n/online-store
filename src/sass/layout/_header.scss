@@ -10,3 +10,34 @@
     margin-bottom: 25px;
   }
 }
+
+.cart {
+  &-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__info {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      @include font($size: 2.4rem);
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.content {
+  &__wrapper {
+    padding: 60px 80px 50px;
+  }
+}
+
+.total {
+  &__text {
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
+    @include font($weight: 700);
+  }
+}

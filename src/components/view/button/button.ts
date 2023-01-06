@@ -1,8 +1,9 @@
 import createElement from '../../../utils/create-element';
+import { handleApplyPromoCode } from '../../controller/cart';
 import clearAllFilters from '../../model/clear-filter';
 
 export function resetStoreButton(): HTMLElement {
-  const reset = createElement('button', 'btn form-store__btn btn_light', 'RESET');
+  const reset = createElement('a', 'btn store-form__btn btn_link', 'RESET');
   reset.addEventListener('click', (e) => {
     e.preventDefault();
     clearAllFilters();
@@ -14,7 +15,7 @@ export function resetStoreButton(): HTMLElement {
 }
 
 export function copyStoreButton(): HTMLElement {
-  const copy = createElement('button', 'btn form-store__btn btn_dark', 'COPY LINK');
+  const copy = createElement('a', 'btn store-form__btn btn_link', 'COPY LINK');
   copy.addEventListener('click', (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(window.location.href);
@@ -31,17 +32,37 @@ export function removeProductBtn() {
 }
 
 export function nextPageButton() {
-  return createElement('button', 'btn btn_next', '>');
+  return createElement('button', '', '>');
 }
 
 export function prevPageButton() {
-  return createElement('button', 'btn btn_prev', '<');
+  return createElement('button', '', '<');
 }
 
 export function addToCartButton() {
-  return createElement('button', 'btn btn_dark btn_cart', 'add to cart');
+  return createElement('a', 'btn btn_link', 'Add to cart');
 }
 
 export function buyNowButton() {
-  return createElement('button', 'btn btn_dark', 'BUY NOW');
+  return createElement('a', 'btn btn_link', 'Buy now');
+}
+
+export function removeAppliedPromoCodeButton() {
+  const removePromoCodeButton = createElement('a', 'btn btn_remove-promo btn_link', 'Remove');
+  if (removePromoCodeButton instanceof HTMLButtonElement) {
+    removePromoCodeButton.addEventListener('click', (e) => {
+      console.log(e.target);
+    });
+  }
+  return removePromoCodeButton;
+}
+
+export function createApplyPromoCodeButton() {
+  const applyPromoCodeButton = createElement('a', 'btn btn_link', 'Apply');
+  if (applyPromoCodeButton instanceof HTMLButtonElement) {
+    applyPromoCodeButton.addEventListener('click', () => {
+      handleApplyPromoCode();
+    });
+  }
+  return applyPromoCodeButton;
 }
