@@ -9,5 +9,5 @@ export default function renderModal() {
   const card = createModalCard();
   const button = createElement('button', 'btn modal__btn', 'CONFIRM');
   form.append(heading, inputs, card, button);
-  return;
+  return form;
 }
