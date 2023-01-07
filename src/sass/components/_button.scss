@@ -20,8 +20,32 @@
     }
   }
 
+  &_prev {
+    background-color: initial;
+    background-image: url('../assets/icons/arrow-left_ico.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+  }
+
+  &_hide {
+    display: none;
+  }
+
+  &_next {
+    background-color: initial;
+    background-image: url('../assets/icons/arrow-left_ico.svg');
+    transform: rotate(180deg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+  }
+
   &_product-add {
-    background-color: $color-primary;
     background-image: url('../assets/icons/add-product-btn_ico.svg');
     background-repeat: no-repeat;
     background-position: center;
@@ -31,7 +55,6 @@
   }
 
   &_product-remove {
-    background-color: $color-primary;
     background-image: url('../assets/icons/remove-product-btn_ico.svg');
     background-repeat: no-repeat;
     background-position: center;
@@ -59,9 +82,11 @@
     background-size: contain;
     width: 17px;
     height: 17px;
-    &_columns{
+
+    &_columns {
       background: url('../assets/icons/view-btn_ico.svg') center no-repeat;
     }
+
     &_list {
       background: url('../assets/icons/btn-view-list.svg') center no-repeat;
     }

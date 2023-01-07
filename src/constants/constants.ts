@@ -6,10 +6,16 @@ export enum PATHS {
   product = '/product/',
 }
 
-export const PROMO: Promo = {
-  RS: 10,
-  TEST: 10,
-};
+export const PROMO: Promo[] = [
+  {
+    name: 'rs',
+    discount: 10,
+  },
+  {
+    name: 'test',
+    discount: 10,
+  },
+];
 
 export const SORTING = {
   lowPrice: 'price: low to high',

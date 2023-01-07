@@ -1,10 +1,3 @@
-import { PROMO } from './../../../constants/constants';
-import {
-  applyPromoCodeBtn,
-  promoCodeContainer,
-  promoCodeFoundText,
-  summaryPromoCode,
-} from './../cart-summary/cart-summary';
 import createElement from '../../../utils/create-element';
 import { handleLocalStorageSearch, handleLocalStorageSort, handleQuerySearch } from '../../controller/main-page';
 import { filterData, queryValues, searchProduct, toggleFilters } from '../../model/filter-model';
@@ -12,6 +5,10 @@ import { renderFilterCards } from '../cards-store/cards-store';
 import { SORTING } from '../../../constants/constants';
 import { sortProducts } from '../../model/sort-model';
 import changeFoundProducts from '../../model/found-model';
+import { handleInputPromoCode } from '../../controller/cart';
+import { calcNumPages, changePage, getLimit, setCurrentPage } from '../../model/cart';
+import { Product } from '../../../types/types';
+import { displayCartItemsPerPage } from '../cart-content/cart-content';
 
 export default function createCheckbox(value: string, id: number, minStock: number, maxStock: number) {
   const checkbox = createElement('input', 'checkbox') as HTMLInputElement;
@@ -67,9 +64,7 @@ export function createSearch() {
   search.addEventListener('input', (e) => {
     const event = e.target as HTMLInputElement;
     let value = event.value;
-
     value = value.trim().toLowerCase();
-
     handleLocalStorageSearch('search', value);
     handleQuerySearch();
     const data = filterData();
@@ -104,9 +99,40 @@ function option(value: string) {
   return option;
 }
 
-export function itemsCountPerPage() {
+export let limit: number;
+
+export function createInputItemsCountPerPage() {
   const input = createElement('input', 'cart__items-count');
-  input.setAttribute('type', 'text');
+  let cart: Product[] = [];
+  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
+  input.setAttribute('type', 'number');
+  input.setAttribute('min', '1');
+  input.setAttribute('max', '6');
+  if (localStorage.getItem('limit')) {
+    limit = JSON.parse(localStorage.limit);
+  } else {
+    limit = 3;
+    localStorage.setItem('limit', JSON.stringify(limit));
+  }
+  input.setAttribute('value', `${limit}`);
+  const url = new URL(window.location.href);
+  url.searchParams.set('limit', `${limit}`);
+  window.history.pushState({}, '', url);
+  input.addEventListener('input', (e) => {
+    const newLimit = getLimit(e, limit);
+    if (newLimit > 0) {
+      if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
+      limit = newLimit;
+      localStorage.setItem('limit', JSON.stringify(limit));
+      input.setAttribute('value', `${limit}`);
+      url.searchParams.set('limit', `${limit}`);
+      window.history.pushState({}, '', url);
+      displayCartItemsPerPage(cart, limit);
+      const currentPage = setCurrentPage();
+      const numPages = calcNumPages(limit);
+      changePage(currentPage, numPages);
+    }
+  });
   return input;
 }
 
@@ -114,22 +140,6 @@ export function createPromoCodeInput() {
   const input = createElement('input', 'promo-code__input input');
   input.setAttribute('type', 'search');
   input.setAttribute('placeholder', 'Enter promo code');
-
-  input.addEventListener('input', (e) => {
-    if (e.target instanceof HTMLInputElement) {
-      const inputTextValue = e.target.value.toUpperCase();
-      const promo = Object.keys(PROMO)
-        .filter((key) => key === inputTextValue)
-        .join('');
-      if (promo === inputTextValue && inputTextValue !== '') {
-        summaryPromoCode.append(promoCodeContainer);
-        promoCodeContainer.append(promoCodeFoundText, applyPromoCodeBtn);
-        promoCodeFoundText.textContent = `${promo} - ${PROMO[promo]}%`;
-      } else {
-        promoCodeContainer.remove();
-      }
-    }
-  });
-
+  input.addEventListener('input', (e) => handleInputPromoCode(e));
   return input;
 }

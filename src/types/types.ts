@@ -12,5 +12,6 @@ export interface Product {
 }
 
 export interface Promo {
-  [key: string]: number;
+  name: string;
+  discount: number;
 }

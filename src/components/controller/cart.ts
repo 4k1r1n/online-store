@@ -1,20 +1,33 @@
 import { cartCounter } from '../view/header/header';
-import { Product } from '../../types/types';
-import { removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
+import { Product, Promo } from '../../types/types';
+import {
+  calcNumPages,
+  changePage,
+  getCurrentPromoObj,
+  removeProduct,
+  setCartItemsCount,
+  setCartTotal,
+  setCartTotalWithDiscount,
+  setCurrentPage,
+} from '../model/cart';
 import fidnDataById from '../model/find-data';
-import getCart, { cartContainer } from '../../pages/cart';
+import { displayCartItemsPerPage } from '../view/cart-content/cart-content';
 import {
   appliedPromoCodeContainer,
   appliedPromoCodeList,
   appliedPromoCodeTitle,
   applyPromoCodeBtn,
+  newSumTotalContainer,
+  newTotal,
+  promoCodeContainer,
   promoCodeFoundText,
-  promoCodeInput,
+  renderAppliedPromoListItem,
   summaryPromoCode,
+  summaryPromoCodeBlock,
   sumTotalContainer,
 } from '../view/cart-summary/cart-summary';
-import createElement from '../../utils/create-element';
-import { removeAppliedPromoCodeButton } from '../view/button/button';
+import { limit } from '../view/input/input';
+import { checkCartIsEmpty } from '../../pages/cart';
 
 export function handleAddItem(
   defaultStock: number,
@@ -45,6 +58,7 @@ export function handleAddItem(
   }
   setCartTotal();
   setCartItemsCount();
+  setCartTotalWithDiscount(appliedPromo);
 }
 
 export function handleRemoveItem(
@@ -77,32 +91,70 @@ export function handleRemoveItem(
         item.remove();
         removeProduct(itemObj);
         cart = JSON.parse(localStorage.cart);
-        cartContainer.innerHTML = '';
-        getCart();
+        displayCartItemsPerPage(cart, limit);
+        const currentPage = setCurrentPage();
+        const numPages = calcNumPages(limit);
+        changePage(currentPage, numPages);
       }
     });
     setCartTotal();
     setCartItemsCount();
+    setCartTotalWithDiscount(appliedPromo);
+    checkCartIsEmpty(cart);
   }
 }
 
-export function handleApplyPromoCode() {
-  sumTotalContainer.classList.add('summary__sum-total_strike');
-  summaryPromoCode.insertBefore(appliedPromoCodeContainer, promoCodeInput);
-  appliedPromoCodeContainer.append(appliedPromoCodeTitle, appliedPromoCodeList);
-  addAppliedPromoCodeItem();
-  // const newSumTotalContainer = createElement('div', 'summary__new-sum-total', `Total $ `);
-  // summaryPromoCode.insertBefore(appliedPromoCodeContainer);
-  // newSumTotalContainer.append(newTotal);
-  // setCartTotalWithDiscount();
-  applyPromoCodeBtn.remove();
+export let appliedPromo: Promo[] = [];
+
+export function handleRemovePromoCode(e: Event) {
+  const targetBtn = e.target;
+  if (targetBtn instanceof HTMLElement) {
+    const listItem = targetBtn.closest('.list-item');
+    const currPromo = listItem?.childNodes[0].textContent?.split(' ')[0];
+    appliedPromo = appliedPromo.filter((promo) => promo.name.toUpperCase() !== currPromo);
+    if (appliedPromoCodeList.childElementCount === 1) {
+      appliedPromoCodeList.textContent = '';
+      appliedPromoCodeContainer.remove();
+      promoCodeContainer.remove();
+      sumTotalContainer.classList.remove('summary__sum-total_strike');
+      newSumTotalContainer.remove();
+    } else if (listItem) {
+      listItem.remove();
+    }
+    setCartTotalWithDiscount(appliedPromo);
+  }
 }
 
-export function addAppliedPromoCodeItem() {
-  const appliedPromoCodeListItem = createElement('li', 'applied-list__item list-item');
-  const listItemText = createElement('span', 'list-item__text');
-  const removeAppliedPromoCodeBtn = removeAppliedPromoCodeButton();
-  listItemText.textContent = promoCodeFoundText.textContent;
-  appliedPromoCodeList.appendChild(appliedPromoCodeListItem);
-  appliedPromoCodeListItem.append(listItemText, removeAppliedPromoCodeBtn);
+export function handleApplyPromoCode(e: Event) {
+  const targetBtn = e.target;
+  if (targetBtn instanceof HTMLElement) targetBtn.remove();
+  const currPromo = promoCodeFoundText.textContent?.split(' ')[0];
+  if (currPromo) {
+    const currPromoObj = getCurrentPromoObj(currPromo) as Promo;
+    appliedPromo.push(currPromoObj);
+    sumTotalContainer.classList.add('summary__sum-total_strike');
+    summaryPromoCode.prepend(appliedPromoCodeContainer);
+    appliedPromoCodeContainer.append(appliedPromoCodeTitle, appliedPromoCodeList);
+    if (promoCodeFoundText.textContent) {
+      const listItem = renderAppliedPromoListItem(promoCodeFoundText.textContent);
+      appliedPromoCodeList.append(listItem);
+    }
+    summaryPromoCode.prepend(newSumTotalContainer);
+    newSumTotalContainer.append(newTotal);
+  }
+  setCartTotalWithDiscount(appliedPromo);
+}
+
+export function handleInputPromoCode(e: Event) {
+  if (e.target instanceof HTMLInputElement) {
+    const inputTextValue = e.target.value.toUpperCase();
+    const promoObj = getCurrentPromoObj(inputTextValue);
+    if (promoObj && !appliedPromo.includes(promoObj)) {
+      promoCodeContainer.append(promoCodeFoundText, applyPromoCodeBtn);
+      promoCodeFoundText.textContent = `${promoObj.name.toUpperCase()} - ${promoObj.discount}%`;
+      summaryPromoCodeBlock.append(promoCodeContainer);
+    } else {
+      promoCodeContainer.remove();
+    }
+  }
 }

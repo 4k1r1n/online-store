@@ -19,14 +19,25 @@
     border-top: solid 1px $color-border;
     padding: 30px 80px;
     justify-content: end;
-  }
-
-  &__page-number {
-    white-space: nowrap;
+    gap: 20px;
   }
 
   &__summary {
     max-width: calc(100% - 75%);
     margin-bottom: 100px;
+  }
+
+  &__items-count {
+    width: 4%;
+  }
+}
+
+.pagination {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  &__page-number {
+    white-space: nowrap;
   }
 }
