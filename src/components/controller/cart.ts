@@ -11,7 +11,7 @@ import {
   setCurrentPage,
 } from '../model/cart';
 import fidnDataById from '../model/find-data';
-import { displayCartItemsPerPage, renderCartIsEmpty } from '../view/cart-content/cart-content';
+import { displayCartItemsPerPage } from '../view/cart-content/cart-content';
 import {
   appliedPromoCodeContainer,
   appliedPromoCodeList,
@@ -27,6 +27,7 @@ import {
   sumTotalContainer,
 } from '../view/cart-summary/cart-summary';
 import { limit } from '../view/input/input';
+import { checkCartIsEmpty } from '../../pages/cart';
 
 export function handleAddItem(
   defaultStock: number,
@@ -99,7 +100,7 @@ export function handleRemoveItem(
     setCartTotal();
     setCartItemsCount();
     setCartTotalWithDiscount(appliedPromo);
-    renderCartIsEmpty(cart);
+    checkCartIsEmpty(cart);
   }
 }
 

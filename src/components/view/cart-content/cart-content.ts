@@ -35,16 +35,13 @@ export default function renderCartContent(cart: Product[]) {
   displayCartItemsPerPage(cart, limit);
   const currentPage = setCurrentPage();
   const numPages = calcNumPages(limit);
-  renderCartIsEmpty(cart);
   changePage(currentPage, numPages);
   cartContent.append(renderCartFooter());
   return cartContent;
 }
 
-export function renderCartIsEmpty(cart: Product[]) {
+export function renderEmptyCart() {
   const cartIsEmpty = createElement('h3', 'content__text');
-  if (!cart || !cart.length) {
-    cartIsEmpty.textContent = 'Cart is empty';
-    contentItems.append(cartIsEmpty);
-  }
+  cartIsEmpty.textContent = 'Cart is empty';
+  return cartIsEmpty;
 }
