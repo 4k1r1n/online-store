@@ -64,9 +64,7 @@ export function createSearch() {
   search.addEventListener('input', (e) => {
     const event = e.target as HTMLInputElement;
     let value = event.value;
-
     value = value.trim().toLowerCase();
-
     handleLocalStorageSearch('search', value);
     handleQuerySearch();
     const data = filterData();

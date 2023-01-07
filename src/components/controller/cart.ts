@@ -3,15 +3,29 @@ import { Product, Promo } from '../../types/types';
 import {
   calcNumPages,
   changePage,
+  getCurrentPromoObj,
   removeProduct,
   setCartItemsCount,
   setCartTotal,
+  setCartTotalWithDiscount,
   setCurrentPage,
 } from '../model/cart';
 import fidnDataById from '../model/find-data';
-import { contentItems, displayCartItemsPerPage } from '../view/cart-content/cart-content';
-import { PROMO } from '../../constants/constants';
-import { renderPromoCodeRes, summaryPromoCodeBlock } from '../view/cart-summary/cart-summary';
+import { displayCartItemsPerPage } from '../view/cart-content/cart-content';
+import {
+  appliedPromoCodeContainer,
+  appliedPromoCodeList,
+  appliedPromoCodeTitle,
+  applyPromoCodeBtn,
+  newSumTotalContainer,
+  newTotal,
+  promoCodeContainer,
+  promoCodeFoundText,
+  renderAppliedPromoListItem,
+  summaryPromoCode,
+  summaryPromoCodeBlock,
+  sumTotalContainer,
+} from '../view/cart-summary/cart-summary';
 import { limit } from '../view/input/input';
 
 export function handleAddItem(
@@ -43,6 +57,7 @@ export function handleAddItem(
   }
   setCartTotal();
   setCartItemsCount();
+  setCartTotalWithDiscount(appliedPromo);
 }
 
 export function handleRemoveItem(
@@ -83,48 +98,61 @@ export function handleRemoveItem(
     });
     setCartTotal();
     setCartItemsCount();
+    setCartTotalWithDiscount(appliedPromo);
   }
 }
 
+export let appliedPromo: Promo[] = [];
+
 export function handleRemovePromoCode(e: Event) {
   const targetBtn = e.target;
-  // const promoCodes: Promo[] = JSON.parse(localStorage.promo);
-  // if (targetBtn instanceof HTMLElement) {
-  // const listItem = targetBtn.closest('.list-item');
-  // const currPromo = listItem?.childNodes[0].textContent?.split(' ')[0];
-  // appliedPromo = promoCodes.filter((promo) => promo.name.toUpperCase() !== currPromo);
-  // if (appliedPromoCodeList.childElementCount === 1) {
-  // removeAppliedPromoCodeList();
-  // } else if (listItem) {
-  // listItem.remove();
-  // }
-  // }
+  if (targetBtn instanceof HTMLElement) {
+    const listItem = targetBtn.closest('.list-item');
+    const currPromo = listItem?.childNodes[0].textContent?.split(' ')[0];
+    appliedPromo = appliedPromo.filter((promo) => promo.name.toUpperCase() !== currPromo);
+    if (appliedPromoCodeList.childElementCount === 1) {
+      appliedPromoCodeList.textContent = '';
+      appliedPromoCodeContainer.remove();
+      promoCodeContainer.remove();
+      sumTotalContainer.classList.remove('summary__sum-total_strike');
+      newSumTotalContainer.remove();
+    } else if (listItem) {
+      listItem.remove();
+    }
+    setCartTotalWithDiscount(appliedPromo);
+  }
 }
-
-// export let appliedPromo: Promo[] = [];
 
 export function handleApplyPromoCode(e: Event) {
   const targetBtn = e.target;
-  // if (targetBtn instanceof HTMLElement) targetBtn.remove();
-  // const currPromo = promoCodeFoundText.textContent?.split(' ')[0];
-  // const currPromoObj = PROMO.find((promo) => promo.name.toUpperCase() === currPromo) as Promo;
-  // appliedPromo.push(currPromoObj);
-  // const appliedPromoCodeList = renderAppliedPromoCodeList();
-  // appliedPromoCodeList.append(renderAppliedPromoListItem());
-  // newSumTotalContainer.append(newTotal);
-  // setCartTotalWithDiscount();
+  if (targetBtn instanceof HTMLElement) targetBtn.remove();
+  const currPromo = promoCodeFoundText.textContent?.split(' ')[0];
+  if (currPromo) {
+    const currPromoObj = getCurrentPromoObj(currPromo) as Promo;
+    appliedPromo.push(currPromoObj);
+    sumTotalContainer.classList.add('summary__sum-total_strike');
+    summaryPromoCode.prepend(appliedPromoCodeContainer);
+    appliedPromoCodeContainer.append(appliedPromoCodeTitle, appliedPromoCodeList);
+    if (promoCodeFoundText.textContent) {
+      const listItem = renderAppliedPromoListItem(promoCodeFoundText.textContent);
+      appliedPromoCodeList.append(listItem);
+    }
+    summaryPromoCode.prepend(newSumTotalContainer);
+    newSumTotalContainer.append(newTotal);
+  }
+  setCartTotalWithDiscount(appliedPromo);
 }
 
 export function handleInputPromoCode(e: Event) {
   if (e.target instanceof HTMLInputElement) {
-    // let appliedPromoCodes: Promo[] = [];
     const inputTextValue = e.target.value.toUpperCase();
-    const promoObj = PROMO.find((promo) => promo.name.toUpperCase() === inputTextValue);
-    const promoCodeRes = renderPromoCodeRes();
-    if (promoObj) {
-      // promoCodeRes.textContent = `${promoObj.name.toUpperCase()} - ${promoObj.discount}%`;
-      summaryPromoCodeBlock.append(promoCodeRes);
+    const promoObj = getCurrentPromoObj(inputTextValue);
+    if (promoObj && !appliedPromo.includes(promoObj)) {
+      promoCodeContainer.append(promoCodeFoundText, applyPromoCodeBtn);
+      promoCodeFoundText.textContent = `${promoObj.name.toUpperCase()} - ${promoObj.discount}%`;
+      summaryPromoCodeBlock.append(promoCodeContainer);
     } else {
+      promoCodeContainer.remove();
     }
   }
 }

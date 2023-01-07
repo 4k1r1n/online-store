@@ -4,7 +4,12 @@ import { cartPageNum, nextPageBtn, prevPageBtn } from '../view/cart-content/foot
 import { newTotal, productsCount, sumTotal } from '../view/cart-summary/cart-summary';
 import { cartCounter, total } from '../view/header/header';
 import { limit } from '../view/input/input';
-import { Product } from './../../types/types';
+import { Product, Promo } from './../../types/types';
+import { PROMO } from '../../constants/constants';
+
+export function getCurrentPromoObj(currPromo: string) {
+  return PROMO.find((promo) => promo.name.toUpperCase() === currPromo);
+}
 
 export function getLimit(e: Event, value: number) {
   const event = e.target;
@@ -18,8 +23,8 @@ export function setCurrentPage() {
     currentPage = JSON.parse(localStorage.page);
   } else {
     currentPage = 1;
-    localStorage.setItem('page', JSON.stringify(currentPage));
   }
+  localStorage.setItem('page', JSON.stringify(currentPage));
   const url = new URL(window.location.href);
   url.searchParams.set('page', `${currentPage}`);
   window.history.pushState({}, '', url);
@@ -48,7 +53,6 @@ export function handleNextPage() {
 export function changePage(page: number, numPages: number) {
   if (page < 1) page = 1;
   if (page > numPages) page = numPages;
-  const currentPage = setCurrentPage();
   localStorage.setItem('page', `${page}`);
   cartPageNum.textContent = `${page}`;
   if (page === 1) {
@@ -62,7 +66,7 @@ export function changePage(page: number, numPages: number) {
     nextPageBtn.classList.remove('btn_hide');
   }
   const url = new URL(window.location.href);
-  url.searchParams.set('page', `${currentPage}`);
+  url.searchParams.set('page', `${page}`);
   window.history.pushState({}, '', url);
   buildPage(page);
 }
@@ -145,11 +149,16 @@ export function setCartTotal() {
   sumTotal.textContent = `${itemsCount}`;
 }
 
-export function setCartTotalWithDiscount(discount: number) {
-  let cart: Product[] = [];
-  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
-  const itemsCount = cart.reduce((acc, value) => {
-    return acc + value.price;
+export function setCartTotalWithDiscount(promoObj: Promo[]) {
+  if (sumTotal.textContent) {
+    const cartTotal = +sumTotal.textContent;
+    const totalDiscount = calcTotalDiscount(promoObj);
+    newTotal.textContent = `${cartTotal - (cartTotal * totalDiscount) / 100}`;
+  }
+}
+
+export function calcTotalDiscount(promoObj: Promo[]) {
+  return promoObj.reduce((acc, value) => {
+    return acc + value.discount;
   }, 0);
-  newTotal.textContent = `${itemsCount - (itemsCount * discount) / 100}`;
 }
