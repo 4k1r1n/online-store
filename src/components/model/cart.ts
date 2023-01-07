@@ -1,7 +1,91 @@
+import { contentItems, createCartItems } from './../view/cart-content/cart-content';
 import data from '../../data/data';
+import { cartPageNum, nextPageBtn, prevPageBtn } from '../view/cart-content/footer';
 import { newTotal, productsCount, sumTotal } from '../view/cart-summary/cart-summary';
 import { cartCounter, total } from '../view/header/header';
+import { limit } from '../view/input/input';
 import { Product } from './../../types/types';
+
+export function getLimit(e: Event, value: number) {
+  const event = e.target;
+  if (event instanceof HTMLInputElement) value = +event.value;
+  return value;
+}
+
+export function setCurrentPage() {
+  let currentPage: number;
+  if (localStorage.getItem('page')) {
+    currentPage = JSON.parse(localStorage.page);
+  } else {
+    currentPage = 1;
+    localStorage.setItem('page', JSON.stringify(currentPage));
+  }
+  const url = new URL(window.location.href);
+  url.searchParams.set('page', `${currentPage}`);
+  window.history.pushState({}, '', url);
+  cartPageNum.textContent = `${currentPage}`;
+  return currentPage;
+}
+
+export function handlePrevPage() {
+  const numPages = calcNumPages(limit);
+  let currentPage = setCurrentPage();
+  if (currentPage > 1) {
+    currentPage--;
+    changePage(currentPage, numPages);
+  }
+}
+
+export function handleNextPage() {
+  const numPages = calcNumPages(limit);
+  let currentPage = setCurrentPage();
+  if (currentPage < numPages) {
+    currentPage++;
+    changePage(currentPage, numPages);
+  }
+}
+
+export function changePage(page: number, numPages: number) {
+  if (page < 1) page = 1;
+  if (page > numPages) page = numPages;
+  const currentPage = setCurrentPage();
+  localStorage.setItem('page', `${page}`);
+  cartPageNum.textContent = `${page}`;
+  if (page === 1) {
+    prevPageBtn.classList.add('btn_hide');
+  } else {
+    prevPageBtn.classList.remove('btn_hide');
+  }
+  if (page === numPages) {
+    nextPageBtn.classList.add('btn_hide');
+  } else {
+    nextPageBtn.classList.remove('btn_hide');
+  }
+  const url = new URL(window.location.href);
+  url.searchParams.set('page', `${currentPage}`);
+  window.history.pushState({}, '', url);
+  buildPage(page);
+}
+
+export function buildPage(page: number) {
+  let cart: Product[] = [];
+  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
+  const items = createCartItems(cart);
+  contentItems.innerHTML = '';
+  const start = (page - 1) * limit;
+  const end = page * limit;
+  for (let i = start; i < end; i++) {
+    if (items[i]) contentItems.append(items[i]);
+  }
+}
+
+export function calcNumPages(itemsPerPage: number) {
+  let cart: Product[] = [];
+  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
+  const numItems = cart.length;
+  const numPages = Math.ceil(numItems / itemsPerPage);
+  return numPages;
+}
 
 export function addProduct(obj: Product) {
   let cart: Product[] = [];

@@ -1,5 +1,6 @@
 import createElement from '../../../utils/create-element';
-import { handleApplyPromoCode } from '../../controller/cart';
+import { handleApplyPromoCode, handleRemovePromoCode } from '../../controller/cart';
+import { handleNextPage, handlePrevPage } from '../../model/cart';
 import clearAllFilters from '../../model/clear-filter';
 
 export function resetStoreButton(): HTMLElement {
@@ -32,11 +33,15 @@ export function removeProductBtn() {
 }
 
 export function nextPageButton() {
-  return createElement('button', '', '>');
+  const nextPageBtn = createElement('button', 'btn btn_next');
+  nextPageBtn.addEventListener('click', () => handleNextPage());
+  return nextPageBtn;
 }
 
 export function prevPageButton() {
-  return createElement('button', '', '<');
+  const prevPageBtn = createElement('button', 'btn btn_prev');
+  prevPageBtn.addEventListener('click', () => handlePrevPage());
+  return prevPageBtn;
 }
 
 export function addToCartButton() {
@@ -49,20 +54,12 @@ export function buyNowButton() {
 
 export function removeAppliedPromoCodeButton() {
   const removePromoCodeButton = createElement('a', 'btn btn_remove-promo btn_link', 'Remove');
-  if (removePromoCodeButton instanceof HTMLButtonElement) {
-    removePromoCodeButton.addEventListener('click', (e) => {
-      console.log(e.target);
-    });
-  }
+  removePromoCodeButton.addEventListener('click', (e) => handleRemovePromoCode(e));
   return removePromoCodeButton;
 }
 
 export function createApplyPromoCodeButton() {
   const applyPromoCodeButton = createElement('a', 'btn btn_link', 'Apply');
-  if (applyPromoCodeButton instanceof HTMLButtonElement) {
-    applyPromoCodeButton.addEventListener('click', () => {
-      handleApplyPromoCode();
-    });
-  }
+  applyPromoCodeButton.addEventListener('click', (e) => handleApplyPromoCode(e));
   return applyPromoCodeButton;
 }

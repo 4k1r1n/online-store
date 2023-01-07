@@ -1,20 +1,18 @@
 import { cartCounter } from '../view/header/header';
-import { Product } from '../../types/types';
-import { removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
-import fidnDataById from '../model/find-data';
-import getCart, { cartContainer } from '../../pages/cart';
+import { Product, Promo } from '../../types/types';
 import {
-  appliedPromoCodeContainer,
-  appliedPromoCodeList,
-  appliedPromoCodeTitle,
-  applyPromoCodeBtn,
-  promoCodeFoundText,
-  promoCodeInput,
-  summaryPromoCode,
-  sumTotalContainer,
-} from '../view/cart-summary/cart-summary';
-import createElement from '../../utils/create-element';
-import { removeAppliedPromoCodeButton } from '../view/button/button';
+  calcNumPages,
+  changePage,
+  removeProduct,
+  setCartItemsCount,
+  setCartTotal,
+  setCurrentPage,
+} from '../model/cart';
+import fidnDataById from '../model/find-data';
+import { contentItems, displayCartItemsPerPage } from '../view/cart-content/cart-content';
+import { PROMO } from '../../constants/constants';
+import { renderPromoCodeRes, summaryPromoCodeBlock } from '../view/cart-summary/cart-summary';
+import { limit } from '../view/input/input';
 
 export function handleAddItem(
   defaultStock: number,
@@ -77,8 +75,10 @@ export function handleRemoveItem(
         item.remove();
         removeProduct(itemObj);
         cart = JSON.parse(localStorage.cart);
-        cartContainer.innerHTML = '';
-        getCart();
+        displayCartItemsPerPage(cart, limit);
+        const currentPage = setCurrentPage();
+        const numPages = calcNumPages(limit);
+        changePage(currentPage, numPages);
       }
     });
     setCartTotal();
@@ -86,23 +86,45 @@ export function handleRemoveItem(
   }
 }
 
-export function handleApplyPromoCode() {
-  sumTotalContainer.classList.add('summary__sum-total_strike');
-  summaryPromoCode.insertBefore(appliedPromoCodeContainer, promoCodeInput);
-  appliedPromoCodeContainer.append(appliedPromoCodeTitle, appliedPromoCodeList);
-  addAppliedPromoCodeItem();
-  // const newSumTotalContainer = createElement('div', 'summary__new-sum-total', `Total $ `);
-  // summaryPromoCode.insertBefore(appliedPromoCodeContainer);
-  // newSumTotalContainer.append(newTotal);
-  // setCartTotalWithDiscount();
-  applyPromoCodeBtn.remove();
+export function handleRemovePromoCode(e: Event) {
+  const targetBtn = e.target;
+  // const promoCodes: Promo[] = JSON.parse(localStorage.promo);
+  // if (targetBtn instanceof HTMLElement) {
+  // const listItem = targetBtn.closest('.list-item');
+  // const currPromo = listItem?.childNodes[0].textContent?.split(' ')[0];
+  // appliedPromo = promoCodes.filter((promo) => promo.name.toUpperCase() !== currPromo);
+  // if (appliedPromoCodeList.childElementCount === 1) {
+  // removeAppliedPromoCodeList();
+  // } else if (listItem) {
+  // listItem.remove();
+  // }
+  // }
 }
 
-export function addAppliedPromoCodeItem() {
-  const appliedPromoCodeListItem = createElement('li', 'applied-list__item list-item');
-  const listItemText = createElement('span', 'list-item__text');
-  const removeAppliedPromoCodeBtn = removeAppliedPromoCodeButton();
-  listItemText.textContent = promoCodeFoundText.textContent;
-  appliedPromoCodeList.appendChild(appliedPromoCodeListItem);
-  appliedPromoCodeListItem.append(listItemText, removeAppliedPromoCodeBtn);
+// export let appliedPromo: Promo[] = [];
+
+export function handleApplyPromoCode(e: Event) {
+  const targetBtn = e.target;
+  // if (targetBtn instanceof HTMLElement) targetBtn.remove();
+  // const currPromo = promoCodeFoundText.textContent?.split(' ')[0];
+  // const currPromoObj = PROMO.find((promo) => promo.name.toUpperCase() === currPromo) as Promo;
+  // appliedPromo.push(currPromoObj);
+  // const appliedPromoCodeList = renderAppliedPromoCodeList();
+  // appliedPromoCodeList.append(renderAppliedPromoListItem());
+  // newSumTotalContainer.append(newTotal);
+  // setCartTotalWithDiscount();
+}
+
+export function handleInputPromoCode(e: Event) {
+  if (e.target instanceof HTMLInputElement) {
+    // let appliedPromoCodes: Promo[] = [];
+    const inputTextValue = e.target.value.toUpperCase();
+    const promoObj = PROMO.find((promo) => promo.name.toUpperCase() === inputTextValue);
+    const promoCodeRes = renderPromoCodeRes();
+    if (promoObj) {
+      // promoCodeRes.textContent = `${promoObj.name.toUpperCase()} - ${promoObj.discount}%`;
+      summaryPromoCodeBlock.append(promoCodeRes);
+    } else {
+    }
+  }
 }
