@@ -11,7 +11,7 @@ import {
   setCurrentPage,
 } from '../model/cart';
 import fidnDataById from '../model/find-data';
-import { displayCartItemsPerPage } from '../view/cart-content/cart-content';
+import { displayCartItemsPerPage, renderCartIsEmpty } from '../view/cart-content/cart-content';
 import {
   appliedPromoCodeContainer,
   appliedPromoCodeList,
@@ -99,6 +99,7 @@ export function handleRemoveItem(
     setCartTotal();
     setCartItemsCount();
     setCartTotalWithDiscount(appliedPromo);
+    renderCartIsEmpty(cart);
   }
 }
 

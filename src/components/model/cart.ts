@@ -1,6 +1,6 @@
 import { contentItems, createCartItems } from './../view/cart-content/cart-content';
 import data from '../../data/data';
-import { cartPageNum, nextPageBtn, prevPageBtn } from '../view/cart-content/footer';
+import { cartPageNum, cartPageText, nextPageBtn, prevPageBtn } from '../view/cart-content/footer';
 import { newTotal, productsCount, sumTotal } from '../view/cart-summary/cart-summary';
 import { cartCounter, total } from '../view/header/header';
 import { limit } from '../view/input/input';
@@ -60,6 +60,12 @@ export function changePage(page: number, numPages: number) {
   } else {
     prevPageBtn.classList.remove('btn_hide');
   }
+  if (page === 0) {
+    prevPageBtn.classList.add('btn_hide');
+    nextPageBtn.classList.add('btn_hide');
+    cartPageNum.textContent = '';
+    cartPageText.textContent = '';
+  }
   if (page === numPages) {
     nextPageBtn.classList.add('btn_hide');
   } else {
@@ -75,7 +81,7 @@ export function buildPage(page: number) {
   let cart: Product[] = [];
   if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
   const items = createCartItems(cart);
-  contentItems.innerHTML = '';
+  if (items.length) contentItems.textContent = '';
   const start = (page - 1) * limit;
   const end = page * limit;
   for (let i = start; i < end; i++) {
