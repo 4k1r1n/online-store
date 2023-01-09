@@ -74,16 +74,9 @@ export function filterData(): Product[] {
     if (localStorage.getItem('sort')) {
       const value = localStorage.getItem('sort') as string;
       if (newData.length) {
-        console.log(value);
         newData = sortProducts(newData, value);
       } else {
         newData = sortProducts(data, value);
-        // default sort
-        if (newData.length) {
-          newData = sortProducts(newData, SORTING.lowPrice);
-        } else {
-          newData = sortProducts(data, SORTING.lowPrice);
-        }
       }
     }
 
