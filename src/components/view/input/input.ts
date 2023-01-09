@@ -57,7 +57,7 @@ export function createRange(min: number, max: number, valueL: number, valueR: nu
 }
 
 export function createSearch() {
-  const search = createElement('input', 'input') as HTMLInputElement;
+  const search = createElement('input', 'input input_search') as HTMLInputElement;
   search.setAttribute('type', 'search');
   search.setAttribute('placeholder', 'Search');
   if (localStorage.getItem('search')) search.value = localStorage.getItem('search') as string;
@@ -102,7 +102,7 @@ function option(value: string) {
 export let limit: number;
 
 export function createInputItemsCountPerPage() {
-  const input = createElement('input', 'cart__items-count');
+  const input = createElement('input', 'limit__input input');
   let cart: Product[] = [];
   if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
   input.setAttribute('type', 'number');
@@ -137,7 +137,7 @@ export function createInputItemsCountPerPage() {
 }
 
 export function createPromoCodeInput() {
-  const input = createElement('input', 'promo-code__input input');
+  const input = createElement('input', 'promo-code__input input input_search');
   input.setAttribute('type', 'search');
   input.setAttribute('placeholder', 'Enter promo code');
   input.addEventListener('input', (e) => handleInputPromoCode(e));

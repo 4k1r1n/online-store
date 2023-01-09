@@ -1,5 +1,5 @@
 import createElement from '../../../utils/create-element';
-import { handleApplyPromoCode, handleRemovePromoCode } from '../../controller/cart';
+import { handleApplyPromoCode, handleBuyNow, handleRemovePromoCode } from '../../controller/cart';
 import { handleNextPage, handlePrevPage } from '../../model/cart';
 import clearAllFilters from '../../model/clear-filter';
 
@@ -49,7 +49,9 @@ export function addToCartButton() {
 }
 
 export function buyNowButton() {
-  return createElement('a', 'btn btn_link', 'Buy now');
+  const buyNowBtn = createElement('a', 'btn btn_link', 'Buy now');
+  buyNowBtn.addEventListener('click', () => handleBuyNow());
+  return buyNowBtn;
 }
 
 export function removeAppliedPromoCodeButton() {
@@ -62,4 +64,10 @@ export function createApplyPromoCodeButton() {
   const applyPromoCodeButton = createElement('a', 'btn btn_link', 'Apply');
   applyPromoCodeButton.addEventListener('click', (e) => handleApplyPromoCode(e));
   return applyPromoCodeButton;
+}
+
+export function createConfirmButton() {
+  const confirmBtn = createElement('button', 'btn modal-content__btn', 'CONFIRM');
+  confirmBtn.setAttribute('type', 'submit');
+  return confirmBtn;
 }

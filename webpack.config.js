@@ -44,6 +44,7 @@ const baseConfig = {
     new CopyPlugin({
       patterns: [
         { from: "./assets/img/products", to: "assets/img/products" },
+        { from: "./assets/icons/modal", to: "assets/icons/modal" }
       ],
     }),
     new NetlifyPlugin({

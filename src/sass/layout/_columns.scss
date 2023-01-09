@@ -2,3 +2,8 @@
   @include columns($width: 31%);
   gap: 45px 30px;
 }
+
+.layout-2-column {
+  @include columns($width: 48%);
+  gap: 15px;
+}

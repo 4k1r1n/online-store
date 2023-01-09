@@ -1,0 +1,41 @@
+.credit-card {
+  margin: auto;
+  padding: 26px 20px;
+  background: $color-primary;
+  border-radius: 12px;
+  max-width: calc(100% - 25%);
+  @include font ($weight: 500);
+  line-height: 14px;
+  color: $color-light;
+  margin-bottom: 25px;
+
+  &__name {
+    margin-bottom: 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    background-image: url('../assets/icons/modal/credit-card_placeholder.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 50px;
+    height: 35px;
+  }
+
+  &__number-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 34px;
+    @extend %font-prim;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}

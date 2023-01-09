@@ -29,46 +29,45 @@
   &__main-image {
     max-width: 65%;
   }
-}
 
-.info {
-  flex-basis: 31%;
+  .info {
+    flex-basis: 31%;
 
-  &__container {
-    margin-bottom: 35px;
-  }
+    &__container {
+      margin-bottom: 35px;
+    }
 
-  &__category {
-    margin-bottom: 8px;
-    @include font($weight: 500);
-  }
+    &__category {
+      margin-bottom: 8px;
+      @include font($weight: 500);
+    }
 
-  &__brand {
-    margin-bottom: 25px;
-  }
+    &__brand {
+      margin-bottom: 25px;
+    }
 
-  &__desc {
-    margin-bottom: 18px;
-  }
+    &__desc {
+      margin-bottom: 18px;
+    }
 
-  &__price {
-    @include font($weight: 700);
-    padding-bottom: 8px;
-    border-bottom: solid 1px $color-border;
-  }
+    &__price {
+      @include font($weight: 700);
+      padding-bottom: 8px;
+      border-bottom: solid 1px $color-border;
+    }
 
-  &__btn {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    &__btn {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
   }
 }
 
 .breadcrumps.wrapper {
-  margin: 0 auto 25px;
-  font-family: Lora;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 25px;
-  color: #161412;
+  margin: 0 auto 45px;
+  @include font($size: 2rem, $weight: 400);
+  @extend %font-additional;
+  line-height: 2rem;
+  color: $color-primary;
 }

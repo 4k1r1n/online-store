@@ -3,6 +3,10 @@
   align-items: center;
   gap: 15px;
 
+  &:not(:last-child) {
+    margin-bottom: 25px;
+  }
+
   &__num {
     @include font($size: 2rem, $weight: 700);
   }
@@ -30,10 +34,10 @@
     justify-content: space-between;
     width: calc(100% - 94%);
   }
-}
 
-.number-control {
-  &__btn:hover {
-    background-color: initial;
+  .number-control {
+    &__btn:hover {
+      background-color: initial;
+    }
   }
 }

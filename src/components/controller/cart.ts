@@ -1,6 +1,7 @@
 import { cartCounter } from '../view/header/header';
 import { Product, Promo } from '../../types/types';
 import {
+  addProduct,
   calcNumPages,
   changePage,
   getCurrentPromoObj,
@@ -28,6 +29,9 @@ import {
 } from '../view/cart-summary/cart-summary';
 import { limit } from '../view/input/input';
 import { checkCartIsEmpty } from '../../pages/cart';
+import renderModal from '../view/modal/modal-form';
+import { PATHS } from '../../constants/constants';
+import { redirectToPage } from '../../utils/utils';
 
 export function handleAddItem(
   defaultStock: number,
@@ -157,4 +161,27 @@ export function handleInputPromoCode(e: Event) {
       promoCodeContainer.remove();
     }
   }
+}
+
+export function handleBuyNow() {
+  const url = new URL(window.location.href);
+  const rootElement = document.getElementById('app') as HTMLElement;
+  const modal = renderModal();
+  if (url.pathname !== PATHS.cart) {
+    const idProduct = +window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
+    const objProduct = fidnDataById(idProduct) as Product;
+    let cart: Product[] = [];
+    addProduct(objProduct);
+    if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
+    cart.forEach((product) => {
+      if (product.id === idProduct) product.stock--;
+    });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    setCartItemsCount();
+    setCartTotal();
+    redirectToPage(PATHS.cart);
+  }
+  rootElement.append(modal);
+  modal.classList.add('active');
+  document.body.classList.add('lock');
 }

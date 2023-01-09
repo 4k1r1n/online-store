@@ -27,17 +27,26 @@
     margin-bottom: 100px;
   }
 
-  &__items-count {
-    width: 4%;
+  .limit {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    &__input {
+      max-width: 8%;
+      padding: 10px;
+      background-color: $color-light;
+      color: $color-primary;
+    }
   }
-}
 
-.pagination {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  .pagination {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 
-  &__page-number {
-    white-space: nowrap;
+    &__page-number {
+      white-space: nowrap;
+    }
   }
 }
