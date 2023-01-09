@@ -8,9 +8,10 @@ import createBreadcrumps from '../view/breadcrumps/breadcrumps';
 export function handleQuerySearch() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
   delete obj.cart;
-  // const obj = Object.entries(parsedObj).filter([key] =>  key!=='cart');
+  delete obj.page;
+  delete obj.limit;
   const params = filterQuery(obj).join('&').split(',').join('%2C');
-  const searchDevider = localStorage.length ? '?' : '';
+  const searchDevider = Object.keys(obj).length ? '?' : '';
   const url = window.location.origin + searchDevider + params;
   window.history.pushState({}, '', url);
 }
