@@ -69,9 +69,13 @@ export function filterData(): Product[] {
     if (localStorage.getItem(localStorageKeys.STOCK)) {
       const [leftRange, rightRange] = filterRange(localStorageKeys.STOCK) as string[];
       if (newData.length) {
-        newData = newData.filter((el) => el[localStorageKeys.STOCK] >= +leftRange && el[localStorageKeys.STOCK] <= +rightRange);
+        newData = newData.filter(
+          (el) => el[localStorageKeys.STOCK] >= +leftRange && el[localStorageKeys.STOCK] <= +rightRange
+        );
       } else {
-        newData = data.filter((el) => el[localStorageKeys.STOCK] >= +leftRange && el[localStorageKeys.STOCK] <= +rightRange);
+        newData = data.filter(
+          (el) => el[localStorageKeys.STOCK] >= +leftRange && el[localStorageKeys.STOCK] <= +rightRange
+        );
       }
     }
 
@@ -184,7 +188,10 @@ export function togglePriceFilters() {
 export function toggleStockFilters() {
   const section = document.querySelector('.stock') as HTMLElement;
   const data = filterData();
-  const [leftStock, rightStock] = [findMinValue(data, localStorageKeys.STOCK), findMaxValue(data, localStorageKeys.STOCK)];
+  const [leftStock, rightStock] = [
+    findMinValue(data, localStorageKeys.STOCK),
+    findMaxValue(data, localStorageKeys.STOCK),
+  ];
   const leftInput = section.lastElementChild?.querySelector('.multi-range__left') as HTMLInputElement;
   const rightInput = section.lastElementChild?.querySelector('.multi-range__right') as HTMLInputElement;
   const leftLabel = section.querySelector('.multi-range__label-min') as HTMLElement;

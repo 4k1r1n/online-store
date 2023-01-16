@@ -10,6 +10,7 @@ export default function productInfo(data: Product) {
   const infoTitle = createElement('h2', 'info__title', `${data.title}`);
   const infoCategory = createElement('p', 'info__category', `${data.category}`);
   const infoBrand = createElement('p', 'info__brand', `${data.brand}`);
+  const infoCapacity = createElement('p', 'info__capacity', `${data.capacity} ml`);
   const infoDesc = createElement('p', 'info__desc', `${data.description}`);
   const infoPrice = createElement('p', 'info__price', `$ ${data.price}`);
   const infoBtn = createElement('div', 'info__btn');
@@ -17,7 +18,7 @@ export default function productInfo(data: Product) {
   const buyProductBtn = buyNowButton();
 
   productInfo.append(infoContainer, infoBtn);
-  infoContainer.append(infoTitle, infoCategory, infoBrand, infoDesc, infoPrice);
+  infoContainer.append(infoTitle, infoCategory, infoBrand, infoDesc, infoCapacity, infoPrice);
   infoBtn.append(addProductBtn, buyProductBtn);
 
   let isClicked = false;
