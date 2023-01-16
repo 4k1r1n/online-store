@@ -1,3 +1,4 @@
+import { validation } from '../../constants/constants';
 import createElement from '../../utils/create-element';
 import {
   creditCardCvvInput,
@@ -101,8 +102,7 @@ const validateName = (input: HTMLInputElement) => {
 
 const validatePhone = (input: HTMLInputElement) => {
   const phone = input.value;
-  const reg = /^\+\d{9,}$/;
-  return reg.test(phone);
+  return validation.PHONE.test(phone);
 };
 
 const validateDelivery = (input: HTMLInputElement) => {
@@ -116,45 +116,37 @@ const validateDelivery = (input: HTMLInputElement) => {
 
 const validateEmail = (input: HTMLInputElement) => {
   const email = input.value;
-  const reg = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
-  return reg.test(email);
+  return validation.EMAIL.test(email);
 };
 
 const validateNumberCreditCard = (input: HTMLInputElement) => {
   const creditCardNumber = input.value;
-  const reg = /^\d{16}$/;
-  return reg.test(creditCardNumber);
+  return validation.CREDIT_CARD_NUMBER.test(creditCardNumber);
 };
 
 const validateCvvCreditCard = (input: HTMLInputElement) => {
   const creditCardCvv = input.value;
-  const reg = /^\d{3}$/;
-  return reg.test(creditCardCvv);
+  return validation.CREDIT_CARD_CVV.test(creditCardCvv);
 };
 
 const validateValidCreditCard = (input: HTMLInputElement) => {
   const creditCardValid = input.value;
-  const reg = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
   const expiredDate = input.value.split('/');
   const today = new Date();
   const date = new Date();
   date.setFullYear(+`20${expiredDate[1]}`, +expiredDate[0]);
-  return reg.test(creditCardValid) && date > today;
+  return validation.CREDIT_CARD_VALID.test(creditCardValid) && date > today;
 };
 
 export function changeCreditCardLogo(cardNumber: string) {
-  const regVisa = /^4[0-9]{12}(?:[0-9]{3})?$/;
-  const regMasterCard = /^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/;
-  const regJSB = /^(?:2131|1800|35\d{3})\d{12}$/;
-
   switch (true) {
-    case regVisa.test(cardNumber):
+    case validation.CREDIT_CARD_VISA.test(cardNumber):
       creditCardLogo.style.backgroundImage = "url('../assets/icons/modal/visa_ico.svg')";
       break;
-    case regMasterCard.test(cardNumber):
+    case validation.CREDIT_CARD_MASTERCARD.test(cardNumber):
       creditCardLogo.style.backgroundImage = "url('../assets/icons/modal/mastercard_ico.svg')";
       break;
-    case regJSB.test(cardNumber):
+    case validation.CREDIT_CARD_JCB.test(cardNumber):
       creditCardLogo.style.backgroundImage = "url('../assets/icons/modal/jcb_ico.svg')";
       break;
     default:

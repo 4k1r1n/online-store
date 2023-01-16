@@ -24,7 +24,7 @@ export function createCard(img: string, name: string, price: string | number, id
   const cardId = Number(cardImage.getAttribute('data-id'));
   let isClicked = false;
   cardButton.addEventListener('click', (e) => (isClicked = handleCartClick(isClicked, cardId, e)));
-  isClicked = setStateCardButtons(isClicked, cardButton, cardId);
+  isClicked = setStateCardButtons({ flag: isClicked, btn: cardButton, id: cardId });
 
   return card;
 }

@@ -1,9 +1,10 @@
 import getProduct from '../../pages/product-details';
-import { PATHS } from '../../constants/constants';
+import { localStorageKeys, PATHS, REMOVEPRODUCTTEXT } from '../../constants/constants';
 import fidnDataById from '../model/find-data';
-import { Product } from '../../types/types';
+import { Product, StateCartButtons, StateCardButton } from '../../types/types';
 import { addProduct, removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
 import createBreadcrumps from '../view/breadcrumps/breadcrumps';
+import { setLocalStorage } from '../../utils/utils';
 
 export function handleQuerySearch() {
   const obj = JSON.parse(JSON.stringify({ ...localStorage }));
@@ -14,10 +15,6 @@ export function handleQuerySearch() {
   const searchDevider = Object.keys(obj).length ? '?' : '';
   const url = window.location.origin + searchDevider + params;
   window.history.pushState({}, '', url);
-}
-
-export function setLocalStorage(params: string, type: string) {
-  localStorage.setItem(type, params);
 }
 
 export function handleProductClick(e: Event) {
@@ -108,7 +105,7 @@ export function handleCartClick(flag: boolean, id: number, event: Event) {
     if (!flag) {
       flag = true;
       addProduct(objProduct);
-      if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
+      if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
       cart.forEach((product) => {
         if (product.id === id) {
           product.stock--;
@@ -121,49 +118,49 @@ export function handleCartClick(flag: boolean, id: number, event: Event) {
       removeProduct(objProduct);
       e.classList.add('btn_product-add');
       e.classList.remove('btn_product-remove');
-      if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
+      if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
       cart.forEach((product) => {
         if (product.id === id) {
           product.stock++;
         }
       });
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
+    setLocalStorage(JSON.stringify(cart), localStorageKeys.CART);
     setCartItemsCount();
     setCartTotal();
   }
   return flag;
 }
 
-export function setStateCardButtons(flag: boolean, btn: HTMLElement, id: number) {
+export function setStateCardButtons(state: StateCardButton) {
   let cart: Product[] = [];
-  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
-  const objProduct = fidnDataById(id) as Product;
+  if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
+  const objProduct = fidnDataById(state.id) as Product;
   cart.forEach((product) => {
     if (product.id === objProduct.id) {
-      flag = true;
-      btn.classList.remove('btn_product-add');
-      btn.classList.add('btn_product-remove');
+      state.flag = true;
+      state.btn.classList.remove('btn_product-add');
+      state.btn.classList.add('btn_product-remove');
     }
   });
-  return flag;
+  return state.flag;
 }
 
-export function setStateProductBtn(flag: boolean, btn: HTMLElement) {
+export function setStateProductBtn(state: StateCartButtons) {
   let cart: Product[] = [];
-  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
+  if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const idProduct = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
   if (idProduct) {
     const objProduct = fidnDataById(+idProduct) as Product;
     cart.forEach((product) => {
       if (product.id === objProduct.id) {
-        flag = true;
-        btn.textContent = 'remove from cart';
+        state.flag = true;
+        state.btn.textContent = REMOVEPRODUCTTEXT;
       }
     });
     setCartTotal();
   }
-  return flag;
+  return state.flag;
 }
 
 export function handleLocalStorageSort(key: string, value: string) {

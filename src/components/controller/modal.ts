@@ -1,27 +1,25 @@
+import { validation } from './../../constants/constants';
 import { changeCreditCardLogo } from '../model/modal';
 
-export function handleNumberCreditCard(e: KeyboardEvent) {
-  const reg = /^\d{0,16}$/;
+export function handleValidateNumberCreditCard(e: KeyboardEvent) {
   const event = e.target;
   if (event instanceof HTMLInputElement) {
-    if (!reg.test(`${event.value}${e.key}`)) e.preventDefault();
+    if (!validation.CREDIT_CARD_NUMBER.test(`${event.value}${e.key}`)) e.preventDefault();
     changeCreditCardLogo(event.value);
   }
 }
 
-export function handleCvvCreditCard(e: KeyboardEvent) {
-  const reg = /^\d{0,3}$/;
+export function handleValidateCvvCreditCard(e: KeyboardEvent) {
   const event = e.target;
-  if (event instanceof HTMLInputElement) {
-    if (!reg.test(`${event.value}${e.key}`)) e.preventDefault();
+  if (event instanceof HTMLInputElement && !validation.CREDIT_CARD_CVV.test(`${event.value}${e.key}`)) {
+    e.preventDefault();
   }
 }
 
-export function handleValidCreditCard(e: KeyboardEvent) {
+export function handleValidateValidCreditCard(e: KeyboardEvent) {
   const event = e.target;
-  const reg = /^\d{0,4}$/;
   if (event instanceof HTMLInputElement) {
     if (event.value.length === 2) event.value += '/';
-    if (!reg.test(`${event.value.split('/').join('')}${e.key}`)) e.preventDefault();
+    if (!validation.CREDIT_CARD_INPUT_VALID.test(`${event.value.split('/').join('')}${e.key}`)) e.preventDefault();
   }
 }

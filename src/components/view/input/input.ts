@@ -6,7 +6,7 @@ import { SORTING } from '../../../constants/constants';
 import { sortProducts } from '../../model/sort-model';
 import changeFoundProducts from '../../model/found-model';
 import { handleInputPromoCode } from '../../controller/cart';
-import { calcNumPages, changePage, getLimit, setCurrentPage } from '../../model/cart';
+import { calculatePagesCount, changePage, getLimit, setCurrentPage } from '../../model/cart';
 import { Product } from '../../../types/types';
 import { displayCartItemsPerPage } from '../cart-content/cart-content';
 
@@ -129,8 +129,8 @@ export function createInputItemsCountPerPage() {
       window.history.pushState({}, '', url);
       displayCartItemsPerPage(cart, limit);
       const currentPage = setCurrentPage();
-      const numPages = calcNumPages(limit);
-      changePage(currentPage, numPages);
+      const pagesCount = calculatePagesCount(limit);
+      changePage(currentPage, pagesCount);
     }
   });
   return input;

@@ -15,3 +15,12 @@ export interface Promo {
   name: string;
   discount: number;
 }
+
+export interface StateCartButtons {
+  flag: boolean;
+  btn: HTMLElement;
+}
+
+export interface StateCardButton extends StateCartButtons {
+  id: number;
+}

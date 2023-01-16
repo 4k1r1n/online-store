@@ -1,4 +1,4 @@
-import { SORTING } from '../../constants/constants';
+import { localStorageKeys, SORTING } from '../../constants/constants';
 import data from '../../data/data';
 import { Product } from '../../types/types';
 import { createCategoriesInput } from '../view/form-store/input/categories-input';
@@ -20,7 +20,7 @@ export function getQueryParams() {
 export function getFilterQuery(obj: { [key: string]: string[] }) {
   const arr: string[][] = [];
   for (const [key, value] of Object.entries(obj)) {
-    if (key === 'price' || key === 'stock') {
+    if (key === localStorageKeys.PRICE || key === localStorageKeys.STOCK) {
       arr.push([`${key}`, `${value}`]);
     } else {
       value.forEach((el) => arr.push([`${key}`, `${decodeURIComponent(el).split('%20').join(' ')}`]));
@@ -39,40 +39,44 @@ export function queryValues() {
 export function filterData(): Product[] {
   let newData: Product[] = [];
   if (ifFiltersTrue()) {
-    if (localStorage.getItem('category')) {
-      newData = filterCategory(data, 'category');
-      if (localStorage.getItem('brand')) {
-        newData = filterCategory(newData, 'brand');
+    if (localStorage.getItem(localStorageKeys.CATEGORY)) {
+      newData = filterCategory(data, localStorageKeys.CATEGORY);
+      if (localStorage.getItem(localStorageKeys.BRAND)) {
+        newData = filterCategory(newData, localStorageKeys.BRAND);
       }
     }
 
-    if (localStorage.getItem('brand')) {
-      newData = filterCategory(data, 'brand');
-      if (localStorage.getItem('category')) {
-        newData = filterCategory(newData, 'category');
+    if (localStorage.getItem(localStorageKeys.BRAND)) {
+      newData = filterCategory(data, localStorageKeys.BRAND);
+      if (localStorage.getItem(localStorageKeys.CATEGORY)) {
+        newData = filterCategory(newData, localStorageKeys.CATEGORY);
       }
     }
 
-    if (localStorage.getItem('price')) {
-      const [leftPrice, rightPrice] = filterRange('price') as string[];
+    if (localStorage.getItem(localStorageKeys.PRICE)) {
+      const [leftPrice, rightPrice] = filterRange(localStorageKeys.PRICE) as string[];
       if (newData.length) {
-        newData = newData.filter((el) => el['price'] >= +leftPrice && el['price'] <= +rightPrice);
+        newData = newData.filter(
+          (el) => el[localStorageKeys.PRICE] >= +leftPrice && el[localStorageKeys.PRICE] <= +rightPrice
+        );
       } else {
-        newData = data.filter((el) => el['price'] >= +leftPrice && el['price'] <= +rightPrice);
+        newData = data.filter(
+          (el) => el[localStorageKeys.PRICE] >= +leftPrice && el[localStorageKeys.PRICE] <= +rightPrice
+        );
       }
     }
 
-    if (localStorage.getItem('stock')) {
-      const [leftRange, rightRange] = filterRange('stock') as string[];
+    if (localStorage.getItem(localStorageKeys.STOCK)) {
+      const [leftRange, rightRange] = filterRange(localStorageKeys.STOCK) as string[];
       if (newData.length) {
-        newData = newData.filter((el) => el['stock'] >= +leftRange && el['stock'] <= +rightRange);
+        newData = newData.filter((el) => el[localStorageKeys.STOCK] >= +leftRange && el[localStorageKeys.STOCK] <= +rightRange);
       } else {
-        newData = data.filter((el) => el['stock'] >= +leftRange && el['stock'] <= +rightRange);
+        newData = data.filter((el) => el[localStorageKeys.STOCK] >= +leftRange && el[localStorageKeys.STOCK] <= +rightRange);
       }
     }
 
-    if (localStorage.getItem('sort')) {
-      const value = localStorage.getItem('sort') as string;
+    if (localStorage.getItem(localStorageKeys.SORT)) {
+      const value = localStorage.getItem(localStorageKeys.SORT) as string;
       if (newData.length) {
         newData = sortProducts(newData, value);
       } else {
@@ -80,8 +84,8 @@ export function filterData(): Product[] {
       }
     }
 
-    if (localStorage.getItem('search')) {
-      const value = localStorage.getItem('search') as string;
+    if (localStorage.getItem(localStorageKeys.SEARCH)) {
+      const value = localStorage.getItem(localStorageKeys.SEARCH) as string;
       if (newData.length) {
         newData = searchProduct(newData, value);
       } else {
@@ -163,7 +167,10 @@ export function toggleCategoryFilters() {
 export function togglePriceFilters() {
   const section = document.querySelector('.price') as HTMLElement;
   const data = filterData();
-  const [leftPrice, rightPrice] = [findMinValue(data, 'price'), findMaxValue(data, 'price')];
+  const [leftPrice, rightPrice] = [
+    findMinValue(data, localStorageKeys.PRICE),
+    findMaxValue(data, localStorageKeys.PRICE),
+  ];
   const leftInput = section.lastElementChild?.querySelector('.multi-range__left') as HTMLInputElement;
   const rightInput = section.lastElementChild?.querySelector('.multi-range__right') as HTMLInputElement;
   const leftLabel = section.querySelector('.multi-range__label-min') as HTMLElement;
@@ -177,7 +184,7 @@ export function togglePriceFilters() {
 export function toggleStockFilters() {
   const section = document.querySelector('.stock') as HTMLElement;
   const data = filterData();
-  const [leftStock, rightStock] = [findMinValue(data, 'stock'), findMaxValue(data, 'stock')];
+  const [leftStock, rightStock] = [findMinValue(data, localStorageKeys.STOCK), findMaxValue(data, localStorageKeys.STOCK)];
   const leftInput = section.lastElementChild?.querySelector('.multi-range__left') as HTMLInputElement;
   const rightInput = section.lastElementChild?.querySelector('.multi-range__right') as HTMLInputElement;
   const leftLabel = section.querySelector('.multi-range__label-min') as HTMLElement;
@@ -211,11 +218,11 @@ function filterCategory(data: Product[], type: string) {
 }
 
 function ifFiltersTrue() {
-  const price = localStorage.getItem('price');
-  const stock = localStorage.getItem('stock');
-  const category = localStorage.getItem('category');
-  const brand = localStorage.getItem('brand');
-  const sort = localStorage.getItem('sort');
-  const search = localStorage.getItem('search');
+  const price = localStorage.getItem(localStorageKeys.PRICE);
+  const stock = localStorage.getItem(localStorageKeys.STOCK);
+  const category = localStorage.getItem(localStorageKeys.CATEGORY);
+  const brand = localStorage.getItem(localStorageKeys.BRAND);
+  const sort = localStorage.getItem(localStorageKeys.SORT);
+  const search = localStorage.getItem(localStorageKeys.SEARCH);
   return [price, stock, category, brand, sort, search].filter((el) => !!el === true).length;
 }

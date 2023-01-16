@@ -11,3 +11,7 @@ export function redirectToPage(path: PATHS) {
   const page = renderPage(url.pathname);
   rootElement.append(page);
 }
+
+export function setLocalStorage(params: string, type: string) {
+  localStorage.setItem(type, params);
+}

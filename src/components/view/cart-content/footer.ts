@@ -3,7 +3,7 @@ import { nextPageButton, prevPageButton } from '../button/button';
 
 export const prevPageBtn = prevPageButton();
 export const nextPageBtn = nextPageButton();
-export const cartPageNum = createElement('span', 'pagination__page-number', `${1}`);
+export const cartPageNum = createElement('span', 'pagination__page-number');
 export const cartPageText = createElement('span', 'pagination__page-text', 'Page');
 
 export default function renderCartFooter() {

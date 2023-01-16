@@ -2,11 +2,11 @@ import createElement from '../../../utils/create-element';
 import { buyNowButton, createApplyPromoCodeButton, removeAppliedPromoCodeButton } from '../button/button';
 import { createPromoCodeInput } from '../input/input';
 
-export const productsCount = createElement('span', 'summary__products-count', '0');
-export const sumTotalContainer = createElement('div', 'summary__sum-total', `Total $ `);
-export const sumTotal = createElement('span', 'sum-total', `${0}`);
-export const newTotal = createElement('span', 'new-sum-total', `${sumTotal.textContent}`);
-export const newSumTotalContainer = createElement('div', 'summary__new-sum-total', `Total $ `);
+export const productsCount = createElement('span', 'summary__products-count');
+export const sumTotalContainer = createElement('div', 'summary__sum-total', 'Total $ ');
+export const sumTotal = createElement('span', 'sum-total');
+export const newTotal = createElement('span', 'new-sum-total');
+export const newSumTotalContainer = createElement('div', 'summary__new-sum-total', 'Total $ ');
 
 export const applyPromoCodeBtn = createApplyPromoCodeButton();
 export const promoCodeContainer = createElement('div', 'promo-code__res');
@@ -22,7 +22,7 @@ export default function renderCartSummary() {
   const cartSummary = createElement('div', 'cart__summary summary');
   const summaryHeading = createElement('h2', 'summary__heading', 'Summary');
   const summaryInfo = createElement('div', 'summary__info');
-  const productsText = createElement('span', 'summary__products-text', `Products: `);
+  const productsText = createElement('span', 'summary__products-text', 'Products: ');
   cartSummary.append(summaryHeading, summaryInfo, summaryPromoCodeBlock, buyNowButton());
   summaryInfo.append(productsText, sumTotalContainer);
   sumTotalContainer.append(sumTotal);

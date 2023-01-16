@@ -1,9 +1,11 @@
+import { localStorageKeys } from '../../constants/constants';
+
 export default function clearAllFilters() {
-  localStorage.removeItem('price');
-  localStorage.removeItem('stock');
-  localStorage.removeItem('brand');
-  localStorage.removeItem('category');
-  localStorage.removeItem('sort');
-  localStorage.removeItem('search');
-  localStorage.removeItem('view');
+  localStorage.removeItem(localStorageKeys.PRICE);
+  localStorage.removeItem(localStorageKeys.STOCK);
+  localStorage.removeItem(localStorageKeys.BRAND);
+  localStorage.removeItem(localStorageKeys.CATEGORY);
+  localStorage.removeItem(localStorageKeys.SORT);
+  localStorage.removeItem(localStorageKeys.SEARCH);
+  localStorage.removeItem(localStorageKeys.VIEW);
 }

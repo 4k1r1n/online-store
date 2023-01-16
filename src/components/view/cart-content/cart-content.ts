@@ -4,7 +4,7 @@ import createCartItem from '../cart-item/cart-item';
 import renderCartHeader from './header';
 import renderCartFooter from './footer';
 import { limit } from '../input/input';
-import { calcNumPages, changePage, setCurrentPage } from '../../model/cart';
+import { calculatePagesCount, changePage, setCurrentPage } from '../../model/cart';
 
 export const contentItems = createElement('div', 'content__items');
 
@@ -34,8 +34,8 @@ export default function renderCartContent(cart: Product[]) {
   contentWrapper.append(contentHeader, contentItems);
   displayCartItemsPerPage(cart, limit);
   const currentPage = setCurrentPage();
-  const numPages = calcNumPages(limit);
-  changePage(currentPage, numPages);
+  const pagesCount = calculatePagesCount(limit);
+  changePage(currentPage, pagesCount);
   cartContent.append(renderCartFooter());
   return cartContent;
 }

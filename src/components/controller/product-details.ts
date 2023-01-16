@@ -1,4 +1,6 @@
+import { localStorageKeys, REMOVEPRODUCTTEXT } from '../../constants/constants';
 import { Product } from '../../types/types';
+import { setLocalStorage } from '../../utils/utils';
 import { addProduct, removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
 import fidnDataById from '../model/find-data';
 
@@ -11,8 +13,8 @@ export function handleAddProductClick(flag: boolean, event: Event) {
     if (!flag) {
       flag = true;
       addProduct(objProduct);
-      e.textContent = 'remove from cart';
-      if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
+      e.textContent = REMOVEPRODUCTTEXT;
+      if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
       cart.forEach((product) => {
         if (product.id === idProduct) product.stock--;
       });
@@ -20,12 +22,12 @@ export function handleAddProductClick(flag: boolean, event: Event) {
       flag = false;
       removeProduct(objProduct);
       e.textContent = 'add to cart';
-      if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
+      if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
       cart.forEach((product) => {
         if (product.id === idProduct) product.stock++;
       });
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
+    setLocalStorage(JSON.stringify(cart), localStorageKeys.CART);
     setCartItemsCount();
     setCartTotal();
   }

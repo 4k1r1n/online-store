@@ -2,7 +2,7 @@ import { cartCounter } from '../view/header/header';
 import { Product, Promo } from '../../types/types';
 import {
   addProduct,
-  calcNumPages,
+  calculatePagesCount,
   changePage,
   getCurrentPromoObj,
   removeProduct,
@@ -30,8 +30,8 @@ import {
 import { limit } from '../view/input/input';
 import { checkCartIsEmpty } from '../../pages/cart';
 import renderModal from '../view/modal/modal-form';
-import { PATHS } from '../../constants/constants';
-import { redirectToPage } from '../../utils/utils';
+import { localStorageKeys, PATHS } from '../../constants/constants';
+import { redirectToPage, setLocalStorage } from '../../utils/utils';
 
 export function handleAddItem(
   defaultStock: number,
@@ -43,7 +43,7 @@ export function handleAddItem(
   let cart: Product[] = [];
   let cartItemsNum: number;
   const itemId = Number(item.getAttribute('data-id'));
-  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
+  if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   if (defaultStock) {
     cart.forEach((product) => {
       if (product.id === itemId && product.stock < defaultStock && product.stock !== 0) {
@@ -58,7 +58,7 @@ export function handleAddItem(
         }
       }
     });
-    localStorage.setItem('cart', JSON.stringify(cart));
+    setLocalStorage(JSON.stringify(cart), localStorageKeys.CART);
   }
   setCartTotal();
   setCartItemsCount();
@@ -74,7 +74,7 @@ export function handleRemoveItem(
 ) {
   let cart: Product[] = [];
   let cartItemsNum: number;
-  if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart);
+  if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const itemId = Number(item.getAttribute('data-id'));
   const itemObj = fidnDataById(itemId) as Product;
   if (defaultStock) {
@@ -89,7 +89,7 @@ export function handleRemoveItem(
           cartCounter.textContent = `${cartItemsNum}`;
           counterText.textContent = `${defaultStock - product.stock}`;
         }
-        localStorage.setItem('cart', JSON.stringify(cart));
+        setLocalStorage(JSON.stringify(cart), localStorageKeys.CART);
       }
       if (product.stock === defaultStock) {
         item.remove();
@@ -97,8 +97,8 @@ export function handleRemoveItem(
         cart = JSON.parse(localStorage.cart);
         displayCartItemsPerPage(cart, limit);
         const currentPage = setCurrentPage();
-        const numPages = calcNumPages(limit);
-        changePage(currentPage, numPages);
+        const pagesCount = calculatePagesCount(limit);
+        changePage(currentPage, pagesCount);
       }
     });
     setCartTotal();
@@ -172,11 +172,11 @@ export function handleBuyNow() {
     const objProduct = fidnDataById(idProduct) as Product;
     let cart: Product[] = [];
     addProduct(objProduct);
-    if (localStorage.getItem('cart')) cart = JSON.parse(localStorage.cart) as Product[];
+    if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
     cart.forEach((product) => {
       if (product.id === idProduct) product.stock--;
     });
-    localStorage.setItem('cart', JSON.stringify(cart));
+    setLocalStorage(JSON.stringify(cart), localStorageKeys.CART);
     setCartItemsCount();
     setCartTotal();
     redirectToPage(PATHS.cart);
