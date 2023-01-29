@@ -24,3 +24,9 @@ export interface StateCartButtons {
 export interface StateCardButton extends StateCartButtons {
   id: number;
 }
+
+export interface LocalStorage {
+  event: Event;
+  key: string;
+  query: string[];
+}

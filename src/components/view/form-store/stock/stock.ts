@@ -21,7 +21,7 @@ export default function renderStockRage() {
   const [leftStock, rightStock] = queryParams ? queryParams : [min, max];
   stockRange.addEventListener('input', (e) => {
     const filterQueryParams: string[] = [];
-    handleLocalStorageRange(e, 'stock', filterQueryParams);
+    handleLocalStorageRange({ event: e, key: 'stock', query: filterQueryParams });
     handleQuerySearch();
     const [newLeftStock, newRightStock] = getQueryParams().stock;
     const filteredData = filterByRange({

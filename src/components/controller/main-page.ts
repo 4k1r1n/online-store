@@ -1,7 +1,7 @@
 import getProduct from '../../pages/product-details';
 import { localStorageKeys, PATHS, REMOVEPRODUCTTEXT } from '../../constants/constants';
 import fidnDataById from '../model/find-data';
-import { Product, StateCartButtons, StateCardButton } from '../../types/types';
+import { Product, StateCartButtons, StateCardButton, LocalStorage } from '../../types/types';
 import { addProduct, removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
 import createBreadcrumps from '../view/breadcrumps/breadcrumps';
 import { setLocalStorage } from '../../utils/utils';
@@ -44,7 +44,7 @@ function filterQuery(filters: Record<string, string>) {
   return filterQuery;
 }
 
-export function handelLocalStorage(event: Event, key: string, query: string[]) {
+export function handelLocalStorage({ event, key, query }: LocalStorage) {
   const value = (event.target as HTMLInputElement).value;
   if (query.indexOf(value) === -1) {
     query.push(value);
@@ -55,7 +55,7 @@ export function handelLocalStorage(event: Event, key: string, query: string[]) {
   if (!localStorage.getItem(key)) localStorage.removeItem(key);
 }
 
-export function handleLocalStorageRange(event: Event, key: string, query: string[]) {
+export function handleLocalStorageRange({ event, key, query }: LocalStorage) {
   const values: { leftValue: string; rightValue: string } = {
     leftValue: '',
     rightValue: '',

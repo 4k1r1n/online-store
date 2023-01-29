@@ -22,7 +22,7 @@ export function createCategoriesInput(data: Product[]) {
   }
   const section = createElement('div', 'categories__input');
   section.addEventListener('change', (e: Event) => {
-    handelLocalStorage(e, 'category', filterQueryParams);
+    handelLocalStorage({ event: e, key: 'category', query: filterQueryParams });
     handleQuerySearch();
     renderFilterCards(filterData());
     changeFoundProducts();

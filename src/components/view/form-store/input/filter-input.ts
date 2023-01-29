@@ -17,7 +17,7 @@ export function createFilterInput(data: Product[]) {
   }
   const section = createElement('div', 'filter__input');
   section.addEventListener('change', (e: Event) => {
-    handelLocalStorage(e, 'brand', filterQueryParams);
+    handelLocalStorage({ event: e, key: 'brand', query: filterQueryParams });
     handleQuerySearch();
     renderFilterCards(filterData());
     changeFoundProducts();

@@ -21,7 +21,7 @@ export default function renderPriceRage() {
   const [leftPrice, rightPrice] = queryParams ? queryParams : [min, max];
   priceRange.addEventListener('input', (e) => {
     const filterQueryParams: string[] = [];
-    handleLocalStorageRange(e, 'price', filterQueryParams);
+    handleLocalStorageRange({ event: e, key: 'price', query: filterQueryParams });
     handleQuerySearch();
     const [newLeftPrice, newRightPrice] = getQueryParams().price;
     const filteredData = filterByRange({
