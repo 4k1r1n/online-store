@@ -24,7 +24,12 @@ export default function renderPriceRage() {
     handleLocalStorageRange(e, 'price', filterQueryParams);
     handleQuerySearch();
     const [newLeftPrice, newRightPrice] = getQueryParams().price;
-    const filteredData = filterByRange(filterData(), 'price', +newLeftPrice, +newRightPrice);
+    const filteredData = filterByRange({
+      Products: filterData(),
+      key: 'price',
+      leftRange: +newLeftPrice,
+      rightRange: +newRightPrice,
+    });
     renderFilterCards(filteredData);
     changeFoundProducts();
     toggleBrandFilters();

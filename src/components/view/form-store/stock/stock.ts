@@ -24,7 +24,12 @@ export default function renderStockRage() {
     handleLocalStorageRange(e, 'stock', filterQueryParams);
     handleQuerySearch();
     const [newLeftStock, newRightStock] = getQueryParams().stock;
-    const filteredData = filterByRange(filterData(), 'stock', +newLeftStock, +newRightStock);
+    const filteredData = filterByRange({
+      Products: filterData(),
+      key: 'stock',
+      leftRange: +newLeftStock,
+      rightRange: +newRightStock,
+    });
     renderFilterCards(filteredData);
     changeFoundProducts();
     changeFoundProducts();
