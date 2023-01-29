@@ -18,16 +18,16 @@ export function getQueryParams() {
 }
 
 export function getFilterQuery(obj: { [key: string]: string[] }) {
-  const arr: string[][] = [];
+  const filteredQuery: string[][] = [];
   for (const [key, value] of Object.entries(obj)) {
     if (key === localStorageKeys.PRICE || key === localStorageKeys.STOCK) {
-      arr.push([`${key}`, `${value}`]);
+      filteredQuery.push([`${key}`, `${value}`]);
     } else {
-      value.forEach((el) => arr.push([`${key}`, `${decodeURIComponent(el).split('%20').join(' ')}`]));
+      value.forEach((el) => filteredQuery.push([`${key}`, `${decodeURIComponent(el).split('%20').join(' ')}`]));
     }
   }
 
-  return arr;
+  return filteredQuery;
 }
 
 export function queryValues() {
