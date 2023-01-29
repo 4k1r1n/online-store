@@ -36,23 +36,12 @@ export function renderProductsSection(id: number) {
   rootElement.append(breadcrumps, page);
 }
 
-function filterQuery(object: object) {
-  const array: string[][] = [];
-  for (const [key, value] of Object.entries(object)) {
-    array.push([`${key}=${value}`]);
+function filterQuery(filters: Record<string, string>) {
+  const filterQuery: string[][] = [];
+  for (const [key, value] of Object.entries(filters)) {
+    filterQuery.push([`${key}=${value}`]);
   }
-  return array;
-}
-
-export function filterLocalStorage(object: object) {
-  const array: string[][] = [];
-  for (const [key, value] of Object.entries(object)) {
-    const newValue = value.split(',');
-    for (let i = 0; i < newValue.length; i++) {
-      array.push([`${key},${newValue[i]}`]);
-    }
-  }
-  return array.map((el) => el.join().split(','));
+  return filterQuery;
 }
 
 export function handelLocalStorage(event: Event, key: string, query: string[]) {
