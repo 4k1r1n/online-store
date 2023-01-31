@@ -40,7 +40,7 @@ export function handleAddItem(
   item: HTMLElement,
   itemPrice: HTMLElement
 ) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   let cartItemsNum: number;
   const itemId = Number(item.getAttribute('data-id'));
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
@@ -72,7 +72,7 @@ export function handleRemoveItem(
   item: HTMLElement,
   itemPrice: HTMLElement
 ) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   let cartItemsNum: number;
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const itemId = Number(item.getAttribute('data-id'));
@@ -108,7 +108,7 @@ export function handleRemoveItem(
   }
 }
 
-export let appliedPromo: Promo[] = [];
+export let appliedPromo: Array<Promo> = [];
 
 export function handleRemovePromoCode(e: Event) {
   const targetBtn = e.target;
@@ -170,9 +170,9 @@ export function handleBuyNow() {
   if (url.pathname !== PATHS.cart) {
     const idProduct = +window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
     const objProduct = fidnDataById(idProduct) as Product;
-    let cart: Product[] = [];
+    let cart: Array<Product> = [];
     addProduct(objProduct);
-    if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
+    if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Array<Product>;
     cart.forEach((product) => {
       if (product.id === idProduct) product.stock--;
     });

@@ -38,7 +38,7 @@ export const validation = {
   CREDIT_CARD_JCB: /^(?:2131|1800|35\d{3})\d{12}$/,
 };
 
-export const REMOVEPRODUCTTEXT = 'remove from cart';
+export const REMOVE_PRODUCT_TEXT = 'remove from cart';
 
 export enum localStorageKeys {
   CART = 'cart',

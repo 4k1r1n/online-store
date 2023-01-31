@@ -1,5 +1,5 @@
 import getProduct from '../../pages/product-details';
-import { localStorageKeys, PATHS, REMOVEPRODUCTTEXT } from '../../constants/constants';
+import { localStorageKeys, PATHS, REMOVE_PRODUCT_TEXT } from '../../constants/constants';
 import fidnDataById from '../model/find-data';
 import { Product, StateCartButtons, StateCardButton, LocalStorage } from '../../types/types';
 import { addProduct, removeProduct, setCartItemsCount, setCartTotal } from '../model/cart';
@@ -89,7 +89,7 @@ export function handleLocalStorageSearch(key: string, value: string) {
 export function handleCartClick(flag: boolean, id: number, event: Event) {
   if (event.target instanceof HTMLElement) {
     const e = event.target;
-    let cart: Product[] = [];
+    let cart: Array<Product> = [];
     const objProduct = fidnDataById(id) as Product;
     if (!flag) {
       flag = true;
@@ -122,7 +122,7 @@ export function handleCartClick(flag: boolean, id: number, event: Event) {
 }
 
 export function setStateCardButtons(state: StateCardButton) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const objProduct = fidnDataById(state.id) as Product;
   cart.forEach((product) => {
@@ -136,7 +136,7 @@ export function setStateCardButtons(state: StateCardButton) {
 }
 
 export function setStateProductBtn(state: StateCartButtons) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const idProduct = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
   if (idProduct) {
@@ -144,7 +144,7 @@ export function setStateProductBtn(state: StateCartButtons) {
     cart.forEach((product) => {
       if (product.id === objProduct.id) {
         state.flag = true;
-        state.btn.textContent = REMOVEPRODUCTTEXT;
+        state.btn.textContent = REMOVE_PRODUCT_TEXT;
       }
     });
     setCartTotal();

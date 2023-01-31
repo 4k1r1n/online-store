@@ -78,7 +78,7 @@ export function changePage(page: number, pagesCount: number) {
 }
 
 export function buildPage(page: number) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const items = createCartItems(cart);
   if (items.length) contentItems.textContent = '';
@@ -90,7 +90,7 @@ export function buildPage(page: number) {
 }
 
 export function calculatePagesCount(itemsPerPage: number) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const numItems = cart.length;
   const pagesCount = Math.ceil(numItems / itemsPerPage);
@@ -98,7 +98,7 @@ export function calculatePagesCount(itemsPerPage: number) {
 }
 
 export function addProduct(obj: Product) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
   cart.push(obj);
   const uniqueProducts = [...new Map(cart.map((item) => [item.id, item])).values()];
@@ -106,7 +106,7 @@ export function addProduct(obj: Product) {
 }
 
 export function removeProduct(obj: Product) {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart) as Product[];
   const cartWithoutProduct = cart.filter((product) => product.id !== obj.id);
   setLocalStorage(JSON.stringify(cartWithoutProduct), localStorageKeys.CART);
@@ -114,7 +114,7 @@ export function removeProduct(obj: Product) {
 
 export function setItemCount(item: HTMLElement, stock: number) {
   const itemId = Number(item.getAttribute('data-id'));
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   let count;
   if (localStorage.getItem(localStorageKeys.CART)) {
     cart = JSON.parse(localStorage.cart);
@@ -128,7 +128,7 @@ export function setItemCount(item: HTMLElement, stock: number) {
 }
 
 export function setCartItemsCount() {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const count = [];
   for (let i = 0; i < cart.length; i++) {
@@ -146,7 +146,7 @@ export function setCartItemsCount() {
 }
 
 export function setCartTotal() {
-  let cart: Product[] = [];
+  let cart: Array<Product> = [];
   if (localStorage.getItem(localStorageKeys.CART)) cart = JSON.parse(localStorage.cart);
   const itemsCount = cart.reduce((acc, value) => {
     return acc + value.price;
@@ -155,7 +155,7 @@ export function setCartTotal() {
   sumTotal.textContent = `${itemsCount}`;
 }
 
-export function setCartTotalWithDiscount(promoObj: Promo[]) {
+export function setCartTotalWithDiscount(promoObj: Array<Promo>) {
   if (sumTotal.textContent) {
     const cartTotal = +sumTotal.textContent;
     const totalDiscount = calculateTotalDiscount(promoObj);
@@ -163,7 +163,7 @@ export function setCartTotalWithDiscount(promoObj: Promo[]) {
   }
 }
 
-export function calculateTotalDiscount(promoObj: Promo[]) {
+export function calculateTotalDiscount(promoObj: Array<Promo>) {
   return promoObj.reduce((acc, value) => {
     return acc + value.discount;
   }, 0);

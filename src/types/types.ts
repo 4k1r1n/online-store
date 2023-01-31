@@ -8,7 +8,7 @@ export interface Product {
   price: number;
   stock: number;
   capacity: number;
-  images: string[];
+  images: Array<string>;
 }
 
 export interface Promo {
@@ -28,5 +28,5 @@ export interface StateCardButton extends StateCartButtons {
 export interface LocalStorage {
   event: Event;
   key: string;
-  query: string[];
+  query: Array<string>;
 }

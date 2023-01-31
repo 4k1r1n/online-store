@@ -36,8 +36,8 @@ export function queryValues() {
   return filtersArr;
 }
 
-export function filterData(): Product[] {
-  let newData: Product[] = [];
+export function filterData(): Array<Product> {
+  let newData: Array<Product> = [];
   if (ifFiltersTrue()) {
     if (localStorage.getItem(localStorageKeys.CATEGORY)) {
       newData = filterCategory(data, localStorageKeys.CATEGORY);
@@ -126,7 +126,7 @@ export function filterByRange({
   leftRange,
   rightRange,
 }: {
-  Products: Product[];
+  Products: Array<Product>;
   key: string;
   leftRange: number;
   rightRange: number;
@@ -134,7 +134,7 @@ export function filterByRange({
   return Products.filter((el) => el[key] >= leftRange && el[key] <= rightRange);
 }
 
-export function searchProduct(Products: Product[], value: string): Product[] {
+export function searchProduct(Products: Array<Product>, value: string): Array<Product> {
   return Products.filter((el) => {
     if (el.brand.toLowerCase().includes(value)) return el;
     if (el.capacity === +value) return el;
@@ -212,19 +212,19 @@ export function toggleStockFilters() {
   rightInput.value = rightStock.toString();
 }
 
-function findMaxValue(obj: Product[], key: string) {
+function findMaxValue(obj: Array<Product>, key: string) {
   const values = obj.map((el) => el[key]) as number[];
   return Math.max(...values);
 }
 
-function findMinValue(obj: Product[], key: string) {
+function findMinValue(obj: Array<Product>, key: string) {
   const values = obj.map((el) => el[key]) as number[];
   return Math.min(...values);
 }
 
-function filterCategory(data: Product[], type: string) {
+function filterCategory(data: Array<Product>, type: string) {
   const categories = (localStorage.getItem(type) as string).split(',');
-  const result: Product[] = [];
+  const result: Array<Product> = [];
   for (let i = 0; i < categories.length; i++) {
     const value = categories[i];
     data.forEach((el) => {

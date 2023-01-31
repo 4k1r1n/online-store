@@ -1,7 +1,7 @@
 import { SORTING } from '../../constants/constants';
 import { Product } from '../../types/types';
 
-export function sortProducts(data: Product[], sort: string) {
+export function sortProducts(data: Array<Product>, sort: string) {
   switch (sort) {
     case SORTING.lowPrice:
       return data.sort((a, b) => a.price - b.price);

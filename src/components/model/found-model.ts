@@ -20,6 +20,6 @@ export function getAmountOfProducts(key: string, value: string) {
   return amount;
 }
 
-export function calculateBalanceOfProducts(obj: Product[], key: string, value: string) {
+export function calculateBalanceOfProducts(obj: Array<Product>, key: string, value: string) {
   return obj.filter((el) => el[key] === value).length;
 }
